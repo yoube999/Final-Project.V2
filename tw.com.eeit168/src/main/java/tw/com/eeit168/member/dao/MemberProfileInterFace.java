@@ -6,4 +6,6 @@ public interface MemberProfileInterFace {
 
 	MemberProfileBean select(int member_profile_id);
 
+	
+	public abstract void insert(MemberProfileBean memberProfileBean);
 }
