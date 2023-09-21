@@ -1,4 +1,4 @@
-package tw.com.eeit168.domain;
+package tw.com.eeit168.products.restaurant.model;
 
 public class RestaurantBean {
 

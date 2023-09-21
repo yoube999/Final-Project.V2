@@ -1,4 +1,4 @@
-package tw.com.eeit168.domain;
+package tw.com.eeit168.member.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
