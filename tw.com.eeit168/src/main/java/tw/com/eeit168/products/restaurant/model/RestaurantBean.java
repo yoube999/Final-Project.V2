@@ -1,14 +1,36 @@
 package tw.com.eeit168.products.restaurant.model;
 
-public class RestaurantBean {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "restaurant")
+public class RestaurantBean {
+	
+	@Id
+	@Column(name = "restaurant_id")
 	private Integer restaurant_id;
+	
+	@Column(name = "restaurant_name")
 	private String restaurant_name;
+	
+	@Column(name = "restaurant_address")
 	private String restaurant_address;
+	
+	@Column(name = "contact_number")
 	private String contact_number;
+	
+	@Column(name = "price")
 	private Integer price;
+	
+	@Column(name = "rating")
 	private String rating;
+	
+	@Column(name = "times_purchased")
 	private Integer times_purchased;
+
 	
 	@Override
 	public String toString() {
@@ -16,6 +38,7 @@ public class RestaurantBean {
 				+ ", restaurant_address=" + restaurant_address + ", contact_number=" + contact_number + ", price="
 				+ price + ", rating=" + rating + ", times_purchased=" + times_purchased + "]";
 	}
+
 	
 	public Integer getRestaurant_id() {
 		return restaurant_id;
@@ -59,7 +82,5 @@ public class RestaurantBean {
 	public void setTimes_purchased(Integer times_purchased) {
 		this.times_purchased = times_purchased;
 	}
-	
-	
 	
 }
