@@ -2,14 +2,14 @@ package tw.com.eeit168.products.accommodation.model;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "accommodation_inventory")
@@ -28,6 +28,61 @@ public class AccommodationInventory {
 	private AccommodationRoomType roomType;
 	
 	
+	public AccommodationInventory() {
+		
+	}
+	
+	
+	public AccommodationInventory(int inventoryId, Accommodation accommodation, AccommodationRoomType roomType,
+			Date availabilityDate, int availableRooms) {
+		super();
+		this.inventoryId = inventoryId;
+		this.accommodation = accommodation;
+		this.roomType = roomType;
+		this.availabilityDate = availabilityDate;
+		this.availableRooms = availableRooms;
+	}
+
+	public int getInventoryId() {
+		return inventoryId;
+	}
+
+	public void setInventoryId(int inventoryId) {
+		this.inventoryId = inventoryId;
+	}
+
+	public Accommodation getAccommodation() {
+		return accommodation;
+	}
+
+	public void setAccommodation(Accommodation accommodation) {
+		this.accommodation = accommodation;
+	}
+
+	public AccommodationRoomType getRoomType() {
+		return roomType;
+	}
+
+	public void setRoomType(AccommodationRoomType roomType) {
+		this.roomType = roomType;
+	}
+
+	public Date getAvailabilityDate() {
+		return availabilityDate;
+	}
+
+	public void setAvailabilityDate(Date availabilityDate) {
+		this.availabilityDate = availabilityDate;
+	}
+
+	public int getAvailableRooms() {
+		return availableRooms;
+	}
+
+	public void setAvailableRooms(int availableRooms) {
+		this.availableRooms = availableRooms;
+	}
+
 	@Column(name = "availability_date")
 	private Date availabilityDate;
 	
