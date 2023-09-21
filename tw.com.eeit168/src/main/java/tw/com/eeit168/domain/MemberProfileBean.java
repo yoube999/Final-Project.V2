@@ -6,8 +6,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "customer")
-public class CustomerBean {
+@Table(name = "member_profile")
+public class MemberProfileBean {
 
 	@Id
 	@Column(name = "member_profile_id")
