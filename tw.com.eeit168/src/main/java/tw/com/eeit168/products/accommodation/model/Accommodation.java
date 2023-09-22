@@ -15,7 +15,7 @@ public class Accommodation {
 	//使用底层数据库的自增字段来生成主键。适用于大多数数据库，如 MySQL、PostgreSQL 等。每个插入操作后，数据库会为新记录分配一个唯一的自增 ID。
 	
 	@Column(name = "accommodation_id")
-	private int accommodationId;
+	private Integer accommodationId;
 	
 	@Column(name = "accommodation_name", nullable = false, columnDefinition = "nvarchar")
 	private String accommodationName;
@@ -29,24 +29,32 @@ public class Accommodation {
 	@Column(name = "times_purchased", nullable = false)
 	private int timesPurchased;
 
+	@Override
+	public String toString() {
+		return "Accommodation [accommodationId=" + accommodationId + ", accommodationName=" + accommodationName
+				+ ", accommodationAddress=" + accommodationAddress + ", contactNumber=" + contactNumber
+				+ ", timesPurchased=" + timesPurchased + "]";
+	}
+	
+	//Constructors
+//	public Accommodation() {
+//		
+//	}
+//	
+//	public Accommodation(int accommodationid, String accommodationName, String accommodationAddress,
+//			String contactNumber, int timesPurchased) {
+//		super();
+//		this.accommodationId = accommodationid;
+//		this.accommodationName = accommodationName;
+//		this.accommodationAddress = accommodationAddress;
+//		this.contactNumber = contactNumber;
+//		this.timesPurchased = timesPurchased;
+//	}
+
 	public int getAccommodationid() {
 		return accommodationId;
 	}
 
-	//Constructors
-	public Accommodation() {
-		
-	}
-	
-	public Accommodation(int accommodationid, String accommodationName, String accommodationAddress,
-			String contactNumber, int timesPurchased) {
-		super();
-		this.accommodationId = accommodationid;
-		this.accommodationName = accommodationName;
-		this.accommodationAddress = accommodationAddress;
-		this.contactNumber = contactNumber;
-		this.timesPurchased = timesPurchased;
-	}
 
 	public void setAccommodationid(int accommodationid) {
 		this.accommodationId = accommodationid;
