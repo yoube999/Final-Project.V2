@@ -3,6 +3,7 @@ package tw.com.eeit168.products.restaurant.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 
 @Entity
@@ -13,7 +14,7 @@ public class RestaurantInventoryBean {
 	@Column(name = "restaurant_Inventory_id")
 	private Integer restaurant_Inventory_id;
 	
-	@Column(name = "restaurant_id")
+	@JoinColumn(name = "restaurant_id")
 	private Integer restaurant_id;
 	
 	@Column(name = "availability_date")

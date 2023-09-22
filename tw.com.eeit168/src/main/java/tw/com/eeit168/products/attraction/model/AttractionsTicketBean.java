@@ -3,6 +3,7 @@ package tw.com.eeit168.products.attraction.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 @Entity
 @Table(name = "attractions_ticket")
@@ -12,7 +13,7 @@ public class AttractionsTicketBean {
 	@Column(name = "attractions_ticket_id")
 	private Integer attractions_ticket_id;
 	
-	@Column(name = "attractions_id")
+	@JoinColumn(name = "attractions_id")
 	private Integer attractions_id;
 	
 	@Column(name = "valid_date")
