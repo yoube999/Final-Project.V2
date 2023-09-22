@@ -17,10 +17,10 @@ public class Accommodation {
 	@Column(name = "accommodation_id")
 	private int accommodationId;
 	
-	@Column(name = "accommodation_name", nullable = false)
+	@Column(name = "accommodation_name", nullable = false, columnDefinition = "nvarchar")
 	private String accommodationName;
 	
-	@Column(name = "accommodation_address", nullable = false)
+	@Column(name = "accommodation_address", nullable = false, columnDefinition = "nvarchar")
 	private String accommodationAddress;
 	
 	@Column(name = "contact_number", nullable = false)

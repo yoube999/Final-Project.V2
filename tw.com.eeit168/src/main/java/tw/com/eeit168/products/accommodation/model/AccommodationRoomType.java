@@ -21,11 +21,11 @@ public class AccommodationRoomType {
 	@JoinColumn(name = "accommodation_id", nullable = false)
 	private Accommodation accommodation;
 	
-	@Column(name = "room_type_name", nullable = false)
+	@Column(name = "room_type_name", nullable = false, columnDefinition = "nvarchar")
 	private String roomTypeName;
 	
 	
-	@Column(name = "capacity", nullable = false)
+	@Column(name = "capacity", nullable = false, columnDefinition = "nvarchar")
 	private String capacity;
 	
 	
