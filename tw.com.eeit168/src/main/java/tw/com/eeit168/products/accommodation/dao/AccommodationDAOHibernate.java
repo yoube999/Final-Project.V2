@@ -7,12 +7,14 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import tw.com.eeit168.products.accommodation.model.Accommodation;
 
 @Repository
+@Transactional
 public class AccommodationDAOHibernate implements AccommodationDAO{
 //	@PersistenceContext
 //	private Session session;
@@ -39,12 +41,17 @@ public class AccommodationDAOHibernate implements AccommodationDAO{
 	@Override
 	public List<Accommodation> searchByKeyword(String keyword){
 		if(keyword != null && !keyword.trim().isEmpty()) {
-			String hql = "FROM Accommodation WHERE accommodation_name LIKE :keyword OR accommodation_address LIKE :keyword";
+			String hql = "FROM Accommodation WHERE accommodationName LIKE :keyword OR accommodationAddress LIKE :keyword";
 			Query<Accommodation> query = getSession().createQuery(hql, Accommodation.class);
 			query.setParameter("keyword", "%" + keyword + "%");
 			return query.list();
 		}
 		return null;
+		
+//		return entityManager.createNamedQuery("Accommodation.searchByKeyword", Accommodation.class)
+//                .setParameter("keyword", "%" + keyword + "%")
+//                .getResultList();
+//		
 	}
 	
 	

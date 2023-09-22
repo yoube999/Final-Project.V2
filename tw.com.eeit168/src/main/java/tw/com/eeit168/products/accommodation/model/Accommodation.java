@@ -17,10 +17,10 @@ public class Accommodation {
 	@Column(name = "accommodation_id")
 	private Integer accommodationId;
 	
-	@Column(name = "accommodation_name", nullable = false, columnDefinition = "nvarchar")
+	@Column(name = "accommodation_name", nullable = false, columnDefinition = "nvarchar(255)")
 	private String accommodationName;
 	
-	@Column(name = "accommodation_address", nullable = false, columnDefinition = "nvarchar")
+	@Column(name = "accommodation_address", nullable = false, columnDefinition = "nvarchar(255)")
 	private String accommodationAddress;
 	
 	@Column(name = "contact_number", nullable = false)
@@ -29,35 +29,12 @@ public class Accommodation {
 	@Column(name = "times_purchased", nullable = false)
 	private int timesPurchased;
 
-	@Override
-	public String toString() {
-		return "Accommodation [accommodationId=" + accommodationId + ", accommodationName=" + accommodationName
-				+ ", accommodationAddress=" + accommodationAddress + ", contactNumber=" + contactNumber
-				+ ", timesPurchased=" + timesPurchased + "]";
-	}
-	
-	//Constructors
-//	public Accommodation() {
-//		
-//	}
-//	
-//	public Accommodation(int accommodationid, String accommodationName, String accommodationAddress,
-//			String contactNumber, int timesPurchased) {
-//		super();
-//		this.accommodationId = accommodationid;
-//		this.accommodationName = accommodationName;
-//		this.accommodationAddress = accommodationAddress;
-//		this.contactNumber = contactNumber;
-//		this.timesPurchased = timesPurchased;
-//	}
-
-	public int getAccommodationid() {
+	public Integer getAccommodationId() {
 		return accommodationId;
 	}
 
-
-	public void setAccommodationid(int accommodationid) {
-		this.accommodationId = accommodationid;
+	public void setAccommodationId(Integer accommodationId) {
+		this.accommodationId = accommodationId;
 	}
 
 	public String getAccommodationName() {
@@ -91,4 +68,30 @@ public class Accommodation {
 	public void setTimesPurchased(int timesPurchased) {
 		this.timesPurchased = timesPurchased;
 	}
+
+	@Override
+	public String toString() {
+		return "Accommodation [accommodationId=" + accommodationId + ", accommodationName=" + accommodationName
+				+ ", accommodationAddress=" + accommodationAddress + ", contactNumber=" + contactNumber
+				+ ", timesPurchased=" + timesPurchased + "]";
+	}
+
+	
+	
+	//Constructors
+//	public Accommodation() {
+//		
+//	}
+//	
+//	public Accommodation(int accommodationid, String accommodationName, String accommodationAddress,
+//			String contactNumber, int timesPurchased) {
+//		super();
+//		this.accommodationId = accommodationid;
+//		this.accommodationName = accommodationName;
+//		this.accommodationAddress = accommodationAddress;
+//		this.contactNumber = contactNumber;
+//		this.timesPurchased = timesPurchased;
+//	}
+
+	
 }
