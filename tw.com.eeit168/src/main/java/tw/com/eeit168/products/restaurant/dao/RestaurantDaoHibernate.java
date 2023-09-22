@@ -1,5 +1,7 @@
 package tw.com.eeit168.products.restaurant.dao;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
@@ -22,6 +24,46 @@ public class RestaurantDaoHibernate implements RestaurantDAO{
 			return this.getSession().get(RestaurantBean.class, id);
 		}
 		return null;
+	}
+	
+	@Override
+	public List<RestaurantBean> selectAll() {
+		return this.getSession().createQuery("from RestaurantBean", RestaurantBean.class).list();
+	}
+	
+	@Override
+	public RestaurantBean insert(RestaurantBean bean) {
+		if(bean != null && bean.getRestaurant_id() != null) {
+			RestaurantBean temp = this.getSession().get(RestaurantBean.class, bean.getRestaurant_id());
+			if(temp == null) {
+				this.getSession().persist(bean);
+				return bean;
+			}
+		}
+		return null;
+	}
+	
+	@Override
+	public RestaurantBean update(RestaurantBean bean) {
+		if(bean != null && bean.getRestaurant_id() != null) {
+			RestaurantBean temp = this.getSession().get(RestaurantBean.class, bean.getRestaurant_id());
+			if(temp != null) {
+				return (RestaurantBean)this.getSession().merge(bean);
+			}
+		}
+		return null;
+	}
+	
+	@Override
+	public boolean delete(Integer id) {
+		if(id != null) {
+			RestaurantBean temp = this.getSession().get(RestaurantBean.class, id);
+			if(temp != null) {
+				this.getSession().remove(temp);
+				return true;
+			}
+		}
+		return false;
 	}
 	
 }

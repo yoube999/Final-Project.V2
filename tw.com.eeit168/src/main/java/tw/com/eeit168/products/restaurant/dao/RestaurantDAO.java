@@ -8,12 +8,12 @@ public interface RestaurantDAO {
 
 	RestaurantBean select(Integer id);
 	
-//	List<RestaurantBean> selectAll();
-//	
-//	boolean insert(RestaurantBean bean);
-//	
-//	RestaurantBean update(RestaurantBean bean);
-//	
-//	boolean delete(Integer id);
+	List<RestaurantBean> selectAll();
+	
+	RestaurantBean insert(RestaurantBean bean);
+	
+	RestaurantBean update(RestaurantBean bean);
+	
+	boolean delete(Integer id);
 	
 }
