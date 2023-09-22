@@ -1,6 +1,7 @@
 package tw.com.eeit168.member.dao;
 
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,23 +19,22 @@ import tw.com.eeit168.member.model.MemberProfileBean;
 	    }
 
 	    @Override
-	    public MemberProfileBean select(int member_profile_id) {
-	        if (member_profile_id != 0) {
-	            return this.getSession().get(MemberProfileBean.class, member_profile_id);
-	        }
-	        return null;
+	    public MemberProfileBean select(String user_account) {
+	    	   Session session = getSession();
+	           String hql = "FROM MemberProfileBean WHERE user_account = :account";
+	           Query query = session.createQuery(hql);
+	           query.setParameter("account", user_account);
+
+	           return (MemberProfileBean) query.uniqueResult();
 	    }
 
 	    @Transactional
 	    @Override
-	            
-	            public void insert(MemberProfileBean memberProfileBean) {
-	                if (memberProfileBean != null) {
-	                    this.getSession().merge(memberProfileBean);
-	                }
-	            }
-	        
-	    
+	    public void insert(MemberProfileBean memberProfileBean) {
+	        if (memberProfileBean != null) {
+	            this.getSession().persist(memberProfileBean);
+	        }
+	    }
 	}
 
 	

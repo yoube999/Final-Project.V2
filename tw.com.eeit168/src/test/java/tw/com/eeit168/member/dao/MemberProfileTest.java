@@ -16,14 +16,15 @@ public class MemberProfileTest {
 	@Autowired
 	private MemberProfileInterFace memberProfileInterFace;
 	
-//	@Test
+	@Test
 	public void testselect() {
-		MemberProfileBean bean = memberProfileInterFace.select(1);
+		MemberProfileBean bean = memberProfileInterFace.select("user1@example.com");
 		System.out.println(bean);
+
 	}
 	
 	
-	@Test
+//	@Test
 	public void testInsert() throws ParseException {
 	    MemberProfileBean newMember = new MemberProfileBean();
 	    newMember.setUser_account("example_account");
