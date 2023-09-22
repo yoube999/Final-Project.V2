@@ -23,10 +23,10 @@ public class AttractionBean {
 	private String descriptions;
 	
 	@Column(name = "open_time")
-	private java.util.Date open_time;
+	private String open_time;
 	
 	@Column(name = "close_time")
-	private java.util.Date close_time;
+	private String close_time;
 	
 	@Column(name = "contact_number")
 	private String contact_number;
@@ -71,16 +71,16 @@ public class AttractionBean {
 	public void setDescriptions(String descriptions) {
 		this.descriptions = descriptions;
 	}
-	public java.util.Date getOpen_time() {
+	public String getOpen_time() {
 		return open_time;
 	}
-	public void setOpen_time(java.util.Date open_time) {
+	public void setOpen_time(String open_time) {
 		this.open_time = open_time;
 	}
-	public java.util.Date getClose_time() {
+	public String getClose_time() {
 		return close_time;
 	}
-	public void setClose_time(java.util.Date close_time) {
+	public void setClose_time(String close_time) {
 		this.close_time = close_time;
 	}
 	public String getContact_number() {
