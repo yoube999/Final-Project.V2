@@ -18,7 +18,7 @@ public class MemberProfileTest {
 	
 	@Test
 	public void testselect() {
-		MemberProfileBean bean = memberProfileInterFace.select("user1@example.com");
+		MemberProfileBean bean = memberProfileInterFace.select("example_account");
 		System.out.println(bean);
 
 	}

@@ -1,8 +1,11 @@
 package tw.com.eeit168.member.service;
 
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.Date; // 导入日期类
 import tw.com.eeit168.member.dao.MemberProfileInterFace;
 import tw.com.eeit168.member.model.MemberProfileBean;
 
@@ -24,4 +27,25 @@ public class MemberProfileService {
         }
         return false; // 登入失敗
     }
+    
+    public void registerMember(String user_account, String user_password, String username, String gender, String phone_number, Date birthday) {
+        MemberProfileBean newMember = new MemberProfileBean();
+        newMember.setUser_account(user_account);
+        newMember.setUser_password(user_password);
+        newMember.setUsername(username);
+        newMember.setGender(gender);
+        newMember.setPhone_number(phone_number);
+        newMember.setBirthday(birthday);
+
+        Date registrationDate = new Date();
+        newMember.setRegistration_date(registrationDate);
+
+        newMember.setAccount_status(null);
+        newMember.setMember_level(0);
+        newMember.setVerification_code(null);
+        newMember.setAttempts(0);
+
+        memberProfileInterFace.insert(newMember);
+    }
+
 }
