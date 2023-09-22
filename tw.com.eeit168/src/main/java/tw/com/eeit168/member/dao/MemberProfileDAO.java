@@ -27,11 +27,14 @@ import tw.com.eeit168.member.model.MemberProfileBean;
 
 	    @Transactional
 	    @Override
-	    public void insert(MemberProfileBean memberProfileBean) {
-	        if (memberProfileBean != null) {
-	            this.getSession().persist(memberProfileBean);
-	        }
-	    }
+	            
+	            public void insert(MemberProfileBean memberProfileBean) {
+	                if (memberProfileBean != null) {
+	                    this.getSession().merge(memberProfileBean);
+	                }
+	            }
+	        
+	    
 	}
 
 	
