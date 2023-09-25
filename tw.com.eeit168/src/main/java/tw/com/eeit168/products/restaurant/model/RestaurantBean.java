@@ -22,6 +22,9 @@ public class RestaurantBean {
 	@Column(name = "restaurant_address")
 	private String restaurant_address;
 	
+	@Column(name = "descriptions")
+	private String descriptions;
+	
 	@Column(name = "contact_number")
 	private String contact_number;
 	
@@ -38,11 +41,12 @@ public class RestaurantBean {
 	@Override
 	public String toString() {
 		return "RestaurantBean [restaurant_id=" + restaurant_id + ", restaurant_name=" + restaurant_name
-				+ ", restaurant_address=" + restaurant_address + ", contact_number=" + contact_number + ", price="
-				+ price + ", rating=" + rating + ", times_purchased=" + times_purchased + "]";
+				+ ", restaurant_address=" + restaurant_address + ", descriptions=" + descriptions + ", contact_number="
+				+ contact_number + ", price=" + price + ", rating=" + rating + ", times_purchased=" + times_purchased
+				+ "]";
 	}
 
-	
+
 	public Integer getRestaurant_id() {
 		return restaurant_id;
 	}
@@ -60,6 +64,12 @@ public class RestaurantBean {
 	}
 	public void setRestaurant_address(String restaurant_address) {
 		this.restaurant_address = restaurant_address;
+	}
+	public String getDescriptions() {
+		return descriptions;
+	}
+	public void setDescriptions(String descriptions) {
+		this.descriptions = descriptions;
 	}
 	public String getContact_number() {
 		return contact_number;

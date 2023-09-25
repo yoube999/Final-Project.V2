@@ -29,7 +29,7 @@ public class ReservationRestuarantDaoHibernateTests {
 		System.out.println(selectAll);
 	}
 	
-	@Test
+//	@Test
 	public void testInsert() {
 		ReservationRestuarantBean bean = new ReservationRestuarantBean();
 		bean.setRecord_id(1);

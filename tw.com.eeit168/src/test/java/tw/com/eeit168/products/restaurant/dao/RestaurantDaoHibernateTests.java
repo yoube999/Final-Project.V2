@@ -33,6 +33,7 @@ public class RestaurantDaoHibernateTests {
 		RestaurantBean bean = new RestaurantBean();
 		bean.setRestaurant_name("aaa");
 		bean.setRestaurant_address("hefdkghsk");
+		bean.setDescriptions("evevoerjovjpo");
 		bean.setContact_number("2345567");
 		bean.setPrice(699);
 		bean.setRating("4.6");
@@ -47,6 +48,7 @@ public class RestaurantDaoHibernateTests {
 		bean.setRestaurant_id(11);
 		bean.setRestaurant_name("鼎王");
 		bean.setRestaurant_address("grbrebr");
+		bean.setDescriptions("rpoeitpoerpo");
 		bean.setContact_number("2345567");
 		bean.setPrice(599);
 		bean.setRating("4.6");
