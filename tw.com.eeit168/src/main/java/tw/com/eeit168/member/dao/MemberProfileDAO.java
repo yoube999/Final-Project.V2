@@ -9,7 +9,7 @@ import jakarta.persistence.PersistenceContext;
 import tw.com.eeit168.member.model.MemberProfileBean;
 
 	@Repository
-	public class MemberProfileDAO implements MemberProfileInterFace {
+	public  class MemberProfileDAO implements MemberProfileInterFace {
 
 	    @PersistenceContext
 	    private Session session;
@@ -36,7 +36,16 @@ import tw.com.eeit168.member.model.MemberProfileBean;
 	            this.getSession().persist(memberProfileBean);
 	        }
 	    }
+	    
+	    @Transactional
+	    @Override
+	    public void update(MemberProfileBean memberProfileBean) {
+	        if (memberProfileBean != null) {
+	            this.getSession().update(memberProfileBean);
+	        }
+	    }
 	}
+	
 
 	
 	
