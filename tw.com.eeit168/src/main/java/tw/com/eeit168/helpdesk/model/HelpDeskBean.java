@@ -14,13 +14,13 @@ public class HelpDeskBean {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "helpdesk_id")
-	private int helpdesk_id;
+	private Integer helpdesk_id;
 	
 	@Column(name = "customer_name", columnDefinition = "nvarchar")
 	private String customer_name;
 	
 	@Column(name = "record_id")
-	private int record_id;
+	private Integer record_id;
 	
 	@Column(name = "subject_line", columnDefinition = "nvarchar")
 	private String subject_line;
@@ -37,7 +37,6 @@ public class HelpDeskBean {
 	@Column(name = "way_to_contact", columnDefinition = "nvarchar")
 	private String way_to_contact;
 	
-	
 	@Column(name = "attachment")
 	private String attachment;
 	
@@ -52,12 +51,12 @@ public class HelpDeskBean {
 	}
 
 
-	public int getHelpdesk_id() {
+	public Integer getHelpdesk_id() {
 		return helpdesk_id;
 	}
 
 
-	public void setHelpdesk_id(int helpdesk_id) {
+	public void setHelpdesk_id(Integer helpdesk_id) {
 		this.helpdesk_id = helpdesk_id;
 	}
 
@@ -72,12 +71,12 @@ public class HelpDeskBean {
 	}
 
 
-	public int getRecord_id() {
+	public Integer getRecord_id() {
 		return record_id;
 	}
 
 
-	public void setRecord_id(int record_id) {
+	public void setRecord_id(Integer record_id) {
 		this.record_id = record_id;
 	}
 
@@ -142,12 +141,12 @@ public class HelpDeskBean {
 	}
 
 
-	public int getMember_profile_id() {
+	public Integer getMember_profile_id() {
 		return member_profile_id;
 	}
 
 
-	public void setMember_profile_id(int member_profile_id) {
+	public void setMember_profile_id(Integer member_profile_id) {
 		this.member_profile_id = member_profile_id;
 	}
 
@@ -163,7 +162,7 @@ public class HelpDeskBean {
 
 
 	@Column(name = "member_profile_id")
-	private int member_profile_id;
+	private Integer member_profile_id;
 	
 	
 	@Column(name = "helpdesk_status", columnDefinition = "nvarchar")

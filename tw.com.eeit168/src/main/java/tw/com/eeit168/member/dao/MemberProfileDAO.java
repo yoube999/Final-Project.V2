@@ -18,6 +18,7 @@ import tw.com.eeit168.member.model.MemberProfileBean;
 	        return session;
 	    }
 
+	    // 查詢帳號
 	    @Override
 	    public MemberProfileBean select(String user_account) {
 	    	   Session session = getSession();
