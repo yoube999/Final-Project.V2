@@ -6,7 +6,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -15,11 +14,11 @@ public class AccommodationRoomType {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "room_type_id")
-	private int roomTypeId;
+	private Integer roomTypeId;
 	
-	@ManyToOne
+//	@ManyToOne
 	@JoinColumn(name = "accommodation_id", nullable = false)
-	private Accommodation accommodation;
+	private Integer accommodationId;
 	
 	@Column(name = "room_type_name", nullable = false, columnDefinition = "nvarchar")
 	private String roomTypeName;
@@ -28,72 +27,55 @@ public class AccommodationRoomType {
 	@Column(name = "capacity", nullable = false, columnDefinition = "nvarchar")
 	private String capacity;
 	
-	
-	public int getRoomTypeId() {
+	@Column(name = "beds_amount", nullable = false)
+	private Integer bedsAmount;
+
+	public Integer getRoomTypeId() {
 		return roomTypeId;
 	}
 
-
-	public AccommodationRoomType() {
-		
-	}
-	
-	public AccommodationRoomType(int roomTypeId, Accommodation accommodation, String roomTypeName, String capacity,
-			int bedsAmount) {
-		super();
-		this.roomTypeId = roomTypeId;
-		this.accommodation = accommodation;
-		this.roomTypeName = roomTypeName;
-		this.capacity = capacity;
-		this.bedsAmount = bedsAmount;
-	}
-
-
-	public void setRoomTypeId(int roomTypeId) {
+	public void setRoomTypeId(Integer roomTypeId) {
 		this.roomTypeId = roomTypeId;
 	}
 
-
-	public Accommodation getAccommodation() {
-		return accommodation;
+	public Integer getAccommodationId() {
+		return accommodationId;
 	}
 
-
-	public void setAccommodation(Accommodation accommodation) {
-		this.accommodation = accommodation;
+	public void setAccommodationId(Integer accommodationId) {
+		this.accommodationId = accommodationId;
 	}
-
 
 	public String getRoomTypeName() {
 		return roomTypeName;
 	}
 
-
 	public void setRoomTypeName(String roomTypeName) {
 		this.roomTypeName = roomTypeName;
 	}
-
 
 	public String getCapacity() {
 		return capacity;
 	}
 
-
 	public void setCapacity(String capacity) {
 		this.capacity = capacity;
 	}
 
-
-	public int getBedsAmount() {
+	public Integer getBedsAmount() {
 		return bedsAmount;
 	}
 
-
-	public void setBedsAmount(int bedsAmount) {
+	public void setBedsAmount(Integer bedsAmount) {
 		this.bedsAmount = bedsAmount;
 	}
 
+	@Override
+	public String toString() {
+		return "AccommodationRoomType [roomTypeId=" + roomTypeId + ", accommodationId=" + accommodationId
+				+ ", roomTypeName=" + roomTypeName + ", capacity=" + capacity + ", bedsAmount=" + bedsAmount + "]";
+	}
+	
+	
 
-	@Column(name = "beds_amount", nullable = false)
-	private int bedsAmount;
 }

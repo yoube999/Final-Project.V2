@@ -1,7 +1,5 @@
 package tw.com.eeit168.products.accommodation.dao;
 
-
-
 import java.util.List;
 
 import org.hibernate.Session;
@@ -14,22 +12,20 @@ import jakarta.persistence.PersistenceContext;
 import tw.com.eeit168.products.accommodation.model.Accommodation;
 
 @Repository
-@Transactional
-public class AccommodationDAOHibernate implements AccommodationDAO{
+public class AccommodationDAOHibernate implements AccommodationDAO {
 //	@PersistenceContext
 //	private Session session;
 //	
 //	public Session getSession() {
 //		return session;
 //	}
-	
-	
-	  @PersistenceContext
-	    private EntityManager entityManager;
 
-	    public Session getSession() {
-	        return entityManager.unwrap(Session.class);
-	    }
+	@PersistenceContext
+	private EntityManager entityManager;
+
+	public Session getSession() {
+		return entityManager.unwrap(Session.class);
+	}
 //	@Override
 //	public Accommodation select(Integer id) {
 //			if(id != null) {
@@ -37,22 +33,71 @@ public class AccommodationDAOHibernate implements AccommodationDAO{
 //			}
 //		return null;
 //	}
-	
+
 	@Override
-	public List<Accommodation> searchByKeyword(String keyword){
-		if(keyword != null && !keyword.trim().isEmpty()) {
+	public List<Accommodation> searchByKeyword(String keyword) {
+		if (keyword != null && !keyword.trim().isEmpty()) {
 			String hql = "FROM Accommodation WHERE accommodationName LIKE :keyword OR accommodationAddress LIKE :keyword";
 			Query<Accommodation> query = getSession().createQuery(hql, Accommodation.class);
 			query.setParameter("keyword", "%" + keyword + "%");
 			return query.list();
 		}
 		return null;
-		
+
 //		return entityManager.createNamedQuery("Accommodation.searchByKeyword", Accommodation.class)
 //                .setParameter("keyword", "%" + keyword + "%")
 //                .getResultList();
-//		
+
+	}
+
+	@Override
+	public List<Accommodation> selectAll() {
+		return this.getSession().createQuery("from Accommodation", Accommodation.class).list();
+
 	}
 	
-	
+	@Override
+	public Accommodation insert(Accommodation bean) {
+		
+		if (bean.getAccommodationId() == null) {
+	        // Set accommodationId to null to let Hibernate generate it
+	        bean.setAccommodationId(null);
+	    }
+
+	    // Save the accommodation
+	    this.getSession().persist(bean);
+	    return bean;
+//		if(bean != null) {
+//			Accommodation temp = this.getSession().get(Accommodation.class, bean.getAccommodationId());
+//			if(temp != null) {
+//				this.getSession().persist(bean);
+//				return bean;
+//			}
+//		}
+		
+//		return null;
+		
+	}
+	@Override
+	public Accommodation update(Accommodation bean) {
+		if(bean != null && bean.getAccommodationId()!= null) {
+//		   bean != null && bean.getAccommodationId() != null && this.getSession().get(Accommodation.class, bean.getAccommodationId()) != null
+			Accommodation temp = this.getSession().get(Accommodation.class, bean.getAccommodationId());
+			if(temp != null) {
+				return (Accommodation)this.getSession().merge(bean);
+			}
+		}
+		return null;
+	}
+	@Override
+	public boolean delete(Integer id) {
+		if(id != null) {
+			Accommodation temp = this.getSession().get(Accommodation.class, id);
+			if(temp != null) {
+				this.getSession().remove(temp);
+				return true;
+			}
+		}
+		return false;
+	}
 }
