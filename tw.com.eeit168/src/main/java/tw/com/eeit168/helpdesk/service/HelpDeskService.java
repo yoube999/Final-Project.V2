@@ -2,6 +2,7 @@ package tw.com.eeit168.helpdesk.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import org.json.JSONException;
@@ -48,11 +49,13 @@ public class HelpDeskService {
 			insert.setContact_number(contact_number);
 			insert.setEmail(email);
 			insert.setWay_to_contact(way_to_contact);
-			// 建立案件時狀態固定為未處理
+			// 建立案件時客服人員固定為null
 			insert.setMember_profile_id(null);
+			// 建立案件時狀態固定為未處理
 			insert.setHelpdesk_status("未處理");
+			// 建立案件時取得Loacl當下時間
+			insert.setCreatetime(new java.util.Date());
 
-			System.out.println(insert);
 			return helpDeskInterFace.insert(insert);
 
 		} catch (JSONException e) {
@@ -92,11 +95,13 @@ public class HelpDeskService {
 				String imageUrl = saveImages(image);
 				insert.setAttachment(imageUrl);
 			}
-			// 建立案件時狀態固定為未處理
+			// 建立案件時客服人員固定為null
 			insert.setMember_profile_id(null);
+			// 建立案件時狀態固定為未處理
 			insert.setHelpdesk_status("未處理");
+			// 建立案件時取得Loacl當下時間
+			insert.setCreatetime(new java.util.Date());
 
-			System.out.println(insert);
 			return helpDeskInterFace.insert(insert);
 
 		} catch (JSONException e) {
@@ -143,4 +148,43 @@ public class HelpDeskService {
 		return null;
 	}
 
+	// 查詢未處理案件
+	public List<HelpDeskBean> selectTicket(String json) {
+		JSONObject obj = new JSONObject(json);
+		
+		// 後端收到Null防呆處理
+		String helpdesk_status = obj.isNull("helpdesk_status") ? "未處理" : obj.getString("helpdesk_status");
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

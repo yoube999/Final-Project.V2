@@ -16,12 +16,8 @@ public class HelpDeskDAO implements HelpDeskInterFace {
 		return session;
 	}
 
-	// 上傳圖片
-
 	// 寫入案件單至資料庫
-	@Override
 	public HelpDeskBean insert(HelpDeskBean bean) {
-		System.out.println(bean);
 		if (bean != null) {
 			this.getSession().persist(bean);
 			return bean;
@@ -30,4 +26,10 @@ public class HelpDeskDAO implements HelpDeskInterFace {
 		return null;
 	}
 
+	
+	
+	
+	
+	
+	
 }

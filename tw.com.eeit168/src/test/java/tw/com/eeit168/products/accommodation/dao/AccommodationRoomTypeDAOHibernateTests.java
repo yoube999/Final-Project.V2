@@ -39,7 +39,7 @@ public class AccommodationRoomTypeDAOHibernateTests {
 		System.out.println("selectAll" + selectAll);
 	}
 	
-//	@Test	
+	@Test	
 	public void testInsert() {
 		AccommodationRoomType accommodationRoomTypeInsert = new AccommodationRoomType();
 		accommodationRoomTypeInsert.setAccommodationId(10);
@@ -65,7 +65,7 @@ public class AccommodationRoomTypeDAOHibernateTests {
 		System.out.println("修改資料為" + update);
 	}
 	
-	@Test
+//	@Test
 	public void testDelete() {
 		boolean delete = accommodationRoomTypeDAO.delete(30);
 		System.out.println("刪除資料" + delete);
