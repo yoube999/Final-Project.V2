@@ -33,14 +33,8 @@ public class RestaurantPictureDaoHibernate implements RestaurantPictureDAO{
 	
 	@Override
 	public RestaurantPictureBean insert(RestaurantPictureBean bean) {
-		if(bean != null && bean.getRestaurant_pictures_id() != null) {
-			RestaurantPictureBean temp = this.getSession().get(RestaurantPictureBean.class, bean.getRestaurant_pictures_id());
-			if(temp == null) {
-				this.getSession().persist(bean);
-				return bean;
-			}
-		}
-		return null;
+		this.getSession().persist(bean);
+		return bean;
 	}
 	
 	@Override

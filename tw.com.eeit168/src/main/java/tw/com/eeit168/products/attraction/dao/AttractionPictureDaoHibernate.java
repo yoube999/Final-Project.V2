@@ -33,14 +33,8 @@ public class AttractionPictureDaoHibernate implements AttractionPictureDAO{
 
 	@Override
 	public AttractionPictureBean insert(AttractionPictureBean bean) {
-		if(bean != null && bean.getAttractions_pictures_id() != null) {
-			AttractionPictureBean temp = this.getSession().get(AttractionPictureBean.class, bean.getAttractions_pictures_id());
-			if(temp == null) {
-				this.getSession().persist(bean);
-				return bean;
-			}
-		}
-		return null;
+		this.getSession().persist(bean);
+		return bean;
 	}
 	
 	@Override

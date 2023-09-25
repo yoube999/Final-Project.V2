@@ -31,7 +31,6 @@ public class RestaurantDaoHibernateTests {
 //	@Test
 	public void testInsert() {
 		RestaurantBean bean = new RestaurantBean();
-		bean.setRestaurant_id(11);
 		bean.setRestaurant_name("aaa");
 		bean.setRestaurant_address("hefdkghsk");
 		bean.setContact_number("2345567");
@@ -45,7 +44,7 @@ public class RestaurantDaoHibernateTests {
 //	@Test
 	public void testUpdate() {
 		RestaurantBean bean = new RestaurantBean();
-		bean.setRestaurant_id(10);
+		bean.setRestaurant_id(11);
 		bean.setRestaurant_name("鼎王");
 		bean.setRestaurant_address("grbrebr");
 		bean.setContact_number("2345567");
@@ -58,7 +57,7 @@ public class RestaurantDaoHibernateTests {
 	
 //	@Test
 	public void testDelete() {
-		boolean delete = restaurantDAO.delete(10);
+		boolean delete = restaurantDAO.delete(11);
 		System.out.println(delete);
 	}
 	

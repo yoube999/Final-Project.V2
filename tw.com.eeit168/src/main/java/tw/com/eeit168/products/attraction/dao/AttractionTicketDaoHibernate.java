@@ -33,14 +33,8 @@ public class AttractionTicketDaoHibernate implements AttractionTicketDAO{
 	
 	@Override
 	public AttractionTicketBean insert(AttractionTicketBean bean) {
-		if(bean != null && bean.getAttractions_ticket_id() != null) {
-			AttractionTicketBean temp = this.getSession().get(AttractionTicketBean.class, bean.getAttractions_ticket_id());
-			if(temp == null) {
-				this.getSession().persist(bean);
-				return bean;
-			}
-		}
-		return null;
+		this.getSession().persist(bean);
+		return bean;
 	}
 	
 	@Override

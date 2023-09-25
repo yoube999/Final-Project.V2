@@ -31,7 +31,6 @@ public class ReservationRestuarantDaoHibernateTests {
 //	@Test
 	public void testInsert() {
 		ReservationRestuarantBean bean = new ReservationRestuarantBean();
-		bean.setReservation_restuarant_id(11);
 		bean.setRecord_id(1);
 		bean.setRestaurant_id(1);
 		bean.setReservation_date(null);

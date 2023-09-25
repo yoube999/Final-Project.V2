@@ -31,7 +31,6 @@ public class AttractionTicketDaoHibernateTests {
 //	@Test
 	public void testInsert() {
 		AttractionTicketBean bean = new AttractionTicketBean();
-		bean.setAttractions_ticket_id(11);
 		bean.setAttractions_id(1);
 		bean.setValid_date(null);
 		bean.setAdult_price(599);

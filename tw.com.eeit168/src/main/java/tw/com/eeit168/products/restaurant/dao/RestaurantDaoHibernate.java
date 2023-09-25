@@ -33,14 +33,8 @@ public class RestaurantDaoHibernate implements RestaurantDAO{
 	
 	@Override
 	public RestaurantBean insert(RestaurantBean bean) {
-		if(bean != null && bean.getRestaurant_id() != null) {
-			RestaurantBean temp = this.getSession().get(RestaurantBean.class, bean.getRestaurant_id());
-			if(temp == null) {
-				this.getSession().persist(bean);
-				return bean;
-			}
-		}
-		return null;
+		this.getSession().persist(bean);
+		return bean;
 	}
 	
 	@Override

@@ -31,7 +31,6 @@ public class AttractionInventoryDaoHibernateTests {
 //	@Test
 	public void testInsert() {
 		AttractionInventoryBean bean = new AttractionInventoryBean();
-		bean.setAttractions_inventory_id(11);
 		bean.setAttractions_id(2);
 		bean.setAvailability_date(null);
 		bean.setAdult(50);

@@ -33,14 +33,8 @@ public class AttractionInventoryDaoHibernate implements AttractionInventoryDAO{
 	
 	@Override
 	public AttractionInventoryBean insert(AttractionInventoryBean bean) {
-		if(bean != null && bean.getAttractions_inventory_id() != null) {
-			AttractionInventoryBean temp = this.getSession().get(AttractionInventoryBean.class, bean.getAttractions_inventory_id());
-			if(temp == null) {
-				this.getSession().persist(bean);
-				return bean;
-			}
-		}
-		return null;
+		this.getSession().persist(bean);
+		return bean;
 	}
 	
 	@Override

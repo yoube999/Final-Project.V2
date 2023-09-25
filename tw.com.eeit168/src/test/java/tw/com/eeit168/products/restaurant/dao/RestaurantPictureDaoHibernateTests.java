@@ -31,7 +31,6 @@ public class RestaurantPictureDaoHibernateTests {
 //	@Test
 	public void testInsert() {
 		RestaurantPictureBean bean = new RestaurantPictureBean();
-		bean.setRestaurant_pictures_id(11);
 		bean.setRestaurant_id(1);
 		bean.setUrl_image("lnnldfreg9erh9");
 		RestaurantPictureBean insert = restaurantPictureDAO.insert(bean);

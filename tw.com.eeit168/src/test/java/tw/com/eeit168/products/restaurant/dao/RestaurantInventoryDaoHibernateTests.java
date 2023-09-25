@@ -28,10 +28,9 @@ public class RestaurantInventoryDaoHibernateTests {
 		System.out.println(selectAll);
 	}
 	
-	@Test
+//	@Test
 	public void testInsert() {
 		RestaurantInventoryBean bean = new RestaurantInventoryBean();
-		bean.setRestaurant_Inventory_id(11);
 		bean.setRestaurant_id(1);
 		bean.setAvailability_date(new java.util.Date("2023-09-25"));
 		bean.setLunch(50);

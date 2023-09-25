@@ -33,14 +33,8 @@ public class RestaurantInventoryDaoHibernate implements RestaurantInventoryDAO{
 	
 	@Override
 	public RestaurantInventoryBean insert(RestaurantInventoryBean bean) {
-		if(bean != null && bean.getRestaurant_Inventory_id() != null) {
-			RestaurantInventoryBean temp = this.getSession().get(RestaurantInventoryBean.class, bean.getRestaurant_Inventory_id());
-			if(temp == null) {
-				this.getSession().persist(bean);
-				return bean;
-			}
-		}
-		return null;
+		this.getSession().persist(bean);
+		return bean;
 	}
 	
 	@Override

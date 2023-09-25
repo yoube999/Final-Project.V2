@@ -33,14 +33,8 @@ public class ReservationAttractionDaoHibernate implements ReservationAttractionD
 	
 	@Override
 	public ReservationAttractionBean insert(ReservationAttractionBean bean) {
-		if(bean != null && bean.getReservation_attractions_id() != null) {
-			ReservationAttractionBean temp = this.getSession().get(ReservationAttractionBean.class, bean.getReservation_attractions_id());
-			if(temp == null) {
-				this.getSession().persist(bean);
-				return bean;
-			}
-		}
-		return null;
+		this.getSession().persist(bean);
+		return bean;
 	}
 	
 	@Override

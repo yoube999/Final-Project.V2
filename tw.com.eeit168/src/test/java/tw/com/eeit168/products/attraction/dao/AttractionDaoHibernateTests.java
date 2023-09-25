@@ -31,7 +31,6 @@ public class AttractionDaoHibernateTests {
 //	@Test
 	public void testInsert() {
 		AttractionBean bean = new AttractionBean();
-		bean.setAttractions_id(11);
 		bean.setAttractions_name("skdkrhekhre");
 		bean.setAttractions_address("dsjvjvoejro");
 		bean.setDescriptions("vfnvkners");

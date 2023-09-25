@@ -31,7 +31,6 @@ public class AttractionPictureDaoHibernateTests {
 //	@Test
 	public void testInsert() {
 		AttractionPictureBean bean = new AttractionPictureBean();
-		bean.setAttractions_pictures_id(11);
 		bean.setAttractions_id(2);
 		bean.setUrl_image("lvlvlvs");
 		AttractionPictureBean insert = attractionPictureDAO.insert(bean);
