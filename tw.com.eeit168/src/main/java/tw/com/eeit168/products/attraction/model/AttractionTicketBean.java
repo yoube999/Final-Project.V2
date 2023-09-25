@@ -20,7 +20,7 @@ public class AttractionTicketBean {
 	private Integer attractions_id;
 	
 	@Column(name = "valid_date")
-	private java.util.Date valid_date;
+	private java.sql.Date valid_date;
 	
 	@Column(name = "adult_price")
 	private Integer adult_price;
@@ -49,10 +49,10 @@ public class AttractionTicketBean {
 	public void setAttractions_id(Integer attractions_id) {
 		this.attractions_id = attractions_id;
 	}
-	public java.util.Date getValid_date() {
+	public java.sql.Date getValid_date() {
 		return valid_date;
 	}
-	public void setValid_date(java.util.Date valid_date) {
+	public void setValid_date(java.sql.Date valid_date) {
 		this.valid_date = valid_date;
 	}
 	public Integer getAdult_price() {

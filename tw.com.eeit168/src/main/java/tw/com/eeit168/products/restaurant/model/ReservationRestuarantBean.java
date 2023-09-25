@@ -24,7 +24,7 @@ public class ReservationRestuarantBean {
 	private Integer restaurant_id;
 	
 	@Column(name = "reservation_date")
-	private java.util.Date reservation_date;
+	private java.sql.Date reservation_date;
 	
 	@Column(name = "total_count")
 	private Integer total_count;
@@ -69,11 +69,11 @@ public class ReservationRestuarantBean {
 		this.restaurant_id = restaurant_id;
 	}
 
-	public java.util.Date getReservation_date() {
+	public java.sql.Date getReservation_date() {
 		return reservation_date;
 	}
 
-	public void setReservation_date(java.util.Date reservation_date) {
+	public void setReservation_date(java.sql.Date reservation_date) {
 		this.reservation_date = reservation_date;
 	}
 

@@ -1,5 +1,6 @@
 package tw.com.eeit168.products.attraction.dao;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -32,7 +33,8 @@ public class AttractionTicketDaoHibernateTests {
 	public void testInsert() {
 		AttractionTicketBean bean = new AttractionTicketBean();
 		bean.setAttractions_id(1);
-		bean.setValid_date(null);
+		LocalDate date = LocalDate.of(2023, 8, 22);
+		bean.setValid_date(java.sql.Date.valueOf(date));
 		bean.setAdult_price(599);
 		bean.setChild_price(399);
 		AttractionTicketBean insert = attractionTicketDAO.insert(bean);

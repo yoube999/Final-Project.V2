@@ -21,7 +21,7 @@ public class RestaurantInventoryBean {
 	private Integer restaurant_id;
 	
 	@Column(name = "availability_date")
-	private java.util.Date availability_date;
+	private java.sql.Date availability_date;
 	
 	@Column(name = "lunch")
 	private Integer lunch;
@@ -50,10 +50,10 @@ public class RestaurantInventoryBean {
 	public void setRestaurant_id(Integer restaurant_id) {
 		this.restaurant_id = restaurant_id;
 	}
-	public java.util.Date getAvailability_date() {
+	public java.sql.Date getAvailability_date() {
 		return availability_date;
 	}
-	public void setAvailability_date(java.util.Date availability_date) {
+	public void setAvailability_date(java.sql.Date availability_date) {
 		this.availability_date = availability_date;
 	}
 	public Integer getLunch() {

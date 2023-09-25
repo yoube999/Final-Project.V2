@@ -1,5 +1,7 @@
 package tw.com.eeit168.products.restaurant.dao;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -32,7 +34,8 @@ public class RestaurantInventoryDaoHibernateTests {
 	public void testInsert() {
 		RestaurantInventoryBean bean = new RestaurantInventoryBean();
 		bean.setRestaurant_id(1);
-		bean.setAvailability_date(new java.util.Date("2023-09-25"));
+		LocalDate date = LocalDate.of(2023, 8, 20);
+		bean.setAvailability_date(java.sql.Date.valueOf(date));
 		bean.setLunch(50);
 		bean.setDinner(60);
 		RestaurantInventoryBean insert = restaurantInventoryDAO.insert(bean);

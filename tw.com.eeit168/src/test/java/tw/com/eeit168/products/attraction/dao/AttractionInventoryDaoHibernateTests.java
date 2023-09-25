@@ -1,5 +1,6 @@
 package tw.com.eeit168.products.attraction.dao;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -32,7 +33,8 @@ public class AttractionInventoryDaoHibernateTests {
 	public void testInsert() {
 		AttractionInventoryBean bean = new AttractionInventoryBean();
 		bean.setAttractions_id(2);
-		bean.setAvailability_date(null);
+		LocalDate date = LocalDate.of(2023, 8, 20);
+		bean.setAvailability_date(java.sql.Date.valueOf(date));
 		bean.setAdult(50);
 		bean.setChild(30);
 		AttractionInventoryBean insert = attractionInventoryDAO.insert(bean);

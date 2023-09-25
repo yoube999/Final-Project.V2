@@ -1,5 +1,6 @@
 package tw.com.eeit168.products.attraction.dao;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -33,7 +34,8 @@ public class ReservationAttractionDaoHibernateTests {
 		ReservationAttractionBean bean = new ReservationAttractionBean();
 		bean.setRecord_id(1);
 		bean.setAttractions_id(1);
-		bean.setReservation_date(null);
+		LocalDate date = LocalDate.of(2023, 9, 20);
+		bean.setReservation_date(java.sql.Date.valueOf(date));
 		bean.setTotal_count(5);
 		bean.setTotal_price(3000);
 		bean.setRecord_attractions_status("dgsewf");

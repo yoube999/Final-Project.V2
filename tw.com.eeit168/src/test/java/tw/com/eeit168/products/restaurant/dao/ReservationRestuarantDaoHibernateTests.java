@@ -1,5 +1,6 @@
 package tw.com.eeit168.products.restaurant.dao;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -28,12 +29,13 @@ public class ReservationRestuarantDaoHibernateTests {
 		System.out.println(selectAll);
 	}
 	
-//	@Test
+	@Test
 	public void testInsert() {
 		ReservationRestuarantBean bean = new ReservationRestuarantBean();
 		bean.setRecord_id(1);
 		bean.setRestaurant_id(1);
-		bean.setReservation_date(null);
+		LocalDate date = LocalDate.of(2023, 9, 18);
+		bean.setReservation_date(java.sql.Date.valueOf(date));
 		bean.setTotal_count(5);
 		bean.setTotal_price(3000);
 		bean.setRecord_restuarant_status("dgsewf");
