@@ -16,7 +16,7 @@ public class MemberProfileTest {
 	@Autowired
 	private MemberProfileInterFace memberProfileInterFace;
 	
-	@Test
+//	@Test
 	public void testselect() {
 
 
@@ -26,11 +26,11 @@ public class MemberProfileTest {
 	}
 	
 	
-//	@Test
+	@Test
 	public void testInsert() throws ParseException {
 	    MemberProfileBean newMember = new MemberProfileBean();
-	    newMember.setUser_account("example_account");
-	    newMember.setUser_password("example_password");
+	    newMember.setUser_account("account");
+	    newMember.setUser_password("password");
 	    newMember.setUsername("John Doe");
 
 	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -38,7 +38,7 @@ public class MemberProfileTest {
 	    newMember.setBirthday(birthday);
 
 	    newMember.setGender("Male");
-	    newMember.setPhone_number("1234567890");
+	    newMember.setPhone_number("999999999");
 
 	    Date registrationDate = sdf.parse("2023-09-22");
 	    newMember.setRegistration_date(registrationDate);
