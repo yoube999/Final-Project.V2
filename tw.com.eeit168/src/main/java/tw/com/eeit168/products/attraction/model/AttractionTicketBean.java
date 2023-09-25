@@ -7,7 +7,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 @Entity
 @Table(name = "attractions_ticket")
-public class AttractionsTicketBean {
+public class AttractionTicketBean {
 
 	@Id
 	@Column(name = "attractions_ticket_id")

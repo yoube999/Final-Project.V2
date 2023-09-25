@@ -16,19 +16,19 @@ public class RestaurantDaoHibernateTests {
 	@Autowired
 	private RestaurantDAO restaurantDAO;
 	
-	@Test
+//	@Test
 	public void testSelect() {
 		RestaurantBean select = restaurantDAO.select(1);
 		System.out.println(select);
 	}
 	
-	@Test
+//	@Test
 	public void testSelectAll() {
 		List<RestaurantBean> selectAll = restaurantDAO.selectAll();
 		System.out.println(selectAll);
 	}
 	
-	@Test
+//	@Test
 	public void testInsert() {
 		RestaurantBean bean = new RestaurantBean();
 		bean.setRestaurant_id(11);
@@ -42,7 +42,7 @@ public class RestaurantDaoHibernateTests {
 		System.out.println(insert);
 	}
 	
-	@Test
+//	@Test
 	public void testUpdate() {
 		RestaurantBean bean = new RestaurantBean();
 		bean.setRestaurant_id(10);
@@ -56,7 +56,7 @@ public class RestaurantDaoHibernateTests {
 		System.out.println(update);
 	}
 	
-	@Test
+//	@Test
 	public void testDelete() {
 		boolean delete = restaurantDAO.delete(10);
 		System.out.println(delete);

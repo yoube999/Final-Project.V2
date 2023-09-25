@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "attractions_pictures")
-public class AttractionsPicturesBean {
+public class AttractionPictureBean {
 
 	@Id
 	@Column(name = "attractions_pictures_id")
