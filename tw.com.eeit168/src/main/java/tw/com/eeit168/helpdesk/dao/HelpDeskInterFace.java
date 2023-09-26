@@ -12,7 +12,4 @@ public interface HelpDeskInterFace {
 
 	List<HelpDeskBean> selectTicket(JSONObject obj);
 
-	
-	
-	
 }

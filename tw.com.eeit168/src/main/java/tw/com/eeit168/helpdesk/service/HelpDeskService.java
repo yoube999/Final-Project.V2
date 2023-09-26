@@ -148,12 +148,15 @@ public class HelpDeskService {
 		return null;
 	}
 
-	// 查詢未處理案件
+	// 查詢案件
 	public List<HelpDeskBean> selectTicket(String json) {
-		JSONObject obj = new JSONObject(json);
-		
-		
-		
+		try {
+			JSONObject obj = new JSONObject(json);
+			return helpDeskInterFace.selectTicket(obj);
+		} catch (JSONException e) {
+			// 需改寫成跳轉至錯誤頁面
+			e.printStackTrace();
+		}
 		return null;
 	}
 	
