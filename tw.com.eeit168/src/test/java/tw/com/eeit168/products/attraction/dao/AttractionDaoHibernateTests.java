@@ -37,7 +37,6 @@ public class AttractionDaoHibernateTests {
 		bean.setOpen_time("0830");
 		bean.setClose_time("1800");
 		bean.setContact_number("389375932");
-		bean.setRating("4.5");
 		bean.setTimes_purchased(100);
 		AttractionBean insert = attractionDAO.insert(bean);
 		System.out.println(insert);
@@ -53,7 +52,6 @@ public class AttractionDaoHibernateTests {
 		bean.setOpen_time("0830");
 		bean.setClose_time("1800");
 		bean.setContact_number("389375932");
-		bean.setRating("4.5");
 		bean.setTimes_purchased(100);
 		AttractionBean update = attractionDAO.update(bean);
 		System.out.println(update);

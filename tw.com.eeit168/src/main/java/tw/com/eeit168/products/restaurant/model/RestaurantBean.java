@@ -16,13 +16,13 @@ public class RestaurantBean {
 	@Column(name = "restaurant_id")
 	private Integer restaurant_id;
 	
-	@Column(name = "restaurant_name")
+	@Column(name = "restaurant_name", columnDefinition = "nvarchar")
 	private String restaurant_name;
 	
-	@Column(name = "restaurant_address")
+	@Column(name = "restaurant_address", columnDefinition = "nvarchar")
 	private String restaurant_address;
 	
-	@Column(name = "descriptions")
+	@Column(name = "descriptions", columnDefinition = "nvarchar")
 	private String descriptions;
 	
 	@Column(name = "contact_number")
@@ -30,9 +30,6 @@ public class RestaurantBean {
 	
 	@Column(name = "price")
 	private Integer price;
-	
-	@Column(name = "rating")
-	private String rating;
 	
 	@Column(name = "times_purchased")
 	private Integer times_purchased;
@@ -42,8 +39,7 @@ public class RestaurantBean {
 	public String toString() {
 		return "RestaurantBean [restaurant_id=" + restaurant_id + ", restaurant_name=" + restaurant_name
 				+ ", restaurant_address=" + restaurant_address + ", descriptions=" + descriptions + ", contact_number="
-				+ contact_number + ", price=" + price + ", rating=" + rating + ", times_purchased=" + times_purchased
-				+ "]";
+				+ contact_number + ", price=" + price + ", times_purchased=" + times_purchased + "]";
 	}
 
 
@@ -82,12 +78,6 @@ public class RestaurantBean {
 	}
 	public void setPrice(Integer price) {
 		this.price = price;
-	}
-	public String getRating() {
-		return rating;
-	}
-	public void setRating(String rating) {
-		this.rating = rating;
 	}
 	public Integer getTimes_purchased() {
 		return times_purchased;

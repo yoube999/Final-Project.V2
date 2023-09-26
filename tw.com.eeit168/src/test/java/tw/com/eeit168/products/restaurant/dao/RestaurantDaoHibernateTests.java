@@ -36,7 +36,6 @@ public class RestaurantDaoHibernateTests {
 		bean.setDescriptions("evevoerjovjpo");
 		bean.setContact_number("2345567");
 		bean.setPrice(699);
-		bean.setRating("4.6");
 		bean.setTimes_purchased(346);
 		RestaurantBean insert = restaurantDAO.insert(bean);
 		System.out.println(insert);
@@ -51,7 +50,6 @@ public class RestaurantDaoHibernateTests {
 		bean.setDescriptions("rpoeitpoerpo");
 		bean.setContact_number("2345567");
 		bean.setPrice(599);
-		bean.setRating("4.6");
 		bean.setTimes_purchased(346);
 		RestaurantBean update = restaurantDAO.update(bean);
 		System.out.println(update);

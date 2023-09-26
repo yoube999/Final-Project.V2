@@ -16,13 +16,13 @@ public class AttractionBean {
 	@Column(name = "attractions_id")
 	private Integer attractions_id;
 	
-	@Column(name = "attractions_name")
+	@Column(name = "attractions_name", columnDefinition = "nvarchar")
 	private String attractions_name;
 	
-	@Column(name = "attractions_address")
+	@Column(name = "attractions_address", columnDefinition = "nvarchar")
 	private String attractions_address;
 	
-	@Column(name = "descriptions")
+	@Column(name = "descriptions", columnDefinition = "nvarchar")
 	private String descriptions;
 	
 	@Column(name = "open_time")
@@ -34,22 +34,19 @@ public class AttractionBean {
 	@Column(name = "contact_number")
 	private String contact_number;
 	
-	@Column(name = "rating")
-	private String rating;
-	
 	@Column(name = "times_purchased")
 	private Integer times_purchased;
-	
+
 	
 	@Override
 	public String toString() {
 		return "AttractionBean [attractions_id=" + attractions_id + ", attractions_name=" + attractions_name
 				+ ", attractions_address=" + attractions_address + ", descriptions=" + descriptions + ", open_time="
-				+ open_time + ", close_time=" + close_time + ", contact_number=" + contact_number + ", rating=" + rating
-				+ ", times_purchased=" + times_purchased + "]";
+				+ open_time + ", close_time=" + close_time + ", contact_number=" + contact_number + ", times_purchased="
+				+ times_purchased + "]";
 	}
-	
-	
+
+
 	public Integer getAttractions_id() {
 		return attractions_id;
 	}
@@ -92,17 +89,11 @@ public class AttractionBean {
 	public void setContact_number(String contact_number) {
 		this.contact_number = contact_number;
 	}
-	public String getRating() {
-		return rating;
-	}
-	public void setRating(String rating) {
-		this.rating = rating;
-	}
 	public Integer getTimes_purchased() {
 		return times_purchased;
 	}
 	public void setTimes_purchased(Integer times_purchased) {
 		this.times_purchased = times_purchased;
 	}
-
+	
 }

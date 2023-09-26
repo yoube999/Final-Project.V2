@@ -8,8 +8,8 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "record")
-public class Record {
-
+public class RecordBean {
+	
 	@Id
 	@Column(name = "record_id")
 	private Integer record_id;
@@ -20,23 +20,23 @@ public class Record {
 	@Column(name = "created_at")
 	private java.util.Date created_at;
 	
-	@Column(name = "record_status")
+	@Column(name = "record_status", columnDefinition = "nvarchar")
 	private String record_status;
 	
-	@Column(name = "return_title")
+	@Column(name = "return_title", columnDefinition = "nvarchar")
 	private String return_title;
 	
-	@Column(name = "return_description")
+	@Column(name = "return_description", columnDefinition = "nvarchar")
 	private String return_description;
 	
 	
 	@Override
 	public String toString() {
-		return "Record [record_id=" + record_id + ", member_profile_id=" + member_profile_id + ", created_at="
+		return "RecordBean [record_id=" + record_id + ", member_profile_id=" + member_profile_id + ", created_at="
 				+ created_at + ", record_status=" + record_status + ", return_title=" + return_title
 				+ ", return_description=" + return_description + "]";
 	}
-	
+
 	
 	public Integer getRecord_id() {
 		return record_id;
@@ -74,5 +74,5 @@ public class Record {
 	public void setReturn_description(String return_description) {
 		this.return_description = return_description;
 	}
-	
+		
 }

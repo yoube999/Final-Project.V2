@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.PersistenceContext;
 import tw.com.eeit168.products.restaurant.model.RestaurantBean;
