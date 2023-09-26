@@ -56,8 +56,16 @@ public class HelpDeskController {
 			for(HelpDeskBean helpdesk : helpdesks) {
 				String createtime = DatetimeConverter.toString(helpdesk.getCreatetime(), "yyyy-MM-dd HH:mm:ss");
 				JSONObject item = new JSONObject()
+						.put("helpdesk_id", helpdesk.getHelpdesk_id())
 						.put("customer_name", helpdesk.getCustomer_name())
+						.put("record_id", helpdesk.getRecord_id())
 						.put("subject_line", helpdesk.getSubject_line())
+						.put("descriptions", helpdesk.getDescriptions())
+						.put("contact_number", helpdesk.getContact_number())
+						.put("email", helpdesk.getEmail())
+						.put("way_to_contact", helpdesk.getWay_to_contact())
+						.put("attachment", helpdesk.getAttachment())
+						.put("member_profile_id", helpdesk.getMember_profile_id())
 						.put("createtime", createtime);
 				array = array.put(item);	
 			}
