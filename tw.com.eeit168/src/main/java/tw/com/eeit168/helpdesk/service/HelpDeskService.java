@@ -159,26 +159,10 @@ public class HelpDeskService {
 		}
 		return null;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	// 查詢特定案件
+	public HelpDeskBean selectTicketById(Integer helpdesk_id) {
+		return helpDeskInterFace.selectTicketById(helpdesk_id);
+	}
+
 }

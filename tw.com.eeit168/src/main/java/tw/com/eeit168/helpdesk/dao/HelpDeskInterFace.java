@@ -8,8 +8,10 @@ import tw.com.eeit168.helpdesk.model.HelpDeskBean;
 
 public interface HelpDeskInterFace {
 
-	HelpDeskBean insert(HelpDeskBean bean);
+	public abstract HelpDeskBean insert(HelpDeskBean bean);
 
-	List<HelpDeskBean> selectTicket(JSONObject obj);
+	public abstract List<HelpDeskBean> selectTicket(JSONObject obj);
+
+	public abstract HelpDeskBean selectTicketById(Integer helpdesk_id);
 
 }
