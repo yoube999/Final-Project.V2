@@ -44,7 +44,7 @@ public class HelpDeskDAO implements HelpDeskInterFace {
 		// 後端收到查詢條件相關Null防呆處理
 		int start = obj.isNull("start") ? 0 : obj.getInt("start"); // 起始分頁
 		int row = obj.isNull("row") ? 10 : obj.getInt("row"); // 分頁案件數量
-		String sortType = obj.isNull("sortType") ? null : obj.getString("sortType"); // 查詢條件欄位
+		String sortType = obj.isNull("sortType") ? null : obj.getString("sortType"); // 排序欄位
 		String sortOrder = obj.isNull("sortOrder") ? null : obj.getString("sortOrder"); // 查詢排序
 
 		// 後端收到案件狀態Null防呆處理
