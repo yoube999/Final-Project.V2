@@ -1,7 +1,5 @@
 package tw.com.eeit168.products.accommodation.model;
 
-import java.util.Date;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,61 +15,52 @@ public class AccommodationInventory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	//使用底层数据库的自增字段来生成主键。适用于大多数数据库，如 MySQL、PostgreSQL 等。每个插入操作后，数据库会为新记录分配一个唯一的自增 ID。
-	private int inventoryId;
+	private Integer inventoryId;
 	
-	@ManyToOne
+//	@ManyToOne
 	@JoinColumn(name = "accommodation_id", nullable = false)
-	private Accommodation accommodation;
+	private Integer accommodationId;
 	
-	@ManyToOne
+//	@ManyToOne
 	@JoinColumn(name = "room_type_id", nullable = false)
-	private AccommodationRoomType roomType;
+	private Integer roomTypeId;
 	
 	
-	public AccommodationInventory() {
-		
-	}
+	@Column(name = "availability_date")
+	private java.sql.Date availabilityDate;
 	
-	
-	public AccommodationInventory(int inventoryId, Accommodation accommodation, AccommodationRoomType roomType,
-			Date availabilityDate, int availableRooms) {
-		super();
-		this.inventoryId = inventoryId;
-		this.accommodation = accommodation;
-		this.roomType = roomType;
-		this.availabilityDate = availabilityDate;
-		this.availableRooms = availableRooms;
-	}
+	@Column(name = "available_rooms")
+	private int availableRooms;
 
-	public int getInventoryId() {
+	public Integer getInventoryId() {
 		return inventoryId;
 	}
 
-	public void setInventoryId(int inventoryId) {
+	public void setInventoryId(Integer inventoryId) {
 		this.inventoryId = inventoryId;
 	}
 
-	public Accommodation getAccommodation() {
-		return accommodation;
+	public Integer getAccommodationId() {
+		return accommodationId;
 	}
 
-	public void setAccommodation(Accommodation accommodation) {
-		this.accommodation = accommodation;
+	public void setAccommodationId(Integer accommodationId) {
+		this.accommodationId = accommodationId;
 	}
 
-	public AccommodationRoomType getRoomType() {
-		return roomType;
+	public Integer getRoomTypeId() {
+		return roomTypeId;
 	}
 
-	public void setRoomType(AccommodationRoomType roomType) {
-		this.roomType = roomType;
+	public void setRoomTypeId(Integer roomTypeId) {
+		this.roomTypeId = roomTypeId;
 	}
 
-	public Date getAvailabilityDate() {
+	public java.sql.Date getAvailabilityDate() {
 		return availabilityDate;
 	}
 
-	public void setAvailabilityDate(Date availabilityDate) {
+	public void setAvailabilityDate(java.sql.Date availabilityDate) {
 		this.availabilityDate = availabilityDate;
 	}
 
@@ -83,11 +72,41 @@ public class AccommodationInventory {
 		this.availableRooms = availableRooms;
 	}
 
-	@Column(name = "availability_date")
-	private Date availabilityDate;
+	@Override
+	public String toString() {
+		return "AccommodationInventory [inventoryId=" + inventoryId + ", accommodationId=" + accommodationId
+				+ ", roomTypeId=" + roomTypeId + ", availabilityDate=" + availabilityDate + ", availableRooms="
+				+ availableRooms + "]";
+	}
+
 	
-	@Column(name = "available_rooms")
-	private int availableRooms;
+	
+//	public AccommodationInventory() {
+//		
+//	}
+//	
+//	
+//	public AccommodationInventory(int inventoryId, Accommodation accommodation, AccommodationRoomType roomType,
+//			Date availabilityDate, int availableRooms) {
+//		super();
+//		this.inventoryId = inventoryId;
+//		this.accommodation = accommodation;
+//		this.roomType = roomType;
+//		this.availabilityDate = availabilityDate;
+//		this.availableRooms = availableRooms;
+//	}
+
+	
+
+
+	
+
+
+
+
+
+
+	
 }
 
 

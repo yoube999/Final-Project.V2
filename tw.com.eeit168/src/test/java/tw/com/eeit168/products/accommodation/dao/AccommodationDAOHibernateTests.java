@@ -13,7 +13,7 @@ import tw.com.eeit168.products.accommodation.model.Accommodation;
 
 
 @SpringBootTest
-@Transactional
+//@Transactional
 public class AccommodationDAOHibernateTests {
 	@Autowired
 	private AccommodationDAO accommodationDAO;
@@ -68,12 +68,13 @@ public class AccommodationDAOHibernateTests {
 	}
 
 //	accommodation_name, accommodation_address, contact_number, times_purchased
-	@Test
+//	@Test
 	public void testInsert() {
 		Accommodation accommodationInsert = new Accommodation();
 //		accommodationInsert.setAccommodationId(null);
 		accommodationInsert.setAccommodationName("資展國際");
 		accommodationInsert.setAccommodationAddress("106臺北市大安區復興南路一段390號2樓");
+		accommodationInsert.setDescriptions("描述測試");
 		accommodationInsert.setContactNumber("(02)6631-6588");
 		accommodationInsert.setTimesPurchased(26);
 		
@@ -85,18 +86,19 @@ public class AccommodationDAOHibernateTests {
 //	@Test
 	public void testUpdate() {
 		Accommodation accommodationUpdate = new Accommodation();
-		accommodationUpdate.setAccommodationId(1);
+		accommodationUpdate.setAccommodationId(11);
 		accommodationUpdate.setAccommodationName("資展國際修改");
 		accommodationUpdate.setAccommodationAddress("106臺北市大安區復興南路一段390號3樓");
+		accommodationUpdate.setDescriptions("描述修改測試");
 		accommodationUpdate.setContactNumber("(02) 6612-4445");
 		accommodationUpdate.setTimesPurchased(123);
 		
 		Accommodation update = accommodationDAO.update(accommodationUpdate);
 		System.out.println("修改資料為" +update);
 	}
-//	@Test
+	@Test
 	public void testDelete() {
-		boolean delete = accommodationDAO.delete(20);
+		boolean delete = accommodationDAO.delete(11);
 		System.out.println("刪除資料" + delete);
 	}
 	}

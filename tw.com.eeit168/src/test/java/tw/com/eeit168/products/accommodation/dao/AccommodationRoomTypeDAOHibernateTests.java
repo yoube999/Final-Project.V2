@@ -12,7 +12,7 @@ import jakarta.persistence.PersistenceContext;
 import tw.com.eeit168.products.accommodation.model.AccommodationRoomType;
 
 @SpringBootTest
-@Transactional
+//@Transactional
 public class AccommodationRoomTypeDAOHibernateTests {
 	@Autowired
 	private AccommodationRoomTypeDAO accommodationRoomTypeDAO;
@@ -39,7 +39,7 @@ public class AccommodationRoomTypeDAOHibernateTests {
 		System.out.println("selectAll" + selectAll);
 	}
 	
-	@Test	
+//	@Test	
 	public void testInsert() {
 		AccommodationRoomType accommodationRoomTypeInsert = new AccommodationRoomType();
 		accommodationRoomTypeInsert.setAccommodationId(10);
@@ -55,9 +55,9 @@ public class AccommodationRoomTypeDAOHibernateTests {
 //	@Test
 	public void testUpdate() {
 		AccommodationRoomType AccommodationRoomTypeUpdate = new AccommodationRoomType();
-		AccommodationRoomTypeUpdate.setRoomTypeId(30);
+		AccommodationRoomTypeUpdate.setRoomTypeId(3);
 		AccommodationRoomTypeUpdate.setAccommodationId(10);
-		AccommodationRoomTypeUpdate.setRoomTypeName("測試");
+		AccommodationRoomTypeUpdate.setRoomTypeName("修改測試");
 		AccommodationRoomTypeUpdate.setCapacity("測試人數");
 		AccommodationRoomTypeUpdate.setBedsAmount(4);
 		
@@ -65,9 +65,9 @@ public class AccommodationRoomTypeDAOHibernateTests {
 		System.out.println("修改資料為" + update);
 	}
 	
-//	@Test
+	@Test
 	public void testDelete() {
-		boolean delete = accommodationRoomTypeDAO.delete(30);
+		boolean delete = accommodationRoomTypeDAO.delete(31);
 		System.out.println("刪除資料" + delete);
 	}
 }

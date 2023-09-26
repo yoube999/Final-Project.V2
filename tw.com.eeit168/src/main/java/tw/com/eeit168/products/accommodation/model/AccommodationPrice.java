@@ -14,85 +14,71 @@ import jakarta.persistence.Table;
 public class AccommodationPrice {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int priceId;
+	private Integer priceId;
 	
-	@ManyToOne
+//	@ManyToOne
 	@JoinColumn(name = "accommodation_id", nullable = false)
-	private Accommodation accommodation;
+	private Integer accommodationId;
 	
-	@ManyToOne
+//	@ManyToOne
 	@JoinColumn(name = "room_type_id", nullable = false)
-	private AccommodationRoomType accommodationRoomType;
+	private Integer roomTypeId;
 	
 	@Column(name = "weekday_price", nullable = false)
 	private int weekdayPrice;
 	
-	
-	public AccommodationPrice() {
-		
-	}
-	
-	public AccommodationPrice(int priceId, Accommodation accommodation, AccommodationRoomType accommodationRoomType,
-			int weekdayPrice, int weekendPrice) {
-		super();
-		this.priceId = priceId;
-		this.accommodation = accommodation;
-		this.accommodationRoomType = accommodationRoomType;
-		this.weekdayPrice = weekdayPrice;
-		this.weekendPrice = weekendPrice;
-	}
+	@Column(name = "weekend_price", nullable = false)
+	private int weekendPrice;
 
-
-	public int getPriceId() {
+	public Integer getPriceId() {
 		return priceId;
 	}
 
-
-	public void setPriceId(int priceId) {
+	public void setPriceId(Integer priceId) {
 		this.priceId = priceId;
 	}
 
-
-	public Accommodation getAccommodation() {
-		return accommodation;
+	public Integer getAccommodationId() {
+		return accommodationId;
 	}
 
-
-	public void setAccommodation(Accommodation accommodation) {
-		this.accommodation = accommodation;
+	public void setAccommodationId(Integer accommodationId) {
+		this.accommodationId = accommodationId;
 	}
 
-
-	public AccommodationRoomType getAccommodationRoomType() {
-		return accommodationRoomType;
+	public Integer getRoomTypeId() {
+		return roomTypeId;
 	}
 
-
-	public void setAccommodationRoomType(AccommodationRoomType accommodationRoomType) {
-		this.accommodationRoomType = accommodationRoomType;
+	public void setRoomTypeId(Integer roomTypeId) {
+		this.roomTypeId = roomTypeId;
 	}
-
 
 	public int getWeekdayPrice() {
 		return weekdayPrice;
 	}
 
-
 	public void setWeekdayPrice(int weekdayPrice) {
 		this.weekdayPrice = weekdayPrice;
 	}
-
 
 	public int getWeekendPrice() {
 		return weekendPrice;
 	}
 
-
 	public void setWeekendPrice(int weekendPrice) {
 		this.weekendPrice = weekendPrice;
 	}
 
+	@Override
+	public String toString() {
+		return "AccommodationPrice [priceId=" + priceId + ", accommodationId=" + accommodationId + ", roomTypeId="
+				+ roomTypeId + ", weekdayPrice=" + weekdayPrice + ", weekendPrice=" + weekendPrice + "]";
+	}
 
-	@Column(name = "weekend_price", nullable = false)
-	private int weekendPrice;
+	
+
+	
+	
+	
 }

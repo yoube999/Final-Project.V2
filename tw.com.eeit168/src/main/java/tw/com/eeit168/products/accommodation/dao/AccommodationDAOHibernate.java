@@ -35,6 +35,7 @@ public class AccommodationDAOHibernate implements AccommodationDAO {
 //	}
 
 	@Override
+	@Transactional
 	public List<Accommodation> searchByKeyword(String keyword) {
 		if (keyword != null && !keyword.trim().isEmpty()) {
 			String hql = "FROM Accommodation WHERE accommodationName LIKE :keyword OR accommodationAddress LIKE :keyword";
@@ -51,12 +52,14 @@ public class AccommodationDAOHibernate implements AccommodationDAO {
 	}
 
 	@Override
+	@Transactional
 	public List<Accommodation> selectAll() {
 		return this.getSession().createQuery("from Accommodation", Accommodation.class).list();
 
 	}
 	
 	@Override
+	@Transactional
 	public Accommodation insert(Accommodation bean) {
 		
 		if (bean.getAccommodationId() == null) {
@@ -79,6 +82,7 @@ public class AccommodationDAOHibernate implements AccommodationDAO {
 		
 	}
 	@Override
+	@Transactional
 	public Accommodation update(Accommodation bean) {
 		if(bean != null && bean.getAccommodationId()!= null) {
 //		   bean != null && bean.getAccommodationId() != null && this.getSession().get(Accommodation.class, bean.getAccommodationId()) != null
@@ -90,6 +94,7 @@ public class AccommodationDAOHibernate implements AccommodationDAO {
 		return null;
 	}
 	@Override
+	@Transactional
 	public boolean delete(Integer id) {
 		if(id != null) {
 			Accommodation temp = this.getSession().get(Accommodation.class, id);

@@ -23,6 +23,9 @@ public class Accommodation {
 	@Column(name = "accommodation_address", nullable = false, columnDefinition = "nvarchar(255)")
 	private String accommodationAddress;
 	
+	@Column(name = "descriptions", nullable = false, columnDefinition = "nvarchar(255)")
+	private String descriptions;
+	
 	@Column(name = "contact_number", nullable = false)
 	private String contactNumber;
 	
@@ -69,13 +72,23 @@ public class Accommodation {
 		this.timesPurchased = timesPurchased;
 	}
 
+
+	public String getDescriptions() {
+		return descriptions;
+	}
+
+	public void setDescriptions(String descriptions) {
+		this.descriptions = descriptions;
+	}
+	
 	@Override
 	public String toString() {
 		return "Accommodation [accommodationId=" + accommodationId + ", accommodationName=" + accommodationName
-				+ ", accommodationAddress=" + accommodationAddress + ", contactNumber=" + contactNumber
-				+ ", timesPurchased=" + timesPurchased + "]";
+				+ ", accommodationAddress=" + accommodationAddress + ", descriptions=" + descriptions
+				+ ", contactNumber=" + contactNumber + ", timesPurchased=" + timesPurchased + "]";
 	}
 
+	
 	
 	
 	//Constructors

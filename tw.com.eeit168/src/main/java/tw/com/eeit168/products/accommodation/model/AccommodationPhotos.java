@@ -14,42 +14,29 @@ import jakarta.persistence.Table;
 public class AccommodationPhotos {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int photoId;
+	private Integer photoId;
 	
-	@ManyToOne
+//	@ManyToOne
 	@JoinColumn(name = "accommodation_id", nullable = false)
-	private Accommodation accommodation;
+	private Integer accommodationId;
 	
 	@Column(name = "photo_url", nullable = false)
 	private String photoUrl;
 
-	
-	public AccommodationPhotos() {
-		
-	}
-	
-	
-	public AccommodationPhotos(int photoId, Accommodation accommodation, String photoUrl) {
-		super();
-		this.photoId = photoId;
-		this.accommodation = accommodation;
-		this.photoUrl = photoUrl;
-	}
-
-	public int getPhotoId() {
+	public Integer getPhotoId() {
 		return photoId;
 	}
 
-	public void setPhotoId(int photoId) {
+	public void setPhotoId(Integer photoId) {
 		this.photoId = photoId;
 	}
 
-	public Accommodation getAccommodation() {
-		return accommodation;
+	public Integer getAccommodationId() {
+		return accommodationId;
 	}
 
-	public void setAccommodation(Accommodation accommodation) {
-		this.accommodation = accommodation;
+	public void setAccommodationId(Integer accommodationId) {
+		this.accommodationId = accommodationId;
 	}
 
 	public String getPhotoUrl() {
@@ -59,4 +46,17 @@ public class AccommodationPhotos {
 	public void setPhotoUrl(String photoUrl) {
 		this.photoUrl = photoUrl;
 	}
+
+	@Override
+	public String toString() {
+		return "AccommodationPhotos [photoId=" + photoId + ", accommodationId=" + accommodationId + ", photoUrl="
+				+ photoUrl + "]";
+	}
+
+	
+	
+	
+
+
+	
 }

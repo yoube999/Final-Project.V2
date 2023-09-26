@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -24,6 +25,7 @@ public class AccommodationRoomTypeDAOHibernate implements AccommodationRoomTypeD
 	}
 	
 	@Override
+	@Transactional
 	public List<AccommodationRoomType> searchByKeyword(String keyword){
 		if(keyword != null && !keyword.trim().isEmpty()) {
 			String hql = "FROM AccommodationRoomType WHERE roomTypeName LIKE :keyword OR capacity LIKE :keyword";
@@ -35,11 +37,13 @@ public class AccommodationRoomTypeDAOHibernate implements AccommodationRoomTypeD
 	}
 	
 	@Override
+	@Transactional
 	public List<AccommodationRoomType> selectAll(){
 		return this.getSession().createQuery("from AccommodationRoomType", AccommodationRoomType.class).list();
 	}
 	
 	@Override
+	@Transactional
 	public AccommodationRoomType insert(AccommodationRoomType bean) {
 	    // Set roomTypeId to null to let Hibernate generate it
 	    if (bean.getRoomTypeId() != null && bean.getRoomTypeId() != 0) {
@@ -57,6 +61,7 @@ public class AccommodationRoomTypeDAOHibernate implements AccommodationRoomTypeD
 	}
 	
 	@Override
+	@Transactional
 	public AccommodationRoomType update(AccommodationRoomType bean) {
 		if(bean != null && bean.getRoomTypeId() != null) {
 			AccommodationRoomType temp = this.getSession().get(AccommodationRoomType.class, bean.getRoomTypeId());
@@ -71,6 +76,7 @@ public class AccommodationRoomTypeDAOHibernate implements AccommodationRoomTypeD
 	
 	
 	@Override
+	@Transactional
 	public boolean delete(Integer id) {
 		if(id != null) {
 			AccommodationRoomType temp = this.getSession().get(AccommodationRoomType.class, id);
