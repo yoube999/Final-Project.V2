@@ -21,7 +21,7 @@ public class AccommodationInventoryDAOHibernateTests {
 	@PersistenceContext
 	private EntityManager entityManager;
 	
-	@Test
+//	@Test
 	public void testSelect() {
 		AccommodationInventory select = accommodationInventoryDAO.select(5);
 		System.out.println("select=" +select);
@@ -49,7 +49,7 @@ public class AccommodationInventoryDAOHibernateTests {
 //	@Test
 	public void testUpdate() {
 		AccommodationInventory accommodationInventoryUpdate = new AccommodationInventory();
-		accommodationInventoryUpdate.setInventoryId(32);
+		accommodationInventoryUpdate.setInventoryId(31);
 		accommodationInventoryUpdate.setAccommodationId(10);
 		accommodationInventoryUpdate.setRoomTypeId(30);
 		LocalDate dateUpdated = LocalDate.of(2023, 9, 26);
@@ -60,9 +60,9 @@ public class AccommodationInventoryDAOHibernateTests {
 		System.out.println("修改資料為" + update);
 	}
 	
-//	@Test
+	@Test
 	public void testDelete() {
-		boolean delete = accommodationInventoryDAO.delete(32);
+		boolean delete = accommodationInventoryDAO.delete(31);
 		System.out.println("刪除資料" + delete);
 	}
 }

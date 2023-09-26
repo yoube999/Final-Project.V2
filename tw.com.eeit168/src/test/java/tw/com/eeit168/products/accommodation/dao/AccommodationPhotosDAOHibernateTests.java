@@ -46,7 +46,7 @@ public class AccommodationPhotosDAOHibernateTests {
 //	@Test
 	public void testUpdate() {
 		AccommodationPhotos accommodationPhotosUpdate = new AccommodationPhotos();
-		accommodationPhotosUpdate.setPhotoId(12);
+		accommodationPhotosUpdate.setPhotoId(11);
 		accommodationPhotosUpdate.setAccommodationId(10);
 		accommodationPhotosUpdate.setPhotoUrl("http://updateexample.com/photoexample.jpg");
 		
@@ -56,7 +56,7 @@ public class AccommodationPhotosDAOHibernateTests {
 	
 	@Test
 	public void testDelete() {
-		boolean delete = accommodationPhotosDAO.delete(12);
+		boolean delete = accommodationPhotosDAO.delete(11);
 		System.out.println("刪除資料" +delete);
 	}
 	

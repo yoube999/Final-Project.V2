@@ -1,4 +1,4 @@
-package tw.com.eeit168.products.attraction.dao;
+package tw.com.eeit168.products.accommodation.dao;
 
 import java.util.List;
 
@@ -48,7 +48,7 @@ public class AccommodationPriceDAOHibernateTests {
 //	@Test
 	public void testUpdate() {
 	AccommodationPrice accommodationPriceUpdate = new AccommodationPrice();
-	accommodationPriceUpdate.setPriceId(32);
+	accommodationPriceUpdate.setPriceId(31);
 	accommodationPriceUpdate.setAccommodationId(10);
 	accommodationPriceUpdate.setRoomTypeId(30);
 	accommodationPriceUpdate.setWeekdayPrice(2000);
@@ -59,9 +59,9 @@ public class AccommodationPriceDAOHibernateTests {
 	
 	}
 	
-	@Test
+//	@Test
 	public void testDelete() {
-		boolean delete = accommodationPriceDAO.delete(32);
+		boolean delete = accommodationPriceDAO.delete(31);
 		System.out.println("刪除資料" + delete);
 	}
 }

@@ -48,14 +48,14 @@ public class AccommodationRoomTypeDAOHibernateTests {
 		accommodationRoomTypeInsert.setBedsAmount(4);
 		
 		AccommodationRoomType result = accommodationRoomTypeDAO.insert(accommodationRoomTypeInsert);
-		entityManager.flush();
+//		entityManager.flush();
 		System.out.println("新增資料為" +result);
 	}
 	
 //	@Test
 	public void testUpdate() {
 		AccommodationRoomType AccommodationRoomTypeUpdate = new AccommodationRoomType();
-		AccommodationRoomTypeUpdate.setRoomTypeId(3);
+		AccommodationRoomTypeUpdate.setRoomTypeId(11);
 		AccommodationRoomTypeUpdate.setAccommodationId(10);
 		AccommodationRoomTypeUpdate.setRoomTypeName("修改測試");
 		AccommodationRoomTypeUpdate.setCapacity("測試人數");
