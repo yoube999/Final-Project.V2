@@ -152,15 +152,6 @@ public class HelpDeskService {
 	public List<HelpDeskBean> selectTicket(String json) {
 		JSONObject obj = new JSONObject(json);
 		
-		// 後端收到Null防呆處理
-		String helpdesk_status = obj.isNull("helpdesk_status") ? "未處理" : obj.getString("helpdesk_status");
-		
-		
-		
-		
-		
-		
-		
 		
 		
 		return null;
