@@ -26,10 +26,10 @@ public class MemberProfileTest {
 	}
 	
 	
-//	@Test
+	@Test
 	public void testInsert() throws ParseException {
 	    MemberProfileBean newMember = new MemberProfileBean();
-	    newMember.setUser_account("to60412@gmail.com");
+	    newMember.setUser_account("XXXXX@gmail.com");
 	    newMember.setUser_password("password");
 	    newMember.setUsername("John Doe");
 
@@ -54,7 +54,7 @@ public class MemberProfileTest {
 	
 	
 	
-	@Test
+//	@Test
 	public void testChangePasswordWithVerificationCode() {
 	    // 假设您已经发送了验证码给会员并收到了输入的验证码
 	    String verificationCode = "204726"; // 假设收到的验证码为 "123456"

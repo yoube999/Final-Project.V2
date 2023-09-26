@@ -22,7 +22,7 @@ public class MemberProfileController {
     @Autowired
     private MessageSource messageSource;
 
-    // 前端Post送字串
+    //登入Post送字串
     @PostMapping("/login")
     public String login(@RequestParam String user_account, String user_password) {
 
@@ -33,7 +33,9 @@ public class MemberProfileController {
             return "登入失敗";
         }
     }
-
+    
+    
+    //註冊送Post送Json
     @PostMapping("/register")
     public String register(@RequestBody JsonNode jsonNode) {
         try {
@@ -44,7 +46,7 @@ public class MemberProfileController {
         }
     }
 
-    //發送驗證碼
+    //發送驗證碼Post送字串
     @PostMapping("/send-verification-code")
     public String sendVerificationCode(@RequestParam String user_account) {
         try {
@@ -54,29 +56,18 @@ public class MemberProfileController {
             return e.getMessage();
         }
     }
-
     
-    
-    //輸入驗證碼後修改密碼
-    @PostMapping("/reset-password")
-    public String resetPassword(@RequestParam String user_account, @RequestParam String verification_code, @RequestParam String user_password) {
+    // 輸入验证码后修改密码 Post送字串
+    @PostMapping("/change-password-with-verification-code")
+    public String changePasswordWithVerificationCode(@RequestParam String user_account,
+                                                     @RequestParam String verification_code,
+                                                     @RequestParam String user_password) {
         try {
-            // 先验证验证码是否正确
-            boolean codeVerified = memberProfileService.verifyVerificationCode(user_account, verification_code);
-            if (codeVerified) {
-                // 验证通过，设置新密码
-                boolean success = memberProfileService.resetPassword(user_account,verification_code, user_password);
-                if (success) {
-                    return "密碼重置成功";
-                } else {
-                    return "密碼重置失敗";
-                }
-            } else {
-                return "驗證碼不正確";
-            }
+            memberProfileService.changePasswordWithVerificationCode(user_account, verification_code, user_password);
+            return "密码已成功更改！";
         } catch (Exception e) {
             return e.getMessage();
         }
-    }
+    }}
 
-}
+ 

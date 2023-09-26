@@ -93,7 +93,7 @@ public class MemberProfileService {
         return existingMember != null;
     }
 
-    // 隨機產生驗證碼
+    // 隨機產生驗證碼 給sendVerificationCode用
     private String generateVerificationCode() {
         int codeLength = 6; // 密碼長度
         String characters = "0123456789"; // 密碼組合
@@ -125,7 +125,7 @@ public class MemberProfileService {
             // 設定驗證碼的過期時間為2分鐘後
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(new Date());
-            calendar.add(Calendar.MINUTE, 2); // 添加2分鐘
+            calendar.add(Calendar.MINUTE, 1); // 添加2分鐘
             Date verificationCodeTimestamp = calendar.getTime();
 
             // 存儲驗證碼和過期時間到資料庫
@@ -141,55 +141,47 @@ public class MemberProfileService {
 
         } catch (Exception e) {
             // 處理異常
-            throw new RuntimeException("發送驗證碼郵件失敗：" + e.getMessage());
+        	throw new RuntimeException("發送驗證碼郵件失敗：" + e.getMessage());
         }
     }
 
-
-    // 驗證碼是否正確
-    public boolean verifyVerificationCode(String user_account, String providedCode) {
-        MemberProfileBean existingMember = memberProfileInterFace.select(user_account);
-        if (existingMember != null) {
-            String savedCode = existingMember.getVerification_code();
-            boolean codeMatched = savedCode.equals(providedCode);
-            if (!codeMatched) {
-                System.out.println("验证码不正确"); // 输出错误消息到控制台
-            }
-            return codeMatched;
-        }
-        return false;
-    }
 
     
-    //成功修改密碼
- // 成功修改密碼
-    public boolean resetPassword(String user_account, String user_password, String verification_code) {
-        MemberProfileBean existingMember = memberProfileInterFace.select(user_account);
-        if (existingMember != null) {
-            // 檢查驗證碼是否正確
-            if (verifyVerificationCode(user_account, verification_code)) {
-                // 檢查驗證碼是否已過期
-                Date currentTime = new Date();
-                Date verificationCodeTimestamp = existingMember.getVerification_code_timestamp();
-                if (verificationCodeTimestamp != null && currentTime.before(verificationCodeTimestamp)) {
-                    // 驗證碼驗證成功且尚未過期，可以重置密碼
+  //確認驗證碼+改密碼
+    public void changePasswordWithVerificationCode(String user_account, String verification_code, String user_password) {
+        try {
+            MemberProfileBean existingMember = memberProfileInterFace.select(user_account);
+
+            if (existingMember != null) {
+                String savedCode = existingMember.getVerification_code();
+                Date codeTimestamp = existingMember.getVerification_code_timestamp();
+                Date now = new Date();
+
+                //判斷驗證碼過期codeTimestamp
+                if (savedCode != null && verification_code.equals(savedCode) && now.before(codeTimestamp)) {
                     existingMember.setUser_password(user_password);
-                    existingMember.setVerification_code(null); // 清除验证码
+                    existingMember.setVerification_code(null);
                     memberProfileInterFace.update(existingMember);
-                    System.out.println("密码已成功更改！"); // 输出成功消息到控制台
-                    return true; // 返回密码重置成功
+
+                    if (existingMember.getUser_password().equals(user_password)) {
+                        System.out.println("密码已成功更改！");
+                    } else {
+                        throw new RuntimeException("密码未成功更改");
+                    }
                 } else {
-                    System.out.println("驗證碼已過期"); // 输出错误消息到控制台
-                    return false; // 返回密码重置失败
+                    throw new RuntimeException("验证码错误或已过期");
                 }
             } else {
-                System.out.println("驗證碼不正確"); // 输出错误消息到控制台
-                return false; // 返回密码重置失败
+                throw new RuntimeException("找不到要更改密码的会员");
             }
-        } else {
-            System.out.println("找不到要更改密码的会员"); // 输出错误消息到控制台
-            return false; // 返回密码重置失败
+        } catch (RuntimeException e) {
+            System.out.println("异常消息：" + e.getMessage());
+            throw e;
         }
     }
 
-}
+    }
+
+ 
+
+
