@@ -2,9 +2,12 @@ package tw.com.eeit168.helpdesk.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -179,12 +182,39 @@ public class HelpDeskService {
 			update.setHelpdesk_status(helpdesk_status);
 			update.setMember_profile_id(member_profile_id);
 			
-			System.out.println(helpDeskInterFace.modifyHelpdeskStatus(update));
 			return helpDeskInterFace.modifyHelpdeskStatus(update);		
 		}
-
 		return null;
 	}
+	
+	
+	// 顯示案件內容時，畫面上顯示圖片url，點擊後開啟圖片
+	public byte[] selectPicture(Integer helpdesk_id) {
+		
+		// 先查詢該案件資料，取得附件URL
+		HelpDeskBean pictureURL = helpDeskInterFace.selectTicketById(helpdesk_id);
+		if(pictureURL != null && helpdesk_id != null && pictureURL.getAttachment() != null) {
+			
+			try {
+				// 將字串轉換為位元組數組
+				byte[] imageData = pictureURL.getAttachment().getBytes(StandardCharsets.UTF_8);
+				return imageData;
+			} catch (Exception e) {
+				// 需改寫成跳轉至錯誤頁面
+				e.printStackTrace();
+				return null;
+			}
+		}
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

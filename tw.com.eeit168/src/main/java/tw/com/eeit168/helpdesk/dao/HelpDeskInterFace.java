@@ -16,4 +16,6 @@ public interface HelpDeskInterFace {
 	
 	public abstract HelpDeskBean modifyHelpdeskStatus(HelpDeskBean bean);
 
+//	public abstract HelpDeskBean selectPicture(HelpDeskBean bean);
+	
 }

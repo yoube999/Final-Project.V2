@@ -116,4 +116,14 @@ public class HelpDeskDAO implements HelpDeskInterFace {
 		return null;
 	}
 
+//	@Override
+//	public HelpDeskBean selectPicture(HelpDeskBean bean) {
+//		
+//		
+//		
+//		
+//		
+//		return null;
+//	}
+
 }
