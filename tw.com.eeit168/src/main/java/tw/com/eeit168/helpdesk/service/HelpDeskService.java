@@ -165,4 +165,26 @@ public class HelpDeskService {
 		return helpDeskInterFace.selectTicketById(helpdesk_id);
 	}
 
+	// 透過點擊前端按鈕來變更案件狀態和人員
+	public HelpDeskBean modifyHelpdeskStatus(String json) {
+		
+		JSONObject obj = new JSONObject(json);
+		Integer helpdesk_id = obj.getInt("helpdesk_id");
+		String helpdesk_status = obj.getString("helpdesk_status");
+		Integer member_profile_id = obj.getInt("member_profile_id");
+		
+		
+		HelpDeskBean update = helpDeskInterFace.selectTicketById(helpdesk_id);
+		if(update != null && helpdesk_status != null && member_profile_id != null) {
+			update.setHelpdesk_status(helpdesk_status);
+			update.setMember_profile_id(member_profile_id);
+			
+			System.out.println(helpDeskInterFace.modifyHelpdeskStatus(update));
+			return helpDeskInterFace.modifyHelpdeskStatus(update);		
+		}
+
+		return null;
+	}
+	
+	
 }

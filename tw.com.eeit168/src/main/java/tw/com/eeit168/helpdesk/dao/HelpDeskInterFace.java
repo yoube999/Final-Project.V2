@@ -13,5 +13,7 @@ public interface HelpDeskInterFace {
 	public abstract List<HelpDeskBean> selectTicket(JSONObject obj);
 
 	public abstract HelpDeskBean selectTicketById(Integer helpdesk_id);
+	
+	public abstract HelpDeskBean modifyHelpdeskStatus(HelpDeskBean bean);
 
 }

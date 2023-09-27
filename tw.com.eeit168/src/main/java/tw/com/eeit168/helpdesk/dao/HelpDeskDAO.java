@@ -105,4 +105,15 @@ public class HelpDeskDAO implements HelpDeskInterFace {
 		return null;
 	}
 
+	// 透過點擊前端按鈕來變更案件狀態和人員
+	@Override
+	public HelpDeskBean modifyHelpdeskStatus(HelpDeskBean bean) {
+		if (bean != null) {
+			// 使用 merge 更新 bean
+	        HelpDeskBean updatedBean = (HelpDeskBean) this.getSession().merge(bean);
+	        return updatedBean; // 返回更新後的 bean
+		}
+		return null;
+	}
+
 }

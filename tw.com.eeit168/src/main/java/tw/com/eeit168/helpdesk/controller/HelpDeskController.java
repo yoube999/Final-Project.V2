@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -96,4 +97,32 @@ public class HelpDeskController {
 		return responseJson.toString();
 	}
 
+	
+	// 透過點擊前端按鈕來變更案件狀態和人員
+	@PutMapping("/modifyHelpdeskStatus/{helpdesk_id}")
+	public String modifyHelpdeskStatus(
+			@PathVariable Integer helpdesk_id,
+			@RequestBody String json) {
+		JSONObject responseJson = new JSONObject();
+				
+		// 若前端送的helpdesk_id找不到時需顯示錯誤訊息
+		if(helpDeskService.selectTicketById(helpdesk_id) == null) {
+			responseJson.put("message", "接受案件失敗，請聯絡IT人員");
+			responseJson.put("success", false);
+		} else {
+			HelpDeskBean helpdesk = helpDeskService.modifyHelpdeskStatus(json);
+			
+			if(helpdesk != null) {
+				responseJson.put("message", "接受案件成功!");
+				responseJson.put("success", true);
+			} else {
+				// 若接受案件失敗時需顯示錯誤訊息
+				responseJson.put("message", "接受案件失敗，請聯絡IT人員");
+				responseJson.put("success", false);
+			}
+		}
+		return responseJson.toString();
+	}
+
+	
 }
