@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import jakarta.persistence.PersistenceContext;
 import tw.com.eeit168.products.attraction.model.AttractionPictureBean;
 
-@Repository
+@Repository //此annotation表示這個類別交由spring來控管
 public class AttractionPictureDaoHibernate implements AttractionPictureDAO{
 	
 	@PersistenceContext
@@ -21,19 +21,19 @@ public class AttractionPictureDaoHibernate implements AttractionPictureDAO{
 	@Override
 	public AttractionPictureBean select(Integer id) {
 		if(id != null) {
-			return this.getSession().get(AttractionPictureBean.class, id);
+			return this.getSession().get(AttractionPictureBean.class, id); //select使用Hibernate的get
 		}
 		return null;
 	}
 	
 	@Override
 	public List<AttractionPictureBean> selectAll(){
-		return this.getSession().createQuery("from AttractionPictureBean", AttractionPictureBean.class).list();
+		return this.getSession().createQuery("from AttractionPictureBean", AttractionPictureBean.class).list(); //查詢多筆使用Hibernate裡HQL的createQuery
 	}
 
 	@Override
 	public AttractionPictureBean insert(AttractionPictureBean bean) {
-		this.getSession().persist(bean);
+		this.getSession().persist(bean); //insert使用Hibernate的persist
 		return bean;
 	}
 	
@@ -42,7 +42,7 @@ public class AttractionPictureDaoHibernate implements AttractionPictureDAO{
 		if(bean != null && bean.getAttractions_pictures_id() != null) {
 			AttractionPictureBean temp = this.getSession().get(AttractionPictureBean.class, bean.getAttractions_pictures_id());
 			if(temp != null) {
-				return (AttractionPictureBean)this.getSession().merge(bean);
+				return (AttractionPictureBean)this.getSession().merge(bean); //update使用Hibernate的merge
 			}
 		}
 		return null;
@@ -53,7 +53,7 @@ public class AttractionPictureDaoHibernate implements AttractionPictureDAO{
 		if(id != null) {
 			AttractionPictureBean temp = this.getSession().get(AttractionPictureBean.class, id);
 			if(temp != null) {
-				this.getSession().remove(temp);
+				this.getSession().remove(temp); //delete使用Hibernate的remove
 				return true;
 			}
 		}

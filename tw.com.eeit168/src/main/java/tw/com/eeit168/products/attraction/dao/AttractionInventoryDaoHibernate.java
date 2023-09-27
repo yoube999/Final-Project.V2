@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import jakarta.persistence.PersistenceContext;
 import tw.com.eeit168.products.attraction.model.AttractionInventoryBean;
 
-@Repository
+@Repository //此annotation表示這個類別交由spring來控管
 public class AttractionInventoryDaoHibernate implements AttractionInventoryDAO{
 
 	@PersistenceContext
@@ -21,19 +21,19 @@ public class AttractionInventoryDaoHibernate implements AttractionInventoryDAO{
 	@Override
 	public AttractionInventoryBean select(Integer id) {
 		if(id != null) {
-			return this.getSession().get(AttractionInventoryBean.class, id);
+			return this.getSession().get(AttractionInventoryBean.class, id); //select使用Hibernate的get
 		}
 		return null;
 	}
 	
 	@Override
 	public List<AttractionInventoryBean> selectAll(){
-		return this.getSession().createQuery("from AttractionInventoryBean", AttractionInventoryBean.class).list();
+		return this.getSession().createQuery("from AttractionInventoryBean", AttractionInventoryBean.class).list(); //查詢多筆使用Hibernate裡HQL的createQuery
 	}
 	
 	@Override
 	public AttractionInventoryBean insert(AttractionInventoryBean bean) {
-		this.getSession().persist(bean);
+		this.getSession().persist(bean); //insert使用Hibernate的persist
 		return bean;
 	}
 	
@@ -42,7 +42,7 @@ public class AttractionInventoryDaoHibernate implements AttractionInventoryDAO{
 		if(bean != null && bean.getAttractions_inventory_id() != null) {
 			AttractionInventoryBean temp = this.getSession().get(AttractionInventoryBean.class, bean.getAttractions_inventory_id());
 			if(temp != null) {
-				return (AttractionInventoryBean)this.getSession().merge(bean);
+				return (AttractionInventoryBean)this.getSession().merge(bean); //update使用Hibernate的merge
 			}
 		}
 		return null;
@@ -53,7 +53,7 @@ public class AttractionInventoryDaoHibernate implements AttractionInventoryDAO{
 		if(id != null) {
 			AttractionInventoryBean temp = this.getSession().get(AttractionInventoryBean.class, id);
 			if(temp != null) {
-				this.getSession().remove(temp);
+				this.getSession().remove(temp); //delete使用Hibernate的remove
 				return true;
 			}
 		}

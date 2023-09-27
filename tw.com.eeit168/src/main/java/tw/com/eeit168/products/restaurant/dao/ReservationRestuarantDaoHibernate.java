@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import jakarta.persistence.PersistenceContext;
 import tw.com.eeit168.products.restaurant.model.ReservationRestuarantBean;
 
-@Repository
+@Repository //此annotation表示這個類別交由spring來控管
 public class ReservationRestuarantDaoHibernate implements ReservationRestuarantDAO{
 	
 	@PersistenceContext
@@ -21,19 +21,19 @@ public class ReservationRestuarantDaoHibernate implements ReservationRestuarantD
 	@Override
 	public ReservationRestuarantBean select(Integer id) {
 		if(id != null) {
-			return this.getSession().get(ReservationRestuarantBean.class, id);
+			return this.getSession().get(ReservationRestuarantBean.class, id); //select使用Hibernate的get
 		}
 		return null;
 	}
 	
 	@Override
 	public List<ReservationRestuarantBean> selectAll(){
-		return this.getSession().createQuery("from ReservationRestuarantBean", ReservationRestuarantBean.class).list();
+		return this.getSession().createQuery("from ReservationRestuarantBean", ReservationRestuarantBean.class).list(); //查詢多筆使用Hibernate裡HQL的createQuery
 	}
 	
 	@Override
 	public ReservationRestuarantBean insert(ReservationRestuarantBean bean) {
-		this.getSession().persist(bean);
+		this.getSession().persist(bean); //insert使用Hibernate的persist
 		return bean;
 	}
 
@@ -42,7 +42,7 @@ public class ReservationRestuarantDaoHibernate implements ReservationRestuarantD
 		if(bean != null && bean.getReservation_restuarant_id() != null) {
 			ReservationRestuarantBean temp = this.getSession().get(ReservationRestuarantBean.class, bean.getReservation_restuarant_id());
 			if(temp != null) {
-				return (ReservationRestuarantBean)this.getSession().merge(bean);
+				return (ReservationRestuarantBean)this.getSession().merge(bean); //update使用Hibernate的merge
 			}
 		}
 		return null;
@@ -53,7 +53,7 @@ public class ReservationRestuarantDaoHibernate implements ReservationRestuarantD
 		if(id != null) {
 			ReservationRestuarantBean temp = this.getSession().get(ReservationRestuarantBean.class, id);
 			if(temp != null) {
-				this.getSession().remove(temp);
+				this.getSession().remove(temp); //update使用Hibernate的merge
 				return true;
 			}
 		}

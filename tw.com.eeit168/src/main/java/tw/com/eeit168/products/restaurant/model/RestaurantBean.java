@@ -7,22 +7,22 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@Entity
+@Entity //@Entity是JPA(Java Persistence API)中的一個重要註解，用於定義資料庫實體類別，讓開發者可以使用Java程式碼來操作資料庫中的資料
 @Table(name = "restaurant")
 public class RestaurantBean {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY) //這個用來標記此欄位是自動產生
 	@Column(name = "restaurant_id")
 	private Integer restaurant_id;
 	
-	@Column(name = "restaurant_name", columnDefinition = "nvarchar")
+	@Column(name = "restaurant_name", columnDefinition = "nvarchar") //如有要用nvarchar必須要有此annotation
 	private String restaurant_name;
 	
-	@Column(name = "restaurant_address", columnDefinition = "nvarchar")
+	@Column(name = "restaurant_address", columnDefinition = "nvarchar") //如有要用nvarchar必須要有此annotation
 	private String restaurant_address;
 	
-	@Column(name = "descriptions", columnDefinition = "nvarchar")
+	@Column(name = "descriptions", columnDefinition = "nvarchar") //如有要用nvarchar必須要有此annotation
 	private String descriptions;
 	
 	@Column(name = "contact_number")

@@ -34,8 +34,8 @@ public class ReservationRestuarantDaoHibernateTests {
 		ReservationRestuarantBean bean = new ReservationRestuarantBean();
 		bean.setRecord_id(1);
 		bean.setRestaurant_id(1);
-		LocalDate date = LocalDate.of(2023, 9, 18);
-		bean.setReservation_date(java.sql.Date.valueOf(date));
+		LocalDate date = LocalDate.of(2023, 9, 18); //利用LocalDate就可以輸入自己想要的日期
+		bean.setReservation_date(java.sql.Date.valueOf(date)); //利用java.sql.Date將想要的日期insert進去
 		bean.setTotal_count(5);
 		bean.setTotal_price(3000);
 		bean.setRecord_restuarant_status("dgsewf");
@@ -49,7 +49,8 @@ public class ReservationRestuarantDaoHibernateTests {
 		bean.setReservation_restuarant_id(8);
 		bean.setRecord_id(2);
 		bean.setRestaurant_id(2);
-		bean.setReservation_date(null);
+		LocalDate date = LocalDate.of(2023, 9, 18); //利用LocalDate就可以輸入自己想要的日期
+		bean.setReservation_date(java.sql.Date.valueOf(date)); //利用java.sql.Date將想要的日期insert進去
 		bean.setTotal_count(5);
 		bean.setTotal_price(3000);
 		bean.setRecord_restuarant_status("dgsewf");

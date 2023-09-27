@@ -28,4 +28,10 @@ public class RestaurantServiceTests {
 		List<RestaurantBean> select = restaurantService.select(4);
 		System.out.println(select);
 	}
+	
+//	@Test
+	public void selectList() {
+		List<RestaurantBean> selectList = restaurantService.selectList();
+		System.out.println(selectList);
+	}
 }

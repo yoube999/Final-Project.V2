@@ -3,6 +3,7 @@ package tw.com.eeit168.products.restaurant.service;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import jakarta.persistence.PersistenceContext;
@@ -24,9 +25,21 @@ public class RestaurantService {
 	}
 	
 	public List<RestaurantBean> select(Integer restaurant_id) {
-		String query = "select new List(restaurant_name, descriptions, price)from RestaurantBean where restaurant_id = :id";
+		String query = "select new List(restaurant_name, descriptions, price)from RestaurantBean where restaurant_id = :id"; //搜尋多的欄位使用 new List()包起來
 		return this.getSession().createQuery(query, RestaurantBean.class).setParameter("id", restaurant_id).list();
 		
+	}
+	
+	public List<RestaurantBean> selectList(){
+		String query = "select new List(restaurant_name, descriptions, price)from RestaurantBean"; //搜尋多的欄位使用 new List()包起來
+		return this.getSession().createQuery(query, RestaurantBean.class).list();
+	}
+	
+	public RestaurantBean selectId(Integer id) {
+		if(id != null) {
+			return this.getSession().get(RestaurantBean.class, id);
+		}
+		return null;
 	}
 	
 }

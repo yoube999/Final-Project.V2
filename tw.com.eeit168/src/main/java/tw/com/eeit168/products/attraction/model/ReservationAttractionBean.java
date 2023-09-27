@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 public class ReservationAttractionBean {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY) //這個用來標記此欄位是自動產生
 	@Column(name = "reservation_attractions_id")
 	private Integer reservation_attractions_id;
 	
@@ -32,7 +32,7 @@ public class ReservationAttractionBean {
 	@Column(name = "total_price")
 	private Integer total_price;
 	
-	@Column(name = "record_attractions_status")
+	@Column(name = "record_attractions_status", columnDefinition = "nvarchar") //如有要用nvarchar必須要有此annotation
 	private String record_attractions_status;
 	
 	

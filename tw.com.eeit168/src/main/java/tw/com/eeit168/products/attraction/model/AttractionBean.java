@@ -12,17 +12,17 @@ import jakarta.persistence.Table;
 public class AttractionBean {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY) //這個用來標記此欄位是自動產生
 	@Column(name = "attractions_id")
 	private Integer attractions_id;
 	
-	@Column(name = "attractions_name", columnDefinition = "nvarchar")
+	@Column(name = "attractions_name", columnDefinition = "nvarchar") //如有要用nvarchar必須要有此annotation
 	private String attractions_name;
 	
-	@Column(name = "attractions_address", columnDefinition = "nvarchar")
+	@Column(name = "attractions_address", columnDefinition = "nvarchar") //如有要用nvarchar必須要有此annotation
 	private String attractions_address;
 	
-	@Column(name = "descriptions", columnDefinition = "nvarchar")
+	@Column(name = "descriptions", columnDefinition = "nvarchar") //如有要用nvarchar必須要有此annotation
 	private String descriptions;
 	
 	@Column(name = "open_time")

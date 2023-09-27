@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 public class AttractionTicketBean {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY) //這個用來標記此欄位是自動產生
 	@Column(name = "attractions_ticket_id")
 	private Integer attractions_ticket_id;
 	
