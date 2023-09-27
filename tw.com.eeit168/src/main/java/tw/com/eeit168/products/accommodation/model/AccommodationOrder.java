@@ -17,7 +17,7 @@ public class AccommodationOrder {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
 	@Column(name = "order_id")
-	private int orderId;
+	private Integer orderId;
 	
 //	@ManyToOne
 	@JoinColumn(name = "record_id", nullable = false)
@@ -25,9 +25,9 @@ public class AccommodationOrder {
 	
 //	@ManyToOne
 	@JoinColumn(name = "accommodation_id", nullable = false)
-	private Integer accommodation;
+	private Integer accommodationId;
 	
-	@Column(name= "room_type_name", nullable = false, columnDefinition = "nvarchar")
+	@Column(name= "room_type_name", nullable = false, columnDefinition = "nvarchar(255)")
 	private String roomTypeName;
 	
 	
@@ -40,14 +40,14 @@ public class AccommodationOrder {
 	@Column(name = "total_price", nullable = false)
 	private int totalPrice;
 	
-	@Column(name = "record_accommodation_status", nullable = false, columnDefinition = "nvarchar")
+	@Column(name = "record_accommodation_status", nullable = false, columnDefinition = "nvarchar(255)")
 	private String recordAccommodationStatus;
 
-	public int getOrderId() {
+	public Integer getOrderId() {
 		return orderId;
 	}
 
-	public void setOrderId(int orderId) {
+	public void setOrderId(Integer orderId) {
 		this.orderId = orderId;
 	}
 
@@ -59,12 +59,12 @@ public class AccommodationOrder {
 		this.recordId = recordId;
 	}
 
-	public Integer getAccommodation() {
-		return accommodation;
+	public Integer getAccommodationId() {
+		return accommodationId;
 	}
 
-	public void setAccommodation(Integer accommodation) {
-		this.accommodation = accommodation;
+	public void setAccommodationId(Integer accommodationId) {
+		this.accommodationId = accommodationId;
 	}
 
 	public String getRoomTypeName() {
@@ -109,12 +109,13 @@ public class AccommodationOrder {
 
 	@Override
 	public String toString() {
-		return "AccommodationOrder [orderId=" + orderId + ", recordId=" + recordId + ", accommodation=" + accommodation
-				+ ", roomTypeName=" + roomTypeName + ", checkedInDate=" + checkedInDate + ", checkedOutDate="
-				+ checkedOutDate + ", totalPrice=" + totalPrice + ", recordAccommodationStatus="
+		return "AccommodationOrder [orderId=" + orderId + ", recordId=" + recordId + ", accommodationId="
+				+ accommodationId + ", roomTypeName=" + roomTypeName + ", checkedInDate=" + checkedInDate
+				+ ", checkedOutDate=" + checkedOutDate + ", totalPrice=" + totalPrice + ", recordAccommodationStatus="
 				+ recordAccommodationStatus + "]";
 	}
 
+	
 	
 	
 	
