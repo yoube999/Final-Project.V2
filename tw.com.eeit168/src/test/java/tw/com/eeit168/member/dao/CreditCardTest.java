@@ -27,7 +27,7 @@ public class CreditCardTest {
         // 创建一个 CreditCardBean 对象并设置相关属性
         CreditCardBean creditCard = new CreditCardBean();
         // 假设信用卡属于会员的 member_profile_id 为 1
-        creditCard.setMemberProfileId(1);        
+        creditCard.setMemberProfileId(2);        
         // 设置信用卡的名称
         creditCard.setCardName("Visa");       
         // 设置信用卡类型
