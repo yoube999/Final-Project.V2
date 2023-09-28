@@ -11,4 +11,6 @@ public interface HelpDeskProcessInterFace {
 	public abstract HelpDeskProcessBean insertComment(HelpDeskProcessBean bean);
 
 	public abstract List<HelpDeskProcessBean> selectTicketCommentById(JSONObject obj);
+	
+	
 }

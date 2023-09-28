@@ -5,6 +5,7 @@ import java.util.List;
 import org.json.JSONObject;
 
 import tw.com.eeit168.helpdesk.model.HelpDeskBean;
+import tw.com.eeit168.member.model.MemberProfileBean;
 
 public interface HelpDeskInterFace {
 
@@ -16,4 +17,5 @@ public interface HelpDeskInterFace {
 
 	public abstract HelpDeskBean modifyHelpdeskStatus(HelpDeskBean bean);
 
+	public abstract List<MemberProfileBean> selectCustomerUser(JSONObject obj);
 }

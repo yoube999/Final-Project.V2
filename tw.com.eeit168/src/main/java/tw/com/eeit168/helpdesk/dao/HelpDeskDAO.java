@@ -15,6 +15,7 @@ import jakarta.persistence.criteria.Order;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import tw.com.eeit168.helpdesk.model.HelpDeskBean;
+import tw.com.eeit168.member.model.MemberProfileBean;
 
 @Repository
 public class HelpDeskDAO implements HelpDeskInterFace {
@@ -114,6 +115,61 @@ public class HelpDeskDAO implements HelpDeskInterFace {
 			return updatedBean; // 返回更新後的 bean
 		}
 		return null;
+	}
+
+	// 案件頁面，客服人員文字輸入框中選擇客服人員下拉選單查詢API
+	@Override
+	public List<MemberProfileBean> selectCustomerUser(JSONObject obj) {
+
+		// 後端收到查詢條件相關Null防呆處理
+		String sortType = obj.isNull("sortType") ? null : obj.getString("sortType"); // 排序欄位
+		String sortOrder = obj.isNull("sortOrder") ? null : obj.getString("sortOrder"); // 查詢排序
+
+		// 後端收到人員等級Null防呆處理
+		Integer member_level = obj.isNull("member_level") ? 99 : obj.getInt("member_level"); // 查詢案件歷程，使用人員等級
+
+		// 這是 Criteria API 的一個關鍵介面，它允許您建立各種查詢條件和表達式，獲取了一個用於建立查詢的 CriteriaBuilder 實例 by
+		// ChatGPT
+		CriteriaBuilder criteriaBuilder = this.getSession().getCriteriaBuilder();
+		// 這是描述 JPA 查詢的主要介面。通過 criteriaBuilder.createQuery(HelpDeskBean.class)。這個
+		// MemberProfileBean.class 告訴查詢你要查詢哪種類型的實體 by ChatGPT
+		CriteriaQuery<MemberProfileBean> criteriaQuery = criteriaBuilder.createQuery(MemberProfileBean.class);
+
+		// from member_profile
+		Root<MemberProfileBean> root = criteriaQuery.from(MemberProfileBean.class);
+
+		// where
+		List<Predicate> predicates = new ArrayList<>();
+
+		if (member_level != null) {
+			predicates.add(criteriaBuilder.equal(root.get("member_level"), member_level));
+		}
+
+		// 將 predicates 列表轉換為 Predicate 數組的目的是傳遞它們給 where 子句以構建查詢的一部分。
+		if (predicates != null && !predicates.isEmpty()) {
+			criteriaQuery = criteriaQuery.where(predicates.toArray(new Predicate[1]));
+		}
+
+		if (sortType != null) {
+			if (sortOrder != null && sortOrder.equalsIgnoreCase("desc")) {
+				Order order = criteriaBuilder.desc(root.get(sortType));
+				criteriaQuery = criteriaQuery.orderBy(order);
+			} else {
+				Order order = criteriaBuilder.asc(root.get(sortType));
+				criteriaQuery = criteriaQuery.orderBy(order);
+			}
+		}
+
+		// 這段程式碼的目的是創建一個TypedQuery<MemberProfileBean>對象，用於執行基於標準的 JPA 查詢 by ChatGPT
+		TypedQuery<MemberProfileBean> typedQuery = this.getSession().createQuery(criteriaQuery);
+
+		List<MemberProfileBean> result = typedQuery.getResultList();
+		if (result != null && !result.isEmpty()) {
+			return result;
+		} else {
+			return null;
+		}
+
 	}
 
 }

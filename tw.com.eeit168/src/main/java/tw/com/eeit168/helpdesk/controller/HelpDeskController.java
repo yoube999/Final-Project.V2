@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import tw.com.eeit168.helpdesk.model.HelpDeskBean;
 import tw.com.eeit168.helpdesk.service.HelpDeskService;
+import tw.com.eeit168.member.model.MemberProfileBean;
 import tw.com.eeit168.products.restaurant.util.DatetimeConverter;
 
 @RestController
@@ -144,6 +145,30 @@ public class HelpDeskController {
 //	        return ResponseEntity.notFound().build();
 //		}
 //	}
+	
+	// 前端點擊特定案件時，透過拿到的helpdesk_id來進行搜尋案件歷程
+	@PostMapping("/selectCustomerUser")
+	public String selectCustomerUser(@RequestBody String json) {
+		JSONObject responseJson = new JSONObject();
+
+		List<MemberProfileBean> CustomerUsers = helpDeskService.selectCustomerUser(json);
+		JSONArray array = new JSONArray();
+		if (CustomerUsers != null && !CustomerUsers.isEmpty()) {
+			for (MemberProfileBean CustomerUser : CustomerUsers) {
+				JSONObject item = new JSONObject()
+						.put("member_profile_id", CustomerUser.getMemberProfileId())
+						.put("username", CustomerUser.getUsername());
+						
+				array = array.put(item);
+			}
+		}
+		responseJson.put("list", array);
+		return responseJson.toString();
+	}
+	
+	
+	
+	
 	
 	
 }
