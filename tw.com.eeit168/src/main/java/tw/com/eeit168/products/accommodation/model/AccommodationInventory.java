@@ -30,7 +30,7 @@ public class AccommodationInventory {
 	private java.sql.Date availabilityDate;
 	
 	@Column(name = "available_rooms")
-	private int availableRooms;
+	private Integer availableRooms;
 
 	public Integer getInventoryId() {
 		return inventoryId;
@@ -64,11 +64,11 @@ public class AccommodationInventory {
 		this.availabilityDate = availabilityDate;
 	}
 
-	public int getAvailableRooms() {
+	public Integer getAvailableRooms() {
 		return availableRooms;
 	}
 
-	public void setAvailableRooms(int availableRooms) {
+	public void setAvailableRooms(Integer availableRooms) {
 		this.availableRooms = availableRooms;
 	}
 
@@ -78,6 +78,8 @@ public class AccommodationInventory {
 				+ ", roomTypeId=" + roomTypeId + ", availabilityDate=" + availabilityDate + ", availableRooms="
 				+ availableRooms + "]";
 	}
+
+	
 
 	
 	

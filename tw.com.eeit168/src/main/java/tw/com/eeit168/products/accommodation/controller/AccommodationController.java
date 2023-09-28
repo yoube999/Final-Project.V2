@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import tw.com.eeit168.products.accommodation.model.Accommodation;
+import tw.com.eeit168.products.accommodation.model.AccommodationInventory;
 import tw.com.eeit168.products.accommodation.service.AccommodationSearchService;
 
 @RestController
@@ -24,5 +25,25 @@ public class AccommodationController {
 			@RequestParam(value = "keyword", required = false) String keyword){
 		List<Accommodation> accommodations = accommodationSearchService.findAccommodationName(keyword);
 		return ResponseEntity.ok(accommodations);
+	}
+	
+	@GetMapping("/searchByCriteria/checkInOutDate")
+	public ResponseEntity<List<AccommodationInventory>> searchAccommodationsByCriteria(
+			@RequestParam(value = "checkInDate") String checkInDate,
+			@RequestParam(value = "checkOutDate") String checkOutDate){
+		
+		// Convert the checkInDate from string to java.sql.Date
+		java.sql.Date sqlCheckInDate = java.sql.Date.valueOf(checkInDate);
+		java.sql.Date sqlCheckOutDate = java.sql.Date.valueOf(checkOutDate);
+		List<AccommodationInventory> inventoryByDate = accommodationSearchService.findAccommodationsByDate(sqlCheckInDate, sqlCheckOutDate);
+		return ResponseEntity.ok(inventoryByDate);
+	}
+	@GetMapping("/searchByCriteria/requiredRooms")
+	public ResponseEntity<List<AccommodationInventory>> searchAccommodationsByCriteria(
+			@RequestParam(value = "requiredRooms") Integer requiredRooms){
+		
+		// Convert the checkInDate from string to java.sql.Date
+		List<AccommodationInventory> inventoryByRooms = accommodationSearchService.findAccommodationsByRooms(requiredRooms);
+		return ResponseEntity.ok(inventoryByRooms);
 	}
 }
