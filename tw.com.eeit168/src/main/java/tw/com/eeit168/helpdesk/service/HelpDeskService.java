@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import tw.com.eeit168.helpdesk.dao.HelpDeskDAO;
-import tw.com.eeit168.helpdesk.dao.HelpDeskInterFace;
 import tw.com.eeit168.helpdesk.model.HelpDeskBean;
 
 @Service
