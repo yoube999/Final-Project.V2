@@ -2,12 +2,9 @@ package tw.com.eeit168.helpdesk.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import tw.com.eeit168.helpdesk.dao.HelpDeskDAO;
 import tw.com.eeit168.helpdesk.dao.HelpDeskInterFace;
 import tw.com.eeit168.helpdesk.model.HelpDeskBean;
 
@@ -23,7 +21,7 @@ import tw.com.eeit168.helpdesk.model.HelpDeskBean;
 public class HelpDeskService {
 
 	@Autowired
-	private HelpDeskInterFace helpDeskInterFace = null;
+	private HelpDeskDAO helpDeskDAO;
 
 	// 宣告存放圖片的實體路徑
 	private static final String IMAGE_UPLOAD_PATH = "C:\\Final-Project-workspace\\images\\";
@@ -59,7 +57,7 @@ public class HelpDeskService {
 			// 建立案件時取得Loacl當下時間
 			insert.setCreatetime(new java.util.Date());
 
-			return helpDeskInterFace.insert(insert);
+			return helpDeskDAO.insert(insert);
 
 		} catch (JSONException e) {
 			// 需改寫成跳轉至錯誤頁面
@@ -105,7 +103,7 @@ public class HelpDeskService {
 			// 建立案件時取得Loacl當下時間
 			insert.setCreatetime(new java.util.Date());
 
-			return helpDeskInterFace.insert(insert);
+			return helpDeskDAO.insert(insert);
 
 		} catch (JSONException e) {
 			// 需改寫成跳轉至錯誤頁面
@@ -155,7 +153,7 @@ public class HelpDeskService {
 	public List<HelpDeskBean> selectTicket(String json) {
 		try {
 			JSONObject obj = new JSONObject(json);
-			return helpDeskInterFace.selectTicket(obj);
+			return helpDeskDAO.selectTicket(obj);
 		} catch (JSONException e) {
 			// 需改寫成跳轉至錯誤頁面
 			e.printStackTrace();
@@ -165,7 +163,7 @@ public class HelpDeskService {
 
 	// 查詢特定案件
 	public HelpDeskBean selectTicketById(Integer helpdesk_id) {
-		return helpDeskInterFace.selectTicketById(helpdesk_id);
+		return helpDeskDAO.selectTicketById(helpdesk_id);
 	}
 
 	// 透過點擊前端按鈕來變更案件狀態和人員
@@ -177,41 +175,36 @@ public class HelpDeskService {
 		Integer member_profile_id = obj.getInt("member_profile_id");
 		
 		
-		HelpDeskBean update = helpDeskInterFace.selectTicketById(helpdesk_id);
+		HelpDeskBean update = helpDeskDAO.selectTicketById(helpdesk_id);
 		if(update != null && helpdesk_status != null && member_profile_id != null) {
 			update.setHelpdesk_status(helpdesk_status);
 			update.setMember_profile_id(member_profile_id);
 			
-			return helpDeskInterFace.modifyHelpdeskStatus(update);		
+			return helpDeskDAO.modifyHelpdeskStatus(update);		
 		}
 		return null;
 	}
 	
 	
-	// 顯示案件內容時，畫面上顯示圖片url，點擊後開啟圖片
-	public byte[] selectPicture(Integer helpdesk_id) {
-		
-		// 先查詢該案件資料，取得附件URL
-		HelpDeskBean pictureURL = helpDeskInterFace.selectTicketById(helpdesk_id);
-		if(pictureURL != null && helpdesk_id != null && pictureURL.getAttachment() != null) {
-			
-			try {
-				// 將字串轉換為位元組數組
-				byte[] imageData = pictureURL.getAttachment().getBytes(StandardCharsets.UTF_8);
-				return imageData;
-			} catch (Exception e) {
-				// 需改寫成跳轉至錯誤頁面
-				e.printStackTrace();
-				return null;
-			}
-		}
-		return null;
-	}
-	
-	
-	
-	
-	
+//	// 顯示案件內容時，畫面上顯示圖片url，點擊後開啟圖片
+//	public byte[] selectPicture(Integer helpdesk_id) {
+//		
+//		// 先查詢該案件資料，取得附件URL
+//		HelpDeskBean pictureURL = helpDeskInterFace.selectTicketById(helpdesk_id);
+//		if(pictureURL != null && helpdesk_id != null && pictureURL.getAttachment() != null) {
+//			
+//			try {
+//				// 將字串轉換為位元組數組
+//				byte[] imageData = pictureURL.getAttachment().getBytes(StandardCharsets.UTF_8);
+//				return imageData;
+//			} catch (Exception e) {
+//				// 需改寫成跳轉至錯誤頁面
+//				e.printStackTrace();
+//				return null;
+//			}
+//		}
+//		return null;
+//	}
 	
 	
 	

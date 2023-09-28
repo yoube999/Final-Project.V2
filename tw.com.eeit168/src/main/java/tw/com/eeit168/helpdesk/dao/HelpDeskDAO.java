@@ -110,20 +110,10 @@ public class HelpDeskDAO implements HelpDeskInterFace {
 	public HelpDeskBean modifyHelpdeskStatus(HelpDeskBean bean) {
 		if (bean != null) {
 			// 使用 merge 更新 bean
-	        HelpDeskBean updatedBean = (HelpDeskBean) this.getSession().merge(bean);
-	        return updatedBean; // 返回更新後的 bean
+			HelpDeskBean updatedBean = (HelpDeskBean) this.getSession().merge(bean);
+			return updatedBean; // 返回更新後的 bean
 		}
 		return null;
 	}
-
-//	@Override
-//	public HelpDeskBean selectPicture(HelpDeskBean bean) {
-//		
-//		
-//		
-//		
-//		
-//		return null;
-//	}
 
 }

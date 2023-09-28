@@ -132,25 +132,25 @@ public class HelpDeskController {
 
 	
 	// 顯示案件內容時，畫面上顯示圖片URL
-	@GetMapping("/selectPicture/{helpdesk_id}")
-	// 使用 ResponseEntity<Resource> 是一種通用的方式來處理 HTTP 響應，特別是用於處理二進制數據，例如圖片文件。
-	public ResponseEntity<byte[]> selectPicture(@PathVariable Integer helpdesk_id) {
-		
-		byte[] pictureURL = helpDeskService.selectPicture(helpdesk_id);
-		
-		System.out.println(pictureURL);
-		
-		if(pictureURL != null) {
-			
-			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.IMAGE_JPEG);
-			
-			return new ResponseEntity<>(pictureURL, headers, HttpStatus.OK);
-		} else {
-			// 如果找不到圖片或有其他錯誤，返回 404 錯誤
-	        return ResponseEntity.notFound().build();
-		}
-	}
+//	@GetMapping("/selectPicture/{helpdesk_id}")
+//	// 使用 ResponseEntity<Resource> 是一種通用的方式來處理 HTTP 響應，特別是用於處理二進制數據，例如圖片文件。
+//	public ResponseEntity<byte[]> selectPicture(@PathVariable Integer helpdesk_id) {
+//		
+//		byte[] pictureURL = helpDeskService.selectPicture(helpdesk_id);
+//		
+//		System.out.println(pictureURL);
+//		
+//		if(pictureURL != null) {
+//			
+//			HttpHeaders headers = new HttpHeaders();
+//			headers.setContentType(MediaType.IMAGE_JPEG);
+//			
+//			return new ResponseEntity<>(pictureURL, headers, HttpStatus.OK);
+//		} else {
+//			// 如果找不到圖片或有其他錯誤，返回 404 錯誤
+//	        return ResponseEntity.notFound().build();
+//		}
+//	}
 	
 	
 }
