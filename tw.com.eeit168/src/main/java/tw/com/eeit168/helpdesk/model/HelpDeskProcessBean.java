@@ -28,6 +28,9 @@ public class HelpDeskProcessBean {
 	@Column(name = "member_profile_id")
 	private Integer member_profile_id;
 
+	@Column(name = "createtime")
+	private java.util.Date createtime;
+
 	public Integer getHelpdesk_process_id() {
 		return helpdesk_process_id;
 	}
@@ -68,11 +71,19 @@ public class HelpDeskProcessBean {
 		this.member_profile_id = member_profile_id;
 	}
 
+	public java.util.Date getCreatetime() {
+		return createtime;
+	}
+
+	public void setCreatetime(java.util.Date createtime) {
+		this.createtime = createtime;
+	}
+
 	@Override
 	public String toString() {
 		return "HelpDeskProcessBean [helpdesk_process_id=" + helpdesk_process_id + ", helpdesk_id=" + helpdesk_id
 				+ ", process_description=" + process_description + ", attachment=" + attachment + ", member_profile_id="
-				+ member_profile_id + "]";
+				+ member_profile_id + ", createtime=" + createtime + "]";
 	}
 
 }

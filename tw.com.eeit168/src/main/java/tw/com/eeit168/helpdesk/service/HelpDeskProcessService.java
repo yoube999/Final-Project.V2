@@ -28,14 +28,14 @@ public class HelpDeskProcessService {
 			String attachment = obj.isNull("attachment") ? null : obj.getString("attachment");
 			Integer member_profile_id = obj.getInt("member_profile_id");
 
-			System.out.println(helpdesk_id);
 			
 			HelpDeskProcessBean insert = new HelpDeskProcessBean();
 			insert.setHelpdesk_id(helpdesk_id);
 			insert.setProcess_description(process_description);
 			insert.setAttachment(attachment);
 			insert.setMember_profile_id(member_profile_id);
-			
+			// 送出留言時取得Loacl當下時間
+			insert.setCreatetime(new java.util.Date());
 
 			return helpDeskProcessDAO.insertComment(insert);
 		} catch (JSONException e) {
