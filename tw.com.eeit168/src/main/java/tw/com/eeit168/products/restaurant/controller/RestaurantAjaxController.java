@@ -5,22 +5,27 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import tw.com.eeit168.products.restaurant.model.RestaurantBean;
+import tw.com.eeit168.products.restaurant.model.SelectRestaurantInventoryView;
+import tw.com.eeit168.products.restaurant.service.BlurFindRestaurant;
 import tw.com.eeit168.products.restaurant.service.RestaurantRepositoryService;
 
-@RestController
+@RestController //@Controller+@ResponseBody
 @RequestMapping(path = {"/products"})
 public class RestaurantAjaxController {
 	
 	@Autowired
 	private RestaurantRepositoryService restaurantRepositoryService;
+	
+	@Autowired
+	private BlurFindRestaurant blurFindRestaurant;
 	
 	@GetMapping(path = {"/restaurants/{restaurant_id}"})
 	public String findById(@PathVariable(name = "restaurant_id") Integer id) {
@@ -63,6 +68,27 @@ public class RestaurantAjaxController {
 		responseJson.put("list", array);
 		return responseJson.toString();
 	}
+
+	
+	@GetMapping(path = {"/restaurants/search"}) //模糊搜尋
+	public String blurFind(@RequestParam(value = "keyword", required = false) String keyword){
+		JSONObject responseJson = new JSONObject();
+		JSONArray array = new JSONArray();
+		List<SelectRestaurantInventoryView> result = blurFindRestaurant.blurFind(keyword);
+		if(result != null && !result.isEmpty()) {
+			for(SelectRestaurantInventoryView restaurant : result) {
+				JSONObject item = new JSONObject()
+					.put("restaurant_Inventory_id", restaurant.getRestaurant_Inventory_id())
+					.put("restaurant_name", restaurant.getRestaurant_name())
+					.put("restaurant_address", restaurant.getRestaurant_address())
+					.put("availability_date", restaurant.getAvailability_date());
+				array = array.put(item);
+			}
+		}
+		responseJson.put("list", array);
+		return responseJson.toString();
+	}
+	
 	
 //	@GetMapping(path = {"/restaurants"}) //這是restful
 //	public ResponseEntity<?> findAll() {

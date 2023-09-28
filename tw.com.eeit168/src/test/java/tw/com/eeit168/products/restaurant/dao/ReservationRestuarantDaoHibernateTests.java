@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tw.com.eeit168.products.restaurant.model.ReservationRestuarantBean;
 
 @SpringBootTest
-@Transactional
+@Transactional //執行完以後rollback
 public class ReservationRestuarantDaoHibernateTests {
 
 	@Autowired

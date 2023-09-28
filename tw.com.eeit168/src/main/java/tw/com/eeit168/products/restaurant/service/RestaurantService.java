@@ -3,13 +3,12 @@ package tw.com.eeit168.products.restaurant.service;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import jakarta.persistence.PersistenceContext;
 import tw.com.eeit168.products.restaurant.model.RestaurantBean;
 
-@Service
+@Service //註解類別處理運算邏輯(企業邏輯)
 public class RestaurantService {
 
 	@PersistenceContext
@@ -18,7 +17,7 @@ public class RestaurantService {
 	public Session getSession() {
 		return session;
 	}
-		
+
 	public List<RestaurantBean> selectName(String restaurant_name) {
 		String query = "from RestaurantBean where restaurant_name = :name";
 		return this.getSession().createQuery(query, RestaurantBean.class).setParameter("name", restaurant_name).list();

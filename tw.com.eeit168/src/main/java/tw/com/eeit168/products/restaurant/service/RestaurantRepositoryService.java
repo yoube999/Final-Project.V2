@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tw.com.eeit168.products.restaurant.model.RestaurantBean;
 import tw.com.eeit168.products.restaurant.repository.RestaurantRepository;
 
-@Service
+@Service //註解類別處理運算邏輯(企業邏輯)
 @Transactional
 public class RestaurantRepositoryService {
 	
