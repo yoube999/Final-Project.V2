@@ -45,7 +45,7 @@ public class MemberProfileService {
 
             // 检查是否存在重复的用户帐户
             if (isUserAccountDuplicate(user_account)) {
-                throw new RuntimeException("使用者帳戶已存在"); // 抛出异常
+                throw new RuntimeException("使用者帳號已存在"); // 抛出异常
             }
 
             // 其余的注册逻辑
@@ -164,18 +164,18 @@ public class MemberProfileService {
                     memberProfileInterFace.update(existingMember);
 
                     if (existingMember.getUser_password().equals(user_password)) {
-                        System.out.println("密码已成功更改！");
+                        System.out.println("密碼已成功更改！");
                     } else {
-                        throw new RuntimeException("密码未成功更改");
+                        throw new RuntimeException("密碼未成功更改");
                     }
                 } else {
-                    throw new RuntimeException("验证码错误或已过期");
+                    throw new RuntimeException("驗證碼錯誤或已過期");
                 }
             } else {
-                throw new RuntimeException("找不到要更改密码的会员");
+                throw new RuntimeException("找不到要更改密碼的會員");
             }
         } catch (RuntimeException e) {
-            System.out.println("异常消息：" + e.getMessage());
+            System.out.println("異常消息：" + e.getMessage());
             throw e;
         }
     }

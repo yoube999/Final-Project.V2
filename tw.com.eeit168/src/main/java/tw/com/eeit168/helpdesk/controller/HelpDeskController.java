@@ -59,10 +59,8 @@ public class HelpDeskController {
 				String createtime = DatetimeConverter.toString(helpdesk.getCreatetime(), "yyyy-MM-dd HH:mm:ss");
 				JSONObject item = new JSONObject()
 						// helpdesk_id為了給前端抓取使用，帶入selectTicketById，不顯示於前端頁面
-						.put("helpdesk_id", helpdesk.getHelpdesk_id())
-						.put("customer_name", helpdesk.getCustomer_name())
-						.put("subject_line", helpdesk.getSubject_line())
-						.put("createtime", createtime);
+						.put("helpdesk_id", helpdesk.getHelpdesk_id()).put("customer_name", helpdesk.getCustomer_name())
+						.put("subject_line", helpdesk.getSubject_line()).put("createtime", createtime);
 				array = array.put(item);
 			}
 		}
@@ -72,47 +70,39 @@ public class HelpDeskController {
 
 	// 前端點擊特定案件時，透過拿到的helpdesk_id來進行搜尋
 	@GetMapping("/selectTicket/{helpdesk_id}")
-	public String selectTicketById(@PathVariable(name="helpdesk_id") Integer helpdesk_id) {
+	public String selectTicketById(@PathVariable(name = "helpdesk_id") Integer helpdesk_id) {
 		JSONObject responseJson = new JSONObject();
 		JSONArray array = new JSONArray();
 		HelpDeskBean helpdesk = helpDeskService.selectTicketById(helpdesk_id);
-		if(helpdesk != null) {
-			
-				String createtime = DatetimeConverter.toString(helpdesk.getCreatetime(), "yyyy-MM-dd HH:mm:ss");
-				JSONObject item = new JSONObject()
-						.put("customer_name", helpdesk.getCustomer_name())
-						.put("record_id", helpdesk.getRecord_id())
-						.put("subject_line", helpdesk.getSubject_line())
-						.put("descriptions", helpdesk.getDescriptions())
-						.put("contact_number", helpdesk.getContact_number())
-						.put("email", helpdesk.getEmail())
-						.put("way_to_contact", helpdesk.getWay_to_contact())
-						.put("attachment", helpdesk.getAttachment())
-						.put("member_profile_id", helpdesk.getMember_profile_id())
-						.put("createtime", createtime);
-				array = array.put(item);	
-			
+		if (helpdesk != null) {
+
+			String createtime = DatetimeConverter.toString(helpdesk.getCreatetime(), "yyyy-MM-dd HH:mm:ss");
+			JSONObject item = new JSONObject().put("customer_name", helpdesk.getCustomer_name())
+					.put("record_id", helpdesk.getRecord_id()).put("subject_line", helpdesk.getSubject_line())
+					.put("descriptions", helpdesk.getDescriptions()).put("contact_number", helpdesk.getContact_number())
+					.put("email", helpdesk.getEmail()).put("way_to_contact", helpdesk.getWay_to_contact())
+					.put("attachment", helpdesk.getAttachment())
+					.put("member_profile_id", helpdesk.getMember_profile_id()).put("createtime", createtime);
+			array = array.put(item);
+
 		}
 		responseJson.put("list", array);
 		return responseJson.toString();
 	}
 
-	
 	// 透過點擊前端按鈕來變更案件狀態和人員
 	@PutMapping("/modifyHelpdeskStatus/{helpdesk_id}")
-	public String modifyHelpdeskStatus(
-			@PathVariable Integer helpdesk_id,
-			@RequestBody String json) {
+	public String modifyHelpdeskStatus(@PathVariable Integer helpdesk_id, @RequestBody String json) {
 		JSONObject responseJson = new JSONObject();
-				
+
 		// 若前端送的helpdesk_id找不到時需顯示錯誤訊息
-		if(helpDeskService.selectTicketById(helpdesk_id) == null) {
+		if (helpDeskService.selectTicketById(helpdesk_id) == null) {
 			responseJson.put("message", "接受案件失敗，請聯絡IT人員");
 			responseJson.put("success", false);
 		} else {
 			HelpDeskBean helpdesk = helpDeskService.modifyHelpdeskStatus(json);
-			
-			if(helpdesk != null) {
+
+			if (helpdesk != null) {
 				responseJson.put("message", "接受案件成功!");
 				responseJson.put("success", true);
 			} else {
@@ -124,7 +114,6 @@ public class HelpDeskController {
 		return responseJson.toString();
 	}
 
-	
 	// 顯示案件內容時，畫面上顯示圖片URL
 //	@GetMapping("/selectPicture/{helpdesk_id}")
 //	// 使用 ResponseEntity<Resource> 是一種通用的方式來處理 HTTP 響應，特別是用於處理二進制數據，例如圖片文件。
@@ -145,7 +134,7 @@ public class HelpDeskController {
 //	        return ResponseEntity.notFound().build();
 //		}
 //	}
-	
+
 	// 前端點擊特定案件時，透過拿到的helpdesk_id來進行搜尋案件歷程
 	@PostMapping("/selectCustomerUser")
 	public String selectCustomerUser(@RequestBody String json) {
@@ -155,20 +144,35 @@ public class HelpDeskController {
 		JSONArray array = new JSONArray();
 		if (CustomerUsers != null && !CustomerUsers.isEmpty()) {
 			for (MemberProfileBean CustomerUser : CustomerUsers) {
-				JSONObject item = new JSONObject()
-						.put("member_profile_id", CustomerUser.getMemberProfileId())
+				JSONObject item = new JSONObject().put("member_profile_id", CustomerUser.getMemberProfileId())
 						.put("username", CustomerUser.getUsername());
-						
+
 				array = array.put(item);
 			}
 		}
 		responseJson.put("list", array);
 		return responseJson.toString();
 	}
-	
-	
-	
-	
-	
-	
+
+	// 客服人員寄送Email回覆客戶
+	@PostMapping("/sendEmail")
+	public String sendEmail(@RequestBody String json) {
+		JSONObject responseJson = new JSONObject();
+
+		
+		// 使用boolean判斷寄送信件成功失敗
+		boolean sendEmail = helpDeskService.sendEmail(json);
+		if (sendEmail == true) {
+			// 若前端收到true時需顯示成功訊息
+			responseJson.put("message", "寄送信件成功");
+			responseJson.put("success", true);
+		} else {
+			// 若前端收到true時需顯示成功訊息
+			responseJson.put("message", "寄送信件失敗，請聯繫IT人員");
+			responseJson.put("success", false);
+		}
+
+		return responseJson.toString();
+	}
+
 }
