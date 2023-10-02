@@ -24,13 +24,19 @@ public class SelectRestaurantInventoryView {
 	
 	@Column(name = "availability_date")
 	private java.sql.Date availability_date;
+	
+	@Column(name = "lunch")
+	private Integer lunch;
+	
+	@Column(name = "dinner")
+	private Integer dinner;
 
 	
 	@Override
 	public String toString() {
 		return "SelectRestaurantInventoryView [restaurant_Inventory_id=" + restaurant_Inventory_id
 				+ ", restaurant_name=" + restaurant_name + ", restaurant_address=" + restaurant_address
-				+ ", availability_date=" + availability_date + "]";
+				+ ", availability_date=" + availability_date + ", lunch=" + lunch + ", dinner=" + dinner + "]";
 	}
 
 
@@ -58,5 +64,17 @@ public class SelectRestaurantInventoryView {
 	public void setAvailability_date(java.sql.Date availability_date) {
 		this.availability_date = availability_date;
 	}
+	public Integer getLunch() {
+		return lunch;
+	}
+	public void setLunch(Integer lunch) {
+		this.lunch = lunch;
+	}
+	public Integer getDinner() {
+		return dinner;
+	}
+	public void setDinner(Integer dinner) {
+		this.dinner = dinner;
+	}	
 
 }

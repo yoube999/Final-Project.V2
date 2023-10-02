@@ -24,16 +24,22 @@ public class SelectAttractionsInventoryView {
 	
 	@Column(name = "availability_date")
 	private java.sql.Date availability_date;
+	
+	@Column(name = "adult")
+	private Integer adult;
+	
+	@Column(name = "child")
+	private Integer child;
 
 	
 	@Override
 	public String toString() {
 		return "SelectAttractionsInventoryView [attractions_inventory_id=" + attractions_inventory_id
 				+ ", attractions_name=" + attractions_name + ", attractions_address=" + attractions_address
-				+ ", availability_date=" + availability_date + "]";
+				+ ", availability_date=" + availability_date + ", adult=" + adult + ", child=" + child + "]";
 	}
 
-	
+
 	public Integer getAttractions_inventory_id() {
 		return attractions_inventory_id;
 	}
@@ -57,6 +63,18 @@ public class SelectAttractionsInventoryView {
 	}
 	public void setAvailability_date(java.sql.Date availability_date) {
 		this.availability_date = availability_date;
+	}
+	public Integer getAdult() {
+		return adult;
+	}
+	public void setAdult(Integer adult) {
+		this.adult = adult;
+	}
+	public Integer getChild() {
+		return child;
+	}
+	public void setChild(Integer child) {
+		this.child = child;
 	}
 
 }

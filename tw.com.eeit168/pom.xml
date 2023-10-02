@@ -17,6 +17,14 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+		<!--
+>>>>>>> Stashed changes
+=======
+		<!--
+>>>>>>> Stashed changes
 		<dependency>
 			<groupId>jakarta.mail</groupId>
 			<artifactId>jakarta.mail-api</artifactId>
@@ -35,6 +43,50 @@
 		</dependency> <!-- 或者使用適當的版本號 -->
 		
 		<dependency>
+<<<<<<< Updated upstream
+=======
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		-->
+<<<<<<< Updated upstream
+=======
+		<dependency>
+			<groupId>jakarta.mail</groupId>
+			<artifactId>jakarta.mail-api</artifactId>
+			<version>2.0.1</version> <!-- 使用最新版本 -->
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.6.2</version> <!-- 或者使用適當的版本號 -->
+		</dependency>
+>>>>>>> Stashed changes
+		<dependency>
+			<groupId>jakarta.mail</groupId>
+			<artifactId>jakarta.mail-api</artifactId>
+			<version>2.0.1</version> <!-- 使用最新版本 -->
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.6.2</version> <!-- 或者使用適當的版本號 -->
+		</dependency>
+		<dependency>
+>>>>>>> Stashed changes
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20230618</version>
@@ -76,6 +128,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.10.1</version>
 		</dependency>
 
 
