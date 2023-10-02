@@ -258,7 +258,9 @@ public class HelpDeskService {
 			return false;
 		} catch (MessagingException e) {
 			// 處理異常，需再加上錯誤處理跳轉頁面
-			throw new RuntimeException("發送信件失敗：" + e.getMessage());
+//			throw new RuntimeException("發送信件失敗：" + e.getMessage());
+			e.printStackTrace();
+			return false;
 		}
 
 	}
