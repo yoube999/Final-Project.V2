@@ -21,11 +21,15 @@ public class HelpDeskRecordBean {
 
 	@Column(name = "return_title", columnDefinition = "nvarchar")
 	private String return_title;
+	
+	@Column(name = "member_profile_id")
+	private Integer member_profile_id;
+	
 
 	@Override
 	public String toString() {
 		return "HelpDeskRecordBean [record_id=" + record_id + ", username=" + username + ", return_title="
-				+ return_title + "]";
+				+ return_title + ", member_profile_id=" + member_profile_id + "]";
 	}
 
 	public Integer getRecord_id() {
@@ -50,6 +54,14 @@ public class HelpDeskRecordBean {
 
 	public void setReturn_title(String return_title) {
 		this.return_title = return_title;
+	}
+
+	public Integer getMember_profile_id() {
+		return member_profile_id;
+	}
+
+	public void setMember_profile_id(Integer member_profile_id) {
+		this.member_profile_id = member_profile_id;
 	}
 
 	

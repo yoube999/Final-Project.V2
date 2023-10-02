@@ -36,7 +36,8 @@ public class HelpDeskRecordController {
 			for(HelpDeskRecordBean helpDeskRecord : helpDeskRecords) {
 				JSONObject item = new JSONObject()
 						.put("username", helpDeskRecord.getUsername())
-						.put("return_title", helpDeskRecord.getReturn_title());
+						.put("return_title", helpDeskRecord.getReturn_title())
+						.put("member_profile_id", helpDeskRecord.getMember_profile_id());
 						
 				array = array.put(item);
 			}
