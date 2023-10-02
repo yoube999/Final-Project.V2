@@ -18,7 +18,11 @@ public class HelpDeskProcessService {
 	@Autowired
 	private HelpDeskProcessDAO helpDeskProcessDAO;
 
-	// 客服人員送出留言，建立歷程
+	/**
+	 * 客服人員送出留言，建立歷程
+	 * 
+	 * 
+	 */
 	public HelpDeskProcessBean insertComment(String json) {
 
 		try {
@@ -48,7 +52,11 @@ public class HelpDeskProcessService {
 		return null;
 	}
 
-	// 前端點擊特定案件時，透過拿到的helpdesk_id來進行搜尋案件歷程
+	/**
+	 * 前端點擊特定案件時，透過拿到的helpdesk_id來進行搜尋案件歷程
+	 * 
+	 * 
+	 */
 	public List<HelpDeskProcessBean> selectTicketCommentById(String json) {
 
 		try {

@@ -27,7 +27,11 @@ public class HelpDeskDAO implements HelpDeskInterFace {
 		return session;
 	}
 
-	// 寫入案件單至資料庫
+	/**
+	 * 寫入案件單至資料庫
+	 * 
+	 * 
+	 */
 	@Override
 	public HelpDeskBean insert(HelpDeskBean bean) {
 		if (bean != null) {
@@ -38,7 +42,11 @@ public class HelpDeskDAO implements HelpDeskInterFace {
 		return null;
 	}
 
-	// 查詢案件，使用List實作，前端收到List再從裡面取得資訊顯示
+	/**
+	 * 查詢案件，使用List實作，前端收到List再從裡面取得資訊顯示
+	 * 
+	 * 
+	 */
 	@Override
 	public List<HelpDeskBean> selectTicket(JSONObject obj) {
 
@@ -97,7 +105,11 @@ public class HelpDeskDAO implements HelpDeskInterFace {
 
 	}
 
-	// 前端點擊特定案件時，透過拿到的helpdesk_id來進行搜尋
+	/**
+	 * 前端點擊特定案件時，透過拿到的helpdesk_id來進行搜尋
+	 * 
+	 * 
+	 */
 	@Override
 	public HelpDeskBean selectTicketById(Integer helpdesk_id) {
 		if (helpdesk_id != null) {
@@ -106,7 +118,11 @@ public class HelpDeskDAO implements HelpDeskInterFace {
 		return null;
 	}
 
-	// 透過點擊前端按鈕來變更案件狀態和人員
+	/**
+	 * 透過點擊前端按鈕來變更案件狀態和人員
+	 * 
+	 * 
+	 */
 	@Override
 	public HelpDeskBean modifyHelpdeskStatus(HelpDeskBean bean) {
 		if (bean != null) {
@@ -117,7 +133,11 @@ public class HelpDeskDAO implements HelpDeskInterFace {
 		return null;
 	}
 
-	// 案件頁面，客服人員文字輸入框中選擇客服人員下拉選單查詢API
+	/**
+	 * 案件頁面，客服人員文字輸入框中選擇客服人員下拉選單查詢API
+	 * 
+	 * 
+	 */
 	@Override
 	public List<MemberProfileBean> selectCustomerUser(JSONObject obj) {
 

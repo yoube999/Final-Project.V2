@@ -28,7 +28,11 @@ public class HelpDeskController {
 	@Autowired
 	private HelpDeskService helpDeskService;
 
-	// 寫入案件，用多載方式(overloading)來判斷接收格式
+	/**
+	 * 寫入案件，用多載方式(overloading)來判斷接收格式
+	 * 
+	 * 
+	 */
 	@PostMapping("/createTicket")
 	public String createTicket(@RequestBody(required = true) String json,
 			@RequestPart(required = false) MultipartFile image) {
@@ -47,7 +51,11 @@ public class HelpDeskController {
 		return responseJson.toString();
 	}
 
-	// 查詢案件，透過前端點擊案件分類夾顯示不同狀態的案件標題
+	/**
+	 * 查詢案件，透過前端點擊案件分類夾顯示不同狀態的案件標題
+	 * 
+	 * 
+	 */
 	@PostMapping("/selectTicket")
 	public String selectTicket(@RequestBody String json) {
 		JSONObject responseJson = new JSONObject();
@@ -68,7 +76,11 @@ public class HelpDeskController {
 		return responseJson.toString();
 	}
 
-	// 前端點擊特定案件時，透過拿到的helpdesk_id來進行搜尋
+	/**
+	 * 前端點擊特定案件時，透過拿到的helpdesk_id來進行搜尋
+	 * 
+	 * 
+	 */
 	@GetMapping("/selectTicket/{helpdesk_id}")
 	public String selectTicketById(@PathVariable(name = "helpdesk_id") Integer helpdesk_id) {
 		JSONObject responseJson = new JSONObject();
@@ -90,7 +102,11 @@ public class HelpDeskController {
 		return responseJson.toString();
 	}
 
-	// 透過點擊前端按鈕來變更案件狀態和人員
+	/**
+	 * 透過點擊前端按鈕來變更案件狀態和人員
+	 * 
+	 * 
+	 */
 	@PutMapping("/modifyHelpdeskStatus/{helpdesk_id}")
 	public String modifyHelpdeskStatus(@PathVariable Integer helpdesk_id, @RequestBody String json) {
 		JSONObject responseJson = new JSONObject();
@@ -114,7 +130,11 @@ public class HelpDeskController {
 		return responseJson.toString();
 	}
 
-	// 顯示案件內容時，畫面上顯示圖片URL
+	/**
+	 *  顯示案件內容時，畫面上顯示圖片URL
+	 * 
+	 * 
+	 */
 //	@GetMapping("/selectPicture/{helpdesk_id}")
 //	// 使用 ResponseEntity<Resource> 是一種通用的方式來處理 HTTP 響應，特別是用於處理二進制數據，例如圖片文件。
 //	public ResponseEntity<byte[]> selectPicture(@PathVariable Integer helpdesk_id) {
@@ -135,7 +155,12 @@ public class HelpDeskController {
 //		}
 //	}
 
-	// 前端點擊特定案件時，透過拿到的helpdesk_id來進行搜尋案件歷程
+	
+	/**
+	 * 前端點擊特定案件時，透過拿到的helpdesk_id來進行搜尋案件歷程
+	 * 
+	 * 
+	 */
 	@PostMapping("/selectCustomerUser")
 	public String selectCustomerUser(@RequestBody String json) {
 		JSONObject responseJson = new JSONObject();
@@ -154,7 +179,12 @@ public class HelpDeskController {
 		return responseJson.toString();
 	}
 
-	// 客服人員寄送Email回覆客戶
+	
+	/**
+	 * 客服人員寄送Email回覆客戶
+	 * 
+	 * 
+	 */
 	@PostMapping("/sendEmail")
 	public String sendEmail(@RequestBody String json) {
 		JSONObject responseJson = new JSONObject();

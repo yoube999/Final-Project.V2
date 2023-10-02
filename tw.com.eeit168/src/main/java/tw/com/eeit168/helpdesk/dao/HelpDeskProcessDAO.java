@@ -26,7 +26,11 @@ public class HelpDeskProcessDAO implements HelpDeskProcessInterFace {
 		return session;
 	}
 
-	// 寫入案件歷程至資料庫
+	/**
+	 * 寫入案件歷程至資料庫
+	 * 
+	 * 
+	 */
 	@Override
 	public HelpDeskProcessBean insertComment(HelpDeskProcessBean bean) {
 		if (bean != null) {
@@ -38,7 +42,11 @@ public class HelpDeskProcessDAO implements HelpDeskProcessInterFace {
 		return null;
 	}
 
-	// 前端點擊特定案件時，透過拿到的helpdesk_id來進行搜尋案件歷程
+	/**
+	 * 前端點擊特定案件時，透過拿到的helpdesk_id來進行搜尋案件歷程
+	 * 
+	 * 
+	 */
 	@Override
 	public List<HelpDeskProcessBean> selectTicketCommentById(JSONObject obj) {
 

@@ -37,7 +37,12 @@ public class HelpDeskService {
 	// 宣告存放圖片的實體路徑
 	private static final String IMAGE_UPLOAD_PATH = "C:\\Final-Project-workspace\\images\\";
 
-	// 寫入案件單，需再加上圖片上傳功能
+	
+	/**
+	 * 寫入案件單，需再加上圖片上傳功能
+	 * 
+	 * 
+	 */
 	public HelpDeskBean createTicket(String json) {
 
 		try {
@@ -78,7 +83,11 @@ public class HelpDeskService {
 		return null;
 	}
 
-	// 寫入案件單，使用多載方式，當有上傳圖片時走此邏輯
+	/**
+	 * 寫入案件單，使用多載方式，當有上傳圖片時走此邏輯
+	 * 
+	 * 
+	 */
 	public HelpDeskBean createTicket(String json, MultipartFile image) {
 
 		try {
@@ -124,7 +133,11 @@ public class HelpDeskService {
 		return null;
 	}
 
-	// 上傳圖片邏輯
+	/**
+	 * 上傳圖片邏輯
+	 * 
+	 * 
+	 */
 	private String saveImages(MultipartFile image) {
 
 		try {
@@ -160,7 +173,11 @@ public class HelpDeskService {
 		return null;
 	}
 
-	// 查詢案件
+	/**
+	 * 查詢案件
+	 * 
+	 * 
+	 */
 	public List<HelpDeskBean> selectTicket(String json) {
 		try {
 			JSONObject obj = new JSONObject(json);
@@ -172,12 +189,20 @@ public class HelpDeskService {
 		return null;
 	}
 
-	// 查詢特定案件
+	/**
+	 * 查詢特定案件
+	 * 
+	 * 
+	 */
 	public HelpDeskBean selectTicketById(Integer helpdesk_id) {
 		return helpDeskDAO.selectTicketById(helpdesk_id);
 	}
 
-	// 透過點擊前端按鈕來變更案件狀態和人員
+	/**
+	 * 透過點擊前端按鈕來變更案件狀態和人員
+	 * 
+	 * 
+	 */
 	public HelpDeskBean modifyHelpdeskStatus(String json) {
 
 		JSONObject obj = new JSONObject(json);
@@ -195,7 +220,11 @@ public class HelpDeskService {
 		return null;
 	}
 
-//	// 顯示案件內容時，畫面上顯示圖片url，點擊後開啟圖片
+//	/**
+//	 * 顯示案件內容時，畫面上顯示圖片url，點擊後開啟圖片
+//	 * 
+//	 * 
+//	 */
 //	public byte[] selectPicture(Integer helpdesk_id) {
 //		
 //		// 先查詢該案件資料，取得附件URL
@@ -215,7 +244,11 @@ public class HelpDeskService {
 //		return null;
 //	}
 
-	// 前端載入處理中/結案案件詳細頁面時，處理人員下拉選單查詢API
+	/**
+	 * 前端載入處理中/結案案件詳細頁面時，處理人員下拉選單查詢API
+	 * 
+	 * 
+	 */
 	public List<MemberProfileBean> selectCustomerUser(String json) {
 
 		try {
@@ -229,7 +262,11 @@ public class HelpDeskService {
 		return null;
 	}
 
-	// 客服人員寄送Email回覆客戶
+	/**
+	 * 客服人員寄送Email回覆客戶
+	 * 
+	 * 
+	 */
 	public boolean sendEmail(String json) {
 
 		JSONObject obj = new JSONObject(json);
@@ -258,7 +295,6 @@ public class HelpDeskService {
 			return false;
 		} catch (MessagingException e) {
 			// 處理異常，需再加上錯誤處理跳轉頁面
-//			throw new RuntimeException("發送信件失敗：" + e.getMessage());
 			e.printStackTrace();
 			return false;
 		}
