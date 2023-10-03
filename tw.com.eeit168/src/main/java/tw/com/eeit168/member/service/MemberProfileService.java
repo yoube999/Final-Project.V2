@@ -3,7 +3,7 @@ package tw.com.eeit168.member.service;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
-import java.util.Calendar;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -29,16 +29,20 @@ public class MemberProfileService {
     }
 
     @Transactional
-    public boolean login(String user_account, String user_password) {
+    public MemberProfileBean login(JsonNode jsonNode) {
+        // 从JsonNode中获取用户名和密码
+        String user_account = jsonNode.get("user_account").asText();
+        String user_password = jsonNode.get("user_password").asText();
+
         MemberProfileBean bean = memberProfileInterFace.select(user_account);
         if (bean != null && bean.getUser_password().equals(user_password)) {
-            return true; // 登入成功
+            return bean; // 返回完整的 MemberProfileBean 对象
         }
-        return false; // 登入失敗
+        return null; // 登录失败，返回 null
     }
-
     
-    //註冊會員
+    
+    // 注册会员
     public void registerMember(JsonNode jsonNode) {
         try {
             String user_account = jsonNode.get("user_account").asText();
@@ -72,10 +76,10 @@ public class MemberProfileService {
             newMember.setAccount_status("default");
             newMember.setMember_level(1);
 
-            // 在這裡生成驗證碼
+            // 在这里生成验证代码
             String verificationCode = generateVerificationCode();
 
-            // 存儲驗證碼到資料庫
+            // 存储验证代码到数据库
             newMember.setVerification_code(verificationCode);
 
             newMember.setAttempts(1);
@@ -87,16 +91,16 @@ public class MemberProfileService {
         }
     }
 
-    // 檢查帳戶是否正確
+    // 检查帐户是否正确
     private boolean isUserAccountDuplicate(String user_account) {
         MemberProfileBean existingMember = memberProfileInterFace.select(user_account);
         return existingMember != null;
     }
 
-    // 隨機產生驗證碼 給sendVerificationCode用
+    // 随机生成验证代码 给sendVerificationCode用
     private String generateVerificationCode() {
-        int codeLength = 6; // 密碼長度
-        String characters = "0123456789"; // 密碼組合
+        int codeLength = 6; // 密码长度
+        String characters = "0123456789"; // 密码组合
 
         StringBuilder code = new StringBuilder();
         Random random = new Random();
@@ -109,11 +113,9 @@ public class MemberProfileService {
         return code.toString();
     }
 
-    
-
- // 寄送驗證碼+時效性
+    // 发送验证代码+时效性
     public void sendVerificationCode(String user_account) {
-        String verificationCode = generateVerificationCode(); // 生成驗證碼
+        String verificationCode = generateVerificationCode(); // 生成验证代码
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -122,13 +124,13 @@ public class MemberProfileService {
             helper.setSubject("Verification Code");
             helper.setText("Your verification code is: " + verificationCode);
 
-            // 設定驗證碼的過期時間為2分鐘後
-            Calendar calendar = Calendar.getInstance();
+            // 设置验证代码的过期时间为2分钟后
+            java.util.Calendar calendar = java.util.Calendar.getInstance();
             calendar.setTime(new Date());
-            calendar.add(Calendar.MINUTE, 1); // 添加2分鐘
+            calendar.add(java.util.Calendar.MINUTE, 2); // 添加2分钟
             Date verificationCodeTimestamp = calendar.getTime();
 
-            // 存儲驗證碼和過期時間到資料庫
+            // 存储验证代码和过期时间到数据库
             MemberProfileBean existingMember = memberProfileInterFace.select(user_account);
             if (existingMember != null) {
                 existingMember.setVerification_code(verificationCode);
@@ -137,17 +139,15 @@ public class MemberProfileService {
             }
 
             javaMailSender.send(message);
-            System.out.println("已發送驗證碼郵件至：" + user_account); // 輸出郵件地址到控制台
+            System.out.println("已發送驗證碼郵件至：" + user_account); // 输出邮件地址到控制台
 
         } catch (Exception e) {
-            // 處理異常
-        	throw new RuntimeException("發送驗證碼郵件失敗：" + e.getMessage());
+            // 处理异常
+            throw new RuntimeException("發送驗證碼郵件失敗：" + e.getMessage());
         }
     }
 
-
-    
-  //確認驗證碼+改密碼
+    // 确认验证代码+改密码
     public void changePasswordWithVerificationCode(String user_account, String verification_code, String user_password) {
         try {
             MemberProfileBean existingMember = memberProfileInterFace.select(user_account);
@@ -157,7 +157,7 @@ public class MemberProfileService {
                 Date codeTimestamp = existingMember.getVerification_code_timestamp();
                 Date now = new Date();
 
-                //判斷驗證碼過期codeTimestamp
+                //判断验证代码过期codeTimestamp
                 if (savedCode != null && verification_code.equals(savedCode) && now.before(codeTimestamp)) {
                     existingMember.setUser_password(user_password);
                     existingMember.setVerification_code(null);
@@ -180,8 +180,22 @@ public class MemberProfileService {
         }
     }
 
+    // 根据用户帐号获取用户资料
+    @Transactional(readOnly = true)
+    public MemberProfileBean getProfileInfo(String user_account) {
+        MemberProfileBean profile = memberProfileInterFace.select(user_account);
+        if (profile != null) {
+            // 只返回帐号、姓名、生日、手机号码、性别等信息
+            MemberProfileBean simplifiedProfile = new MemberProfileBean();
+            simplifiedProfile.setUser_account(profile.getUser_account());
+            simplifiedProfile.setUsername(profile.getUsername());
+            simplifiedProfile.setBirthday(profile.getBirthday());
+            simplifiedProfile.setGender(profile.getGender());
+            simplifiedProfile.setPhone_number(profile.getPhone_number());
+
+            return simplifiedProfile;
+        } else {
+            return null;
+        }
     }
-
- 
-
-
+}
