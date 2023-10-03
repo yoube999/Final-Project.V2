@@ -21,15 +21,17 @@ public class HelpDeskRecordBean {
 
 	@Column(name = "return_title", columnDefinition = "nvarchar")
 	private String return_title;
-	
+
 	@Column(name = "member_profile_id")
 	private Integer member_profile_id;
-	
+
+	@Column(name = "return_date")
+	private java.util.Date return_date;
 
 	@Override
 	public String toString() {
 		return "HelpDeskRecordBean [record_id=" + record_id + ", username=" + username + ", return_title="
-				+ return_title + ", member_profile_id=" + member_profile_id + "]";
+				+ return_title + ", member_profile_id=" + member_profile_id + ", return_date=" + return_date + "]";
 	}
 
 	public Integer getRecord_id() {
@@ -64,6 +66,12 @@ public class HelpDeskRecordBean {
 		this.member_profile_id = member_profile_id;
 	}
 
-	
+	public java.util.Date getReturn_date() {
+		return return_date;
+	}
+
+	public void setReturn_date(java.util.Date return_date) {
+		this.return_date = return_date;
+	}
 
 }

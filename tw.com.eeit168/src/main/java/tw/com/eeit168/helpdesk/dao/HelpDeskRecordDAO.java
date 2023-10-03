@@ -14,6 +14,7 @@ import jakarta.persistence.criteria.Order;
 import jakarta.persistence.criteria.Root;
 import tw.com.eeit168.helpdesk.model.HelpDeskRecordBean;
 import tw.com.eeit168.member.model.MemberProfileBean;
+import tw.com.eeit168.products.RecordBean;
 
 @Repository
 public class HelpDeskRecordDAO implements HelpDeskRecordInterFace {
@@ -78,6 +79,20 @@ public class HelpDeskRecordDAO implements HelpDeskRecordInterFace {
 	public MemberProfileBean selectUserById(Integer member_profile_id) {
 		if (member_profile_id != null) {
 			return this.getSession().get(MemberProfileBean.class, member_profile_id);
+		}
+
+		return null;
+	}
+
+	/**
+	 * 取得特定訂單資料
+	 * 
+	 * 
+	 */
+	@Override
+	public RecordBean selectRecordById(Integer record_id) {
+		if (record_id != null) {
+			return this.getSession().get(RecordBean.class, record_id);
 		}
 
 		return null;

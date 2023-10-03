@@ -211,6 +211,7 @@ public class HelpDeskService {
 		Integer member_profile_id = obj.getInt("member_profile_id");
 
 		HelpDeskBean update = helpDeskDAO.selectTicketById(helpdesk_id);
+		// 判斷收到參數皆不為null
 		if (update != null && helpdesk_status != null && member_profile_id != null) {
 			update.setHelpdesk_status(helpdesk_status);
 			update.setMember_profile_id(member_profile_id);

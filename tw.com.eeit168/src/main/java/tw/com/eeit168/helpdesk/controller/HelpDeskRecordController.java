@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import tw.com.eeit168.helpdesk.model.HelpDeskRecordBean;
 import tw.com.eeit168.helpdesk.service.HelpDeskRecordService;
 import tw.com.eeit168.member.model.MemberProfileBean;
+import tw.com.eeit168.products.RecordBean;
 import tw.com.eeit168.products.restaurant.util.DatetimeConverter;
 
 @RestController
@@ -38,15 +39,22 @@ public class HelpDeskRecordController {
 		JSONArray array = new JSONArray();
 		if(helpDeskRecords != null && !helpDeskRecords.isEmpty()) {
 			for(HelpDeskRecordBean helpDeskRecord : helpDeskRecords) {
+				
+				// 將時間格式轉為字串
+				String returnDate = DatetimeConverter.toString(helpDeskRecord.getReturn_date(), "yyyy-MM-dd HH:mm:ss");
+				
+				// 將迴圈得到的資料放入array陣列中
 				JSONObject item = new JSONObject()
 						.put("record_id", helpDeskRecord.getRecord_id())
 						.put("username", helpDeskRecord.getUsername())
 						.put("return_title", helpDeskRecord.getReturn_title())
-						.put("member_profile_id", helpDeskRecord.getMember_profile_id());
+						.put("member_profile_id", helpDeskRecord.getMember_profile_id())
+						.put("return_date", returnDate);
 						
 				array = array.put(item);
 			}
 		}
+		// 將array陣列放入JSON物件中，並回傳字串
 		responseJson.put("list", array);
 		return responseJson.toString();
 	}
@@ -64,8 +72,11 @@ public class HelpDeskRecordController {
 		MemberProfileBean member = helpDeskRecordService.selectUserById(member_profile_id);
 		if(member != null) {
 			
-			String birthday = DatetimeConverter.toString(member.getBirthday(), "yyyy-MM-dd HH:mm:ss");
-			String registration_date = DatetimeConverter.toString(member.getRegistration_date(), "yyyy-MM-dd HH:mm:ss");
+			// 將時間格式轉為字串
+			String birthday = DatetimeConverter.toString(member.getBirthday(), "yyyy-MM-dd");
+			String registration_date = DatetimeConverter.toString(member.getRegistration_date(), "yyyy-MM-dd");
+			
+			// 將得到的資料放入array陣列中
 			JSONObject item = new JSONObject()
 					.put("username", member.getUsername())
 					.put("birthday", birthday)
@@ -75,8 +86,42 @@ public class HelpDeskRecordController {
 					
 			array = array.put(item);
 		}
+		// 將array陣列放入JSON物件中，並回傳字串
 		responseJson.put("list", array);
 		return responseJson.toString();
 	}
+	
+	
+	/**
+	 * 取得特定訂單資料
+	 * 
+	 * 
+	 */
+	@GetMapping("/selectRecordById/{record_id}")
+	public String selectRecordById(@PathVariable(name = "record_id") Integer record_id) {
+		JSONObject responseJson = new JSONObject();
+		JSONArray array = new JSONArray();
+		RecordBean record = helpDeskRecordService.selectRecordById(record_id);
+		if(record != null) {
+			
+			// 將時間格式轉為字串
+			String returnDate = DatetimeConverter.toString(record.getReturn_date(), "yyyy-MM-dd HH:mm:ss");
+			
+			// 將得到的資料放入array陣列中
+			JSONObject item = new JSONObject()
+					.put("return_title", record.getReturn_title())
+					.put("return_description", record.getReturn_description())
+					.put("return_date", returnDate);
+			
+			array = array.put(item);
+		}
+		// 將array陣列放入JSON物件中，並回傳字串
+		responseJson.put("list", array);
+		return responseJson.toString();
+	}
+	
+	
+	
+	
 	
 }
