@@ -66,7 +66,7 @@ public class MemberProfileController {
                                                      @RequestParam String user_password) {
         try {
             memberProfileService.changePasswordWithVerificationCode(user_account, verification_code, user_password);
-            return "密码已成功更改！";
+            return "密碼更改成功！";
         } catch (Exception e) {
             return e.getMessage();
         }
