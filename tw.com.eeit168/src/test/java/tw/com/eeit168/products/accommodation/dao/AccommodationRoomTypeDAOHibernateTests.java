@@ -44,7 +44,7 @@ public class AccommodationRoomTypeDAOHibernateTests {
 		AccommodationRoomType accommodationRoomTypeInsert = new AccommodationRoomType();
 		accommodationRoomTypeInsert.setAccommodationId(10);
 		accommodationRoomTypeInsert.setRoomTypeName("測試房");
-		accommodationRoomTypeInsert.setCapacity("4人");
+		accommodationRoomTypeInsert.setCapacity(4);
 		accommodationRoomTypeInsert.setBedsAmount(4);
 		
 		AccommodationRoomType result = accommodationRoomTypeDAO.insert(accommodationRoomTypeInsert);
@@ -58,7 +58,7 @@ public class AccommodationRoomTypeDAOHibernateTests {
 		AccommodationRoomTypeUpdate.setRoomTypeId(11);
 		AccommodationRoomTypeUpdate.setAccommodationId(10);
 		AccommodationRoomTypeUpdate.setRoomTypeName("修改測試");
-		AccommodationRoomTypeUpdate.setCapacity("測試人數");
+		AccommodationRoomTypeUpdate.setCapacity(4);
 		AccommodationRoomTypeUpdate.setBedsAmount(4);
 		
 		AccommodationRoomType update = accommodationRoomTypeDAO.update(AccommodationRoomTypeUpdate);

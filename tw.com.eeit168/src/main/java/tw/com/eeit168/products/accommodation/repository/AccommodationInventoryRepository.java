@@ -11,5 +11,7 @@ import tw.com.eeit168.products.accommodation.model.AccommodationInventory;
 public interface AccommodationInventoryRepository extends JpaRepository<AccommodationInventory, Integer>{
 	List<AccommodationInventory> findByAvailabilityDateBetween(java.sql.Date startDate, java.sql.Date endDate);
 	List<AccommodationInventory> findByAvailableRooms(Integer availableRooms);
+	List<AccommodationInventory> findByAvailableRoomsGreaterThanEqual(Integer availableRooms);
+
 }
 //JpaRepository 是 Spring Data JPA 提供的一個介面，它提供了一組通用的資料庫操作方法，例如插入、更新、刪除和查詢

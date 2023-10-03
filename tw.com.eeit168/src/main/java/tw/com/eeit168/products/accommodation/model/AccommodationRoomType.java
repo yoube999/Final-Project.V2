@@ -24,8 +24,8 @@ public class AccommodationRoomType {
 	private String roomTypeName;
 	
 	
-	@Column(name = "capacity", nullable = false, columnDefinition = "nvarchar")
-	private String capacity;
+	@Column(name = "capacity", nullable = false)
+	private Integer capacity;
 	
 	@Column(name = "beds_amount", nullable = false)
 	private Integer bedsAmount;
@@ -54,11 +54,11 @@ public class AccommodationRoomType {
 		this.roomTypeName = roomTypeName;
 	}
 
-	public String getCapacity() {
+	public Integer getCapacity() {
 		return capacity;
 	}
 
-	public void setCapacity(String capacity) {
+	public void setCapacity(Integer capacity) {
 		this.capacity = capacity;
 	}
 
@@ -75,6 +75,7 @@ public class AccommodationRoomType {
 		return "AccommodationRoomType [roomTypeId=" + roomTypeId + ", accommodationId=" + accommodationId
 				+ ", roomTypeName=" + roomTypeName + ", capacity=" + capacity + ", bedsAmount=" + bedsAmount + "]";
 	}
+
 	
 	
 
