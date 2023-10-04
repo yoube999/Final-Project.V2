@@ -39,8 +39,8 @@ public class RestaurantInventoryDaoHibernate implements RestaurantInventoryDAO{
 	
 	@Override
 	public RestaurantInventoryBean update(RestaurantInventoryBean bean) {
-		if(bean != null && bean.getRestaurant_Inventory_id() != null) {
-			RestaurantInventoryBean temp = this.getSession().get(RestaurantInventoryBean.class, bean.getRestaurant_Inventory_id());
+		if(bean != null && bean.getRestaurantInventoryId() != null) {
+			RestaurantInventoryBean temp = this.getSession().get(RestaurantInventoryBean.class, bean.getRestaurantInventoryId());
 			if(temp != null) {
 				return (RestaurantInventoryBean)this.getSession().merge(bean); //update使用Hibernate的merge
 			}

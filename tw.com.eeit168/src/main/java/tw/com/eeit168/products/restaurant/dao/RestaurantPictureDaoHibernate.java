@@ -39,8 +39,8 @@ public class RestaurantPictureDaoHibernate implements RestaurantPictureDAO{
 	
 	@Override
 	public RestaurantPictureBean update(RestaurantPictureBean bean) {
-		if(bean != null && bean.getRestaurant_pictures_id() != null) {
-			RestaurantPictureBean temp = this.getSession().get(RestaurantPictureBean.class, bean.getRestaurant_pictures_id());
+		if(bean != null && bean.getRestaurantPicturesId() != null) {
+			RestaurantPictureBean temp = this.getSession().get(RestaurantPictureBean.class, bean.getRestaurantPicturesId());
 			if(temp != null) {
 				return (RestaurantPictureBean)this.getSession().merge(bean); //update使用Hibernate的merge
 			}

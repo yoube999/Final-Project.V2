@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.PersistenceContext;
 import tw.com.eeit168.products.attraction.model.AttractionBean;
+import tw.com.eeit168.products.attraction.model.SelectAttractionsInventoryView;
+import tw.com.eeit168.products.attraction.model.SelectAttractionsPictureView;
+import tw.com.eeit168.products.attraction.model.SelectAttractionsTicketView;
 import tw.com.eeit168.products.attraction.repository.AttractionRepository;
 
 @Service //註解類別處理運算邏輯(企業邏輯)
@@ -42,26 +45,37 @@ public class AttractionRepositoryService {
 	
 	//Top5
 	public List<AttractionBean> selectTop5() {
-		String hql = "from AttractionBean order by times_purchased desc";
-		return this.getSession().createQuery(hql, AttractionBean.class).setMaxResults(5).list();
+		return attractionRepository.selectTop5();
 	}
 	
 	//以被購買次數搜尋(多-少)
 	public List<AttractionBean> findAllByPurchasedDesc() {
-		String hql = "from AttractionBean order by times_purchased desc";
-		return this.getSession().createQuery(hql, AttractionBean.class).list();
+		return attractionRepository.findAllByPurchasedDesc();
 	}
 	
 	//以價格搜尋(高-低)
-//	public List<AttractionBean> findAllByPriceDesc() {
-//		String hql = "from AttractionBean order by price desc";
-//		return this.getSession().createQuery(hql, AttractionBean.class).list();
-//	}
+	public List<SelectAttractionsTicketView> findAllByPriceDesc() {
+		return attractionRepository.findAllByPriceDesc();
+	}
 	
 	//以價格搜尋(低-高)
-//	public List<AttractionBean> findAllByPriceAsc() {
-//		String hql = "from AttractionBean order by price asc";
-//		return this.getSession().createQuery(hql, AttractionBean.class).list();
-//	}
+	public List<SelectAttractionsTicketView> findAllByPriceAsc() {
+		return attractionRepository.findAllByPriceAsc();
+	}
+	
+	//景點名稱及地點的模糊搜尋
+	public List<SelectAttractionsInventoryView> blurFind(String keyword) {
+		return attractionRepository.blurFind(keyword);
+	}
+	
+	//景點日期的模糊搜尋
+	public List<SelectAttractionsInventoryView> blurDateFind(java.sql.Date orderDate) {
+		return attractionRepository.blurDateFind(orderDate);
+	}
+	
+	//用景點名稱搜尋圖片
+	public List<SelectAttractionsPictureView> findPictureByName(String name) {
+		return attractionRepository.findPictureByName(name);
+	}
 	
 }

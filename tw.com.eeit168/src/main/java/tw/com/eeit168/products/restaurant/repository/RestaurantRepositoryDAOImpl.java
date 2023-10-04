@@ -9,6 +9,7 @@ import org.hibernate.query.Query;
 import jakarta.persistence.PersistenceContext;
 import tw.com.eeit168.products.restaurant.model.RestaurantBean;
 import tw.com.eeit168.products.restaurant.model.SelectRestaurantInventoryView;
+import tw.com.eeit168.products.restaurant.model.SelectRestaurantPictureView;
 
 public class RestaurantRepositoryDAOImpl implements RestaurantRepositoryDAO {
 	
@@ -21,13 +22,13 @@ public class RestaurantRepositoryDAOImpl implements RestaurantRepositoryDAO {
 	
 	//Top5
 	public List<RestaurantBean> selectTop5() {
-		String hql = "from RestaurantBean order by times_purchased desc";
+		String hql = "from RestaurantBean order by timesPurchased desc";
 		return this.getSession().createQuery(hql, RestaurantBean.class).setMaxResults(5).list();
 	}
 	
 	//以被購買次數搜尋(多-少)
 	public List<RestaurantBean> findAllByPurchasedDesc() {
-		String hql = "from RestaurantBean order by times_purchased desc";
+		String hql = "from RestaurantBean order by timesPurchased desc";
 		return this.getSession().createQuery(hql, RestaurantBean.class).list();
 	}
 	
@@ -46,7 +47,7 @@ public class RestaurantRepositoryDAOImpl implements RestaurantRepositoryDAO {
 	//餐廳名稱及地點的模糊搜尋
 	public List<SelectRestaurantInventoryView> blurFind(String keyword) {
 		if(keyword != null && !keyword.isEmpty()) {
-			String hql = "from SelectRestaurantInventoryView where restaurant_name like :keyword or restaurant_address like :keyword";
+			String hql = "from SelectRestaurantInventoryView where restaurantName like :keyword or restaurantAddress like :keyword";
 			Query<SelectRestaurantInventoryView> result = this.getSession().createQuery(hql, SelectRestaurantInventoryView.class);
 			result.setParameter("keyword", "%" + keyword + "%");
 			return result.list();
@@ -55,12 +56,22 @@ public class RestaurantRepositoryDAOImpl implements RestaurantRepositoryDAO {
 	}
 	
 	//餐廳日期的模糊搜尋
-	public List<SelectRestaurantInventoryView> blurDateFind(java.sql.Date checkInDate, java.sql.Date checkOutDate) {
-		String hql = "from SelectRestaurantInventoryView where availability_date between :checkInDate and :checkOutDate";
+	public List<SelectRestaurantInventoryView> blurDateFind(java.sql.Date orderDate) {
+		String hql = "from SelectRestaurantInventoryView where availabilityDate = :orderDate";
 		Query<SelectRestaurantInventoryView> result = this.getSession().createQuery(hql, SelectRestaurantInventoryView.class);
-		result.setParameter("checkInDate", checkInDate);
-		result.setParameter("checkOutDate", checkOutDate);
+		result.setParameter("orderDate", orderDate);
 		return result.list();
-	}	
+	}
+	
+	//用餐廳名稱搜尋圖片
+	public List<SelectRestaurantPictureView> findPictureByName(String name) {
+		if(name != null && !name.isEmpty()) {
+			String hql = "from SelectRestaurantPictureView where restaurantName = :name";
+			Query<SelectRestaurantPictureView> result = this.getSession().createQuery(hql, SelectRestaurantPictureView.class);
+			result.setParameter("name", name);
+			return result.list();
+		}
+		return Collections.emptyList();
+	}
 
 }

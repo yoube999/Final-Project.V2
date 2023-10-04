@@ -14,16 +14,16 @@ public class SelectRestaurantInventoryView {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //這個用來標記此欄位是自動產生
 	@Column(name = "restaurant_Inventory_id")
-	private Integer restaurant_Inventory_id;
+	private Integer restaurantInventoryId;
 	
 	@Column(name = "restaurant_name", columnDefinition = "nvarchar") //如有要用nvarchar必須要有此annotation
-	private String restaurant_name;
+	private String restaurantName;
 	
 	@Column(name = "restaurant_address", columnDefinition = "nvarchar") //如有要用nvarchar必須要有此annotation )
-	private String restaurant_address;
+	private String restaurantAddress;
 	
 	@Column(name = "availability_date")
-	private java.sql.Date availability_date;
+	private java.sql.Date availabilityDate;
 	
 	@Column(name = "lunch")
 	private Integer lunch;
@@ -34,35 +34,35 @@ public class SelectRestaurantInventoryView {
 	
 	@Override
 	public String toString() {
-		return "SelectRestaurantInventoryView [restaurant_Inventory_id=" + restaurant_Inventory_id
-				+ ", restaurant_name=" + restaurant_name + ", restaurant_address=" + restaurant_address
-				+ ", availability_date=" + availability_date + ", lunch=" + lunch + ", dinner=" + dinner + "]";
+		return "SelectRestaurantInventoryView [restaurantInventoryId=" + restaurantInventoryId + ", restaurantName="
+				+ restaurantName + ", restaurantAddress=" + restaurantAddress + ", availabilityDate=" + availabilityDate
+				+ ", lunch=" + lunch + ", dinner=" + dinner + "]";
 	}
 
 
-	public Integer getRestaurant_Inventory_id() {
-		return restaurant_Inventory_id;
+	public Integer getRestaurantInventoryId() {
+		return restaurantInventoryId;
 	}
-	public void setRestaurant_Inventory_id(Integer restaurant_Inventory_id) {
-		this.restaurant_Inventory_id = restaurant_Inventory_id;
+	public void setRestaurantInventoryId(Integer restaurantInventoryId) {
+		this.restaurantInventoryId = restaurantInventoryId;
 	}
-	public String getRestaurant_name() {
-		return restaurant_name;
+	public String getRestaurantName() {
+		return restaurantName;
 	}
-	public void setRestaurant_name(String restaurant_name) {
-		this.restaurant_name = restaurant_name;
+	public void setRestaurantName(String restaurantName) {
+		this.restaurantName = restaurantName;
 	}
-	public String getRestaurant_address() {
-		return restaurant_address;
+	public String getRestaurantAddress() {
+		return restaurantAddress;
 	}
-	public void setRestaurant_address(String restaurant_address) {
-		this.restaurant_address = restaurant_address;
+	public void setRestaurantAddress(String restaurantAddress) {
+		this.restaurantAddress = restaurantAddress;
 	}
-	public java.sql.Date getAvailability_date() {
-		return availability_date;
+	public java.sql.Date getAvailabilityDate() {
+		return availabilityDate;
 	}
-	public void setAvailability_date(java.sql.Date availability_date) {
-		this.availability_date = availability_date;
+	public void setAvailabilityDate(java.sql.Date availabilityDate) {
+		this.availabilityDate = availabilityDate;
 	}
 	public Integer getLunch() {
 		return lunch;
@@ -75,6 +75,6 @@ public class SelectRestaurantInventoryView {
 	}
 	public void setDinner(Integer dinner) {
 		this.dinner = dinner;
-	}	
-
+	}
+	
 }

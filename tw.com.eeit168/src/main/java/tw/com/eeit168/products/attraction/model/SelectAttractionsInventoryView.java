@@ -14,16 +14,16 @@ public class SelectAttractionsInventoryView {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //這個用來標記此欄位是自動產生
 	@Column(name = "attractions_inventory_id")
-	private Integer attractions_inventory_id;
+	private Integer attractionsInventoryId;
 	
 	@Column(name = "attractions_name", columnDefinition = "nvarchar") //如有要用nvarchar必須要有此annotation
-	private String attractions_name;
+	private String attractionsName;
 	
 	@Column(name = "attractions_address", columnDefinition = "nvarchar") //如有要用nvarchar必須要有此annotation
-	private String attractions_address;
+	private String attractionsAddress;
 	
 	@Column(name = "availability_date")
-	private java.sql.Date availability_date;
+	private java.sql.Date availabilityDate;
 	
 	@Column(name = "adult")
 	private Integer adult;
@@ -34,35 +34,35 @@ public class SelectAttractionsInventoryView {
 	
 	@Override
 	public String toString() {
-		return "SelectAttractionsInventoryView [attractions_inventory_id=" + attractions_inventory_id
-				+ ", attractions_name=" + attractions_name + ", attractions_address=" + attractions_address
-				+ ", availability_date=" + availability_date + ", adult=" + adult + ", child=" + child + "]";
+		return "SelectAttractionsInventoryView [attractionsInventoryId=" + attractionsInventoryId + ", attractionsName="
+				+ attractionsName + ", attractionsAddress=" + attractionsAddress + ", availabilityDate="
+				+ availabilityDate + ", adult=" + adult + ", child=" + child + "]";
 	}
 
 
-	public Integer getAttractions_inventory_id() {
-		return attractions_inventory_id;
+	public Integer getAttractionsInventoryId() {
+		return attractionsInventoryId;
 	}
-	public void setAttractions_inventory_id(Integer attractions_inventory_id) {
-		this.attractions_inventory_id = attractions_inventory_id;
+	public void setAttractionsInventoryId(Integer attractionsInventoryId) {
+		this.attractionsInventoryId = attractionsInventoryId;
 	}
-	public String getAttractions_name() {
-		return attractions_name;
+	public String getAttractionsName() {
+		return attractionsName;
 	}
-	public void setAttractions_name(String attractions_name) {
-		this.attractions_name = attractions_name;
+	public void setAttractionsName(String attractionsName) {
+		this.attractionsName = attractionsName;
 	}
-	public String getAttractions_address() {
-		return attractions_address;
+	public String getAttractionsAddress() {
+		return attractionsAddress;
 	}
-	public void setAttractions_address(String attractions_address) {
-		this.attractions_address = attractions_address;
+	public void setAttractionsAddress(String attractionsAddress) {
+		this.attractionsAddress = attractionsAddress;
 	}
-	public java.sql.Date getAvailability_date() {
-		return availability_date;
+	public java.sql.Date getAvailabilityDate() {
+		return availabilityDate;
 	}
-	public void setAvailability_date(java.sql.Date availability_date) {
-		this.availability_date = availability_date;
+	public void setAvailabilityDate(java.sql.Date availabilityDate) {
+		this.availabilityDate = availabilityDate;
 	}
 	public Integer getAdult() {
 		return adult;

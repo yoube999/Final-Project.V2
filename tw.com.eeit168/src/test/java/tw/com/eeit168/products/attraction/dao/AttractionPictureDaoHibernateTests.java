@@ -31,8 +31,8 @@ public class AttractionPictureDaoHibernateTests {
 //	@Test
 	public void testInsert() {
 		AttractionPictureBean bean = new AttractionPictureBean();
-		bean.setAttractions_id(2);
-		bean.setUrl_image("lvlvlvs");
+		bean.setAttractionsId(2);
+		bean.setUrlImage("lvlvlvs");
 		AttractionPictureBean insert = attractionPictureDAO.insert(bean);
 		System.out.println(insert);
 	}
@@ -40,9 +40,9 @@ public class AttractionPictureDaoHibernateTests {
 //	@Test
 	public void testUpdate() {
 		AttractionPictureBean bean = new AttractionPictureBean();
-		bean.setAttractions_pictures_id(10);
-		bean.setAttractions_id(4);
-		bean.setUrl_image("lvlvlvs");
+		bean.setAttractionsPicturesId(10);
+		bean.setAttractionsId(4);
+		bean.setUrlImage("lvlvlvs");
 		AttractionPictureBean update = attractionPictureDAO.update(bean);
 		System.out.println(update);
 	}

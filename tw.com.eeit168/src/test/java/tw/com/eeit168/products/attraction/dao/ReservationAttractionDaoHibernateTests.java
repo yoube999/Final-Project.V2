@@ -32,13 +32,13 @@ public class ReservationAttractionDaoHibernateTests {
 //	@Test
 	public void testInsert() {
 		ReservationAttractionBean bean = new ReservationAttractionBean();
-		bean.setRecord_id(1);
-		bean.setAttractions_id(1);
+		bean.setRecordId(1);
+		bean.setAttractionsId(1);
 		LocalDate date = LocalDate.of(2023, 9, 20); //利用LocalDate就可以輸入自己想要的日期
-		bean.setReservation_date(java.sql.Date.valueOf(date)); //利用java.sql.Date將想要的日期insert進去
-		bean.setTotal_count(5);
-		bean.setTotal_price(3000);
-		bean.setRecord_attractions_status("dgsewf");
+		bean.setReservationDate(java.sql.Date.valueOf(date)); //利用java.sql.Date將想要的日期insert進去
+		bean.setTotalCount(5);
+		bean.setTotalPrice(3000);
+		bean.setRecordAttractionsStatus("dgsewf");
 		ReservationAttractionBean insert = reservationAttractionDAO.insert(bean);
 		System.out.println(insert);
 	}
@@ -46,14 +46,14 @@ public class ReservationAttractionDaoHibernateTests {
 //	@Test
 	public void testUpdate() {
 		ReservationAttractionBean bean = new ReservationAttractionBean();
-		bean.setReservation_attractions_id(5);
-		bean.setRecord_id(3);
-		bean.setAttractions_id(3);
+		bean.setReservationAttractionsId(5);
+		bean.setRecordId(3);
+		bean.setAttractionsId(3);
 		LocalDate date = LocalDate.of(2023, 9, 20); //利用LocalDate就可以輸入自己想要的日期
-		bean.setReservation_date(java.sql.Date.valueOf(date)); //利用java.sql.Date將想要的日期insert進去
-		bean.setTotal_count(5);
-		bean.setTotal_price(2000);
-		bean.setRecord_attractions_status("dgsewf");
+		bean.setReservationDate(java.sql.Date.valueOf(date)); //利用java.sql.Date將想要的日期insert進去
+		bean.setTotalCount(5);
+		bean.setTotalPrice(2000);
+		bean.setRecordAttractionsStatus("dgsewf");
 		ReservationAttractionBean update = reservationAttractionDAO.update(bean);
 		System.out.println(update);
 	}

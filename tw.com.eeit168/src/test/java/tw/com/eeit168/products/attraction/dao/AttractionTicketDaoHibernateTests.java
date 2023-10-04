@@ -32,11 +32,11 @@ public class AttractionTicketDaoHibernateTests {
 //	@Test
 	public void testInsert() {
 		AttractionTicketBean bean = new AttractionTicketBean();
-		bean.setAttractions_id(1);
+		bean.setAttractionsId(1);
 		LocalDate date = LocalDate.of(2023, 8, 22); //利用LocalDate就可以輸入自己想要的日期
-		bean.setValid_date(java.sql.Date.valueOf(date)); //利用java.sql.Date將想要的日期insert進去
-		bean.setAdult_price(599);
-		bean.setChild_price(399);
+		bean.setValidDate(java.sql.Date.valueOf(date)); //利用java.sql.Date將想要的日期insert進去
+		bean.setAdultPrice(599);
+		bean.setChildPrice(399);
 		AttractionTicketBean insert = attractionTicketDAO.insert(bean);
 		System.out.println(insert);
 	}
@@ -44,12 +44,12 @@ public class AttractionTicketDaoHibernateTests {
 //	@Test
 	public void testUpdate() {
 		AttractionTicketBean bean = new AttractionTicketBean();
-		bean.setAttractions_ticket_id(21);
-		bean.setAttractions_id(1);
+		bean.setAttractionsTicketId(21);
+		bean.setAttractionsId(1);
 		LocalDate date = LocalDate.of(2023, 8, 22); //利用LocalDate就可以輸入自己想要的日期
-		bean.setValid_date(java.sql.Date.valueOf(date)); //利用java.sql.Date將想要的日期insert進去
-		bean.setAdult_price(599);
-		bean.setChild_price(399);
+		bean.setValidDate(java.sql.Date.valueOf(date)); //利用java.sql.Date將想要的日期insert進去
+		bean.setAdultPrice(599);
+		bean.setChildPrice(399);
 		AttractionTicketBean update = attractionTicketDAO.update(bean);
 		System.out.println(update);
 	}

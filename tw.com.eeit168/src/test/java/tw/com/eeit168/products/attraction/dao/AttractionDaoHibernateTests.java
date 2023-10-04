@@ -31,13 +31,13 @@ public class AttractionDaoHibernateTests {
 //	@Test
 	public void testInsert() {
 		AttractionBean bean = new AttractionBean();
-		bean.setAttractions_name("skdkrhekhre");
-		bean.setAttractions_address("dsjvjvoejro");
+		bean.setAttractionsName("skdkrhekhre");
+		bean.setAttractionsAddress("dsjvjvoejro");
 		bean.setDescriptions("vfnvkners");
-		bean.setOpen_time("0830");
-		bean.setClose_time("1800");
-		bean.setContact_number("389375932");
-		bean.setTimes_purchased(100);
+		bean.setOpenTime("0830");
+		bean.setCloseTime("1800");
+		bean.setContactNumber("389375932");
+		bean.setTimesPurchased(100);
 		AttractionBean insert = attractionDAO.insert(bean);
 		System.out.println(insert);
 	}
@@ -45,14 +45,14 @@ public class AttractionDaoHibernateTests {
 //	@Test
 	public void testUpdate() {
 		AttractionBean bean = new AttractionBean();
-		bean.setAttractions_id(10);
-		bean.setAttractions_name("aaaaaaaaaaaaa");
-		bean.setAttractions_address("dsjvjvoejro");
+		bean.setAttractionsId(10);
+		bean.setAttractionsName("aaaaaaaaaaaaa");
+		bean.setAttractionsAddress("dsjvjvoejro");
 		bean.setDescriptions("vfnvkners");
-		bean.setOpen_time("0830");
-		bean.setClose_time("1800");
-		bean.setContact_number("389375932");
-		bean.setTimes_purchased(100);
+		bean.setOpenTime("0830");
+		bean.setCloseTime("1800");
+		bean.setContactNumber("389375932");
+		bean.setTimesPurchased(100);
 		AttractionBean update = attractionDAO.update(bean);
 		System.out.println(update);
 	}

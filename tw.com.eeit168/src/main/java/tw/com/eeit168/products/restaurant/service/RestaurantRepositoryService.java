@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import jakarta.persistence.PersistenceContext;
 import tw.com.eeit168.products.restaurant.model.RestaurantBean;
 import tw.com.eeit168.products.restaurant.model.SelectRestaurantInventoryView;
+import tw.com.eeit168.products.restaurant.model.SelectRestaurantPictureView;
 import tw.com.eeit168.products.restaurant.repository.RestaurantRepository;
 
 @Service //註解類別處理運算邏輯(企業邏輯)
@@ -67,8 +68,13 @@ public class RestaurantRepositoryService {
 	}
 
 	//餐廳日期的模糊搜尋
-	public List<SelectRestaurantInventoryView> blurDateFind(java.sql.Date checkInDate, java.sql.Date checkOutDate) {
-		return restaurantRepository.blurDateFind(checkInDate, checkOutDate);
+	public List<SelectRestaurantInventoryView> blurDateFind(java.sql.Date orderDate) {
+		return restaurantRepository.blurDateFind(orderDate);
+	}
+	
+	//用餐廳名稱搜尋圖片
+	public List<SelectRestaurantPictureView> findPictureByName(String name) {
+		return restaurantRepository.findPictureByName(name);
 	}
 	
 } 

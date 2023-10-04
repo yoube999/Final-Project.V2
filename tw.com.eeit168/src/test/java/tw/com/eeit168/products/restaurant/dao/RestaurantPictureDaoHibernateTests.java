@@ -31,8 +31,8 @@ public class RestaurantPictureDaoHibernateTests {
 //	@Test
 	public void testInsert() {
 		RestaurantPictureBean bean = new RestaurantPictureBean();
-		bean.setRestaurant_id(1);
-		bean.setUrl_image("lnnldfreg9erh9");
+		bean.setRestaurantId(1);
+		bean.setUrlImage("lnnldfreg9erh9");
 		RestaurantPictureBean insert = restaurantPictureDAO.insert(bean);
 		System.out.println(insert);
 	}
@@ -40,9 +40,9 @@ public class RestaurantPictureDaoHibernateTests {
 //	@Test
 	public void testUpdate() {
 		RestaurantPictureBean bean = new RestaurantPictureBean();
-		bean.setRestaurant_pictures_id(11);
-		bean.setRestaurant_id(10);
-		bean.setUrl_image("ojgojgjmo");
+		bean.setRestaurantPicturesId(11);
+		bean.setRestaurantId(10);
+		bean.setUrlImage("ojgojgjmo");
 		RestaurantPictureBean update = restaurantPictureDAO.update(bean);
 		System.out.println(update);
 	}

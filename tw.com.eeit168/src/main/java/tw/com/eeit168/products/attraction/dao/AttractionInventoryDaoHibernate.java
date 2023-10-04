@@ -39,8 +39,8 @@ public class AttractionInventoryDaoHibernate implements AttractionInventoryDAO{
 	
 	@Override
 	public AttractionInventoryBean update(AttractionInventoryBean bean) {
-		if(bean != null && bean.getAttractions_inventory_id() != null) {
-			AttractionInventoryBean temp = this.getSession().get(AttractionInventoryBean.class, bean.getAttractions_inventory_id());
+		if(bean != null && bean.getAttractionsInventoryId() != null) {
+			AttractionInventoryBean temp = this.getSession().get(AttractionInventoryBean.class, bean.getAttractionsInventoryId());
 			if(temp != null) {
 				return (AttractionInventoryBean)this.getSession().merge(bean); //update使用Hibernate的merge
 			}

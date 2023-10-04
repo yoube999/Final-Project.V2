@@ -31,12 +31,12 @@ public class RestaurantDaoHibernateTests {
 //	@Test
 	public void testInsert() {
 		RestaurantBean bean = new RestaurantBean();
-		bean.setRestaurant_name("aaa");
-		bean.setRestaurant_address("hefdkghsk");
+		bean.setRestaurantName("aaa");
+		bean.setRestaurantAddress("hefdkghsk");
 		bean.setDescriptions("evevoerjovjpo");
-		bean.setContact_number("2345567");
+		bean.setContactNumber("2345567");
 		bean.setPrice(699);
-		bean.setTimes_purchased(346);
+		bean.setTimesPurchased(346);
 		RestaurantBean insert = restaurantDAO.insert(bean);
 		System.out.println(insert);
 	}
@@ -44,13 +44,13 @@ public class RestaurantDaoHibernateTests {
 //	@Test
 	public void testUpdate() {
 		RestaurantBean bean = new RestaurantBean();
-		bean.setRestaurant_id(11);
-		bean.setRestaurant_name("鼎王");
-		bean.setRestaurant_address("grbrebr");
+		bean.setRestaurantId(11);
+		bean.setRestaurantName("鼎王");
+		bean.setRestaurantAddress("grbrebr");
 		bean.setDescriptions("rpoeitpoerpo");
-		bean.setContact_number("2345567");
+		bean.setContactNumber("2345567");
 		bean.setPrice(599);
-		bean.setTimes_purchased(346);
+		bean.setTimesPurchased(346);
 		RestaurantBean update = restaurantDAO.update(bean);
 		System.out.println(update);
 	}

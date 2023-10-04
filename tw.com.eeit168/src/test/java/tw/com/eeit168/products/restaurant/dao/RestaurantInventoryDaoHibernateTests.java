@@ -33,9 +33,9 @@ public class RestaurantInventoryDaoHibernateTests {
 //	@Test
 	public void testInsert() {
 		RestaurantInventoryBean bean = new RestaurantInventoryBean();
-		bean.setRestaurant_id(1);
+		bean.setRestaurantId(1);
 		LocalDate date = LocalDate.of(2023, 8, 20); //利用LocalDate就可以輸入自己想要的日期
-		bean.setAvailability_date(java.sql.Date.valueOf(date)); //利用java.sql.Date將想要的日期insert進去
+		bean.setAvailabilityDate(java.sql.Date.valueOf(date)); //利用java.sql.Date將想要的日期insert進去
 		bean.setLunch(50);
 		bean.setDinner(60);
 		RestaurantInventoryBean insert = restaurantInventoryDAO.insert(bean);
@@ -45,10 +45,10 @@ public class RestaurantInventoryDaoHibernateTests {
 //	@Test
 	public void testUpdate() {
 		RestaurantInventoryBean bean = new RestaurantInventoryBean();
-		bean.setRestaurant_Inventory_id(10);
-		bean.setRestaurant_id(10);
+		bean.setRestaurantInventoryId(10);
+		bean.setRestaurantId(10);
 		LocalDate date = LocalDate.of(2023, 8, 20); //利用LocalDate就可以輸入自己想要的日期
-		bean.setAvailability_date(java.sql.Date.valueOf(date)); //利用java.sql.Date將想要的日期insert進去
+		bean.setAvailabilityDate(java.sql.Date.valueOf(date)); //利用java.sql.Date將想要的日期insert進去
 		bean.setLunch(20);
 		bean.setDinner(30);
 		RestaurantInventoryBean update = restaurantInventoryDAO.update(bean);

@@ -40,8 +40,8 @@ public class RestaurantDaoHibernate implements RestaurantDAO{
 	
 	@Override
 	public RestaurantBean update(RestaurantBean bean) {
-		if(bean != null && bean.getRestaurant_id() != null) {
-			RestaurantBean temp = this.getSession().get(RestaurantBean.class, bean.getRestaurant_id());
+		if(bean != null && bean.getRestaurantId() != null) {
+			RestaurantBean temp = this.getSession().get(RestaurantBean.class, bean.getRestaurantId());
 			if(temp != null) {
 				return (RestaurantBean)this.getSession().merge(bean); //update使用Hibernate的merge
 			}

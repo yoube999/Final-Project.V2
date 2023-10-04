@@ -36,8 +36,8 @@ public class AttractionDaoHibernate implements AttractionDAO{
 	
 	@Override
 	public AttractionBean update(AttractionBean bean) {
-		if(bean != null && bean.getAttractions_id() != null) {
-			AttractionBean temp = this.getSession().get(AttractionBean.class, bean.getAttractions_id());
+		if(bean != null && bean.getAttractionsId() != null) {
+			AttractionBean temp = this.getSession().get(AttractionBean.class, bean.getAttractionsId());
 			if(temp != null) {
 				return (AttractionBean)this.getSession().merge(bean); //update使用Hibernate的merge
 			}

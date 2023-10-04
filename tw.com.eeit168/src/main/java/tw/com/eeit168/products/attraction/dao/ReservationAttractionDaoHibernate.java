@@ -39,8 +39,8 @@ public class ReservationAttractionDaoHibernate implements ReservationAttractionD
 	
 	@Override
 	public ReservationAttractionBean update(ReservationAttractionBean bean) {
-		if(bean != null && bean.getReservation_attractions_id() != null) {
-			ReservationAttractionBean temp = this.getSession().get(ReservationAttractionBean.class, bean.getReservation_attractions_id());
+		if(bean != null && bean.getReservationAttractionsId() != null) {
+			ReservationAttractionBean temp = this.getSession().get(ReservationAttractionBean.class, bean.getReservationAttractionsId());
 			if(temp != null) {
 				return (ReservationAttractionBean)this.getSession().merge(bean); //update使用Hibernate的merge
 			}

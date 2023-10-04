@@ -39,8 +39,8 @@ public class ReservationRestuarantDaoHibernate implements ReservationRestuarantD
 
 	@Override
 	public ReservationRestuarantBean update(ReservationRestuarantBean bean) {
-		if(bean != null && bean.getReservation_restuarant_id() != null) {
-			ReservationRestuarantBean temp = this.getSession().get(ReservationRestuarantBean.class, bean.getReservation_restuarant_id());
+		if(bean != null && bean.getReservationRestuarantId() != null) {
+			ReservationRestuarantBean temp = this.getSession().get(ReservationRestuarantBean.class, bean.getReservationRestuarantId());
 			if(temp != null) {
 				return (ReservationRestuarantBean)this.getSession().merge(bean); //update使用Hibernate的merge
 			}

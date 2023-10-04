@@ -15,46 +15,46 @@ public class AttractionInventoryBean {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //這個用來標記此欄位是自動產生
 	@Column(name = "attractions_inventory_id")
-	private Integer attractions_inventory_id;
+	private Integer attractionsInventoryId;
 	
 	@JoinColumn(name = "attractions_id")
-	private Integer attractions_id;
+	private Integer attractionsId;
 	
 	@Column(name = "availability_date")
-	private java.sql.Date availability_date;
+	private java.sql.Date availabilityDate;
 	
 	@Column(name = "adult")
 	private Integer adult;
 	
 	@Column(name = "child")
 	private Integer child;
-	
+
 	
 	@Override
 	public String toString() {
-		return "AttractionsInventoryBean [attractions_inventory_id=" + attractions_inventory_id + ", attractions_id="
-				+ attractions_id + ", availability_date=" + availability_date + ", adult=" + adult + ", child=" + child
+		return "AttractionInventoryBean [attractionsInventoryId=" + attractionsInventoryId + ", attractionsId="
+				+ attractionsId + ", availabilityDate=" + availabilityDate + ", adult=" + adult + ", child=" + child
 				+ "]";
 	}
-	
-	
-	public Integer getAttractions_inventory_id() {
-		return attractions_inventory_id;
+
+
+	public Integer getAttractionsInventoryId() {
+		return attractionsInventoryId;
 	}
-	public void setAttractions_inventory_id(Integer attractions_inventory_id) {
-		this.attractions_inventory_id = attractions_inventory_id;
+	public void setAttractionsInventoryId(Integer attractionsInventoryId) {
+		this.attractionsInventoryId = attractionsInventoryId;
 	}
-	public Integer getAttractions_id() {
-		return attractions_id;
+	public Integer getAttractionsId() {
+		return attractionsId;
 	}
-	public void setAttractions_id(Integer attractions_id) {
-		this.attractions_id = attractions_id;
+	public void setAttractionsId(Integer attractionsId) {
+		this.attractionsId = attractionsId;
 	}
-	public java.sql.Date getAvailability_date() {
-		return availability_date;
+	public java.sql.Date getAvailabilityDate() {
+		return availabilityDate;
 	}
-	public void setAvailability_date(java.sql.Date availability_date) {
-		this.availability_date = availability_date;
+	public void setAvailabilityDate(java.sql.Date availabilityDate) {
+		this.availabilityDate = availabilityDate;
 	}
 	public Integer getAdult() {
 		return adult;

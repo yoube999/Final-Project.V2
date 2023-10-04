@@ -4,6 +4,7 @@ import java.util.List;
 
 import tw.com.eeit168.products.restaurant.model.RestaurantBean;
 import tw.com.eeit168.products.restaurant.model.SelectRestaurantInventoryView;
+import tw.com.eeit168.products.restaurant.model.SelectRestaurantPictureView;
 
 public interface RestaurantRepositoryDAO {
 	
@@ -17,6 +18,8 @@ public interface RestaurantRepositoryDAO {
 	
 	public List<SelectRestaurantInventoryView> blurFind(String keyword);
 	
-	public List<SelectRestaurantInventoryView> blurDateFind(java.sql.Date checkInDate, java.sql.Date checkOutDate);
+	public List<SelectRestaurantInventoryView> blurDateFind(java.sql.Date orderDate);
+	
+	public List<SelectRestaurantPictureView> findPictureByName(String name);
 
 }

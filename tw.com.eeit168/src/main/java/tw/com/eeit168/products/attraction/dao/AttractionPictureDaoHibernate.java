@@ -39,8 +39,8 @@ public class AttractionPictureDaoHibernate implements AttractionPictureDAO{
 	
 	@Override
 	public AttractionPictureBean update(AttractionPictureBean bean) {
-		if(bean != null && bean.getAttractions_pictures_id() != null) {
-			AttractionPictureBean temp = this.getSession().get(AttractionPictureBean.class, bean.getAttractions_pictures_id());
+		if(bean != null && bean.getAttractionsPicturesId() != null) {
+			AttractionPictureBean temp = this.getSession().get(AttractionPictureBean.class, bean.getAttractionsPicturesId());
 			if(temp != null) {
 				return (AttractionPictureBean)this.getSession().merge(bean); //update使用Hibernate的merge
 			}

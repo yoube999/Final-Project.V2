@@ -15,46 +15,46 @@ public class RestaurantInventoryBean {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //這個用來標記此欄位是自動產生
 	@Column(name = "restaurant_Inventory_id")
-	private Integer restaurant_Inventory_id;
+	private Integer restaurantInventoryId;
 	
 	@JoinColumn(name = "restaurant_id")
-	private Integer restaurant_id;
+	private Integer restaurantId;
 	
 	@Column(name = "availability_date")
-	private java.sql.Date availability_date;
+	private java.sql.Date availabilityDate;
 	
 	@Column(name = "lunch")
 	private Integer lunch;
 	
 	@Column(name = "dinner")
 	private Integer dinner;
-	
+
 	
 	@Override
 	public String toString() {
-		return "RestaurantInventoryBean [restaurant_Inventory_id=" + restaurant_Inventory_id + ", restaurant_id="
-				+ restaurant_id + ", availability_date=" + availability_date + ", lunch=" + lunch + ", dinner=" + dinner
+		return "RestaurantInventoryBean [restaurantInventoryId=" + restaurantInventoryId + ", restaurantId="
+				+ restaurantId + ", availabilityDate=" + availabilityDate + ", lunch=" + lunch + ", dinner=" + dinner
 				+ "]";
 	}
-	
-	
-	public Integer getRestaurant_Inventory_id() {
-		return restaurant_Inventory_id;
+
+
+	public Integer getRestaurantInventoryId() {
+		return restaurantInventoryId;
 	}
-	public void setRestaurant_Inventory_id(Integer restaurant_Inventory_id) {
-		this.restaurant_Inventory_id = restaurant_Inventory_id;
+	public void setRestaurantInventoryId(Integer restaurantInventoryId) {
+		this.restaurantInventoryId = restaurantInventoryId;
 	}
-	public Integer getRestaurant_id() {
-		return restaurant_id;
+	public Integer getRestaurantId() {
+		return restaurantId;
 	}
-	public void setRestaurant_id(Integer restaurant_id) {
-		this.restaurant_id = restaurant_id;
+	public void setRestaurantId(Integer restaurantId) {
+		this.restaurantId = restaurantId;
 	}
-	public java.sql.Date getAvailability_date() {
-		return availability_date;
+	public java.sql.Date getAvailabilityDate() {
+		return availabilityDate;
 	}
-	public void setAvailability_date(java.sql.Date availability_date) {
-		this.availability_date = availability_date;
+	public void setAvailabilityDate(java.sql.Date availabilityDate) {
+		this.availabilityDate = availabilityDate;
 	}
 	public Integer getLunch() {
 		return lunch;

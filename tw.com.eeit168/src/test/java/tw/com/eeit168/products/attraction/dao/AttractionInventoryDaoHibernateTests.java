@@ -32,9 +32,9 @@ public class AttractionInventoryDaoHibernateTests {
 //	@Test
 	public void testInsert() {
 		AttractionInventoryBean bean = new AttractionInventoryBean();
-		bean.setAttractions_id(2);
+		bean.setAttractionsId(2);
 		LocalDate date = LocalDate.of(2023, 8, 20); //利用LocalDate就可以輸入自己想要的日期
-		bean.setAvailability_date(java.sql.Date.valueOf(date)); //利用java.sql.Date將想要的日期insert進去
+		bean.setAvailabilityDate(java.sql.Date.valueOf(date)); //利用java.sql.Date將想要的日期insert進去
 		bean.setAdult(50);
 		bean.setChild(30);
 		AttractionInventoryBean insert = attractionInventoryDAO.insert(bean);
@@ -44,10 +44,10 @@ public class AttractionInventoryDaoHibernateTests {
 //	@Test
 	public void testUpdate() {
 		AttractionInventoryBean bean = new AttractionInventoryBean();
-		bean.setAttractions_inventory_id(21);
-		bean.setAttractions_id(2);
+		bean.setAttractionsInventoryId(21);
+		bean.setAttractionsId(2);
 		LocalDate date = LocalDate.of(2023, 8, 20); //利用LocalDate就可以輸入自己想要的日期
-		bean.setAvailability_date(java.sql.Date.valueOf(date)); //利用java.sql.Date將想要的日期insert進去
+		bean.setAvailabilityDate(java.sql.Date.valueOf(date)); //利用java.sql.Date將想要的日期insert進去
 		bean.setAdult(50);
 		bean.setChild(30);
 		AttractionInventoryBean update = attractionInventoryDAO.update(bean);

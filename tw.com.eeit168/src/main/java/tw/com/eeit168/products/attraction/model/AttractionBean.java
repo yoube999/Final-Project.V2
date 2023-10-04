@@ -14,56 +14,56 @@ public class AttractionBean {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //這個用來標記此欄位是自動產生
 	@Column(name = "attractions_id")
-	private Integer attractions_id;
+	private Integer attractionsId;
 	
 	@Column(name = "attractions_name", columnDefinition = "nvarchar") //如有要用nvarchar必須要有此annotation
-	private String attractions_name;
+	private String attractionsName;
 	
 	@Column(name = "attractions_address", columnDefinition = "nvarchar") //如有要用nvarchar必須要有此annotation
-	private String attractions_address;
+	private String attractionsAddress;
 	
 	@Column(name = "descriptions", columnDefinition = "nvarchar") //如有要用nvarchar必須要有此annotation
 	private String descriptions;
 	
 	@Column(name = "open_time")
-	private String open_time;
+	private String openTime;
 	
 	@Column(name = "close_time")
-	private String close_time;
+	private String closeTime;
 	
 	@Column(name = "contact_number")
-	private String contact_number;
+	private String contactNumber;
 	
 	@Column(name = "times_purchased")
-	private Integer times_purchased;
+	private Integer timesPurchased;
 
 	
 	@Override
 	public String toString() {
-		return "AttractionBean [attractions_id=" + attractions_id + ", attractions_name=" + attractions_name
-				+ ", attractions_address=" + attractions_address + ", descriptions=" + descriptions + ", open_time="
-				+ open_time + ", close_time=" + close_time + ", contact_number=" + contact_number + ", times_purchased="
-				+ times_purchased + "]";
+		return "AttractionBean [attractionsId=" + attractionsId + ", attractionsName=" + attractionsName
+				+ ", attractionsAddress=" + attractionsAddress + ", descriptions=" + descriptions + ", openTime="
+				+ openTime + ", closeTime=" + closeTime + ", contactNumber=" + contactNumber + ", timesPurchased="
+				+ timesPurchased + "]";
 	}
 
 
-	public Integer getAttractions_id() {
-		return attractions_id;
+	public Integer getAttractionsId() {
+		return attractionsId;
 	}
-	public void setAttractions_id(Integer attractions_id) {
-		this.attractions_id = attractions_id;
+	public void setAttractionsId(Integer attractionsId) {
+		this.attractionsId = attractionsId;
 	}
-	public String getAttractions_name() {
-		return attractions_name;
+	public String getAttractionsName() {
+		return attractionsName;
 	}
-	public void setAttractions_name(String attractions_name) {
-		this.attractions_name = attractions_name;
+	public void setAttractionsName(String attractionsName) {
+		this.attractionsName = attractionsName;
 	}
-	public String getAttractions_address() {
-		return attractions_address;
+	public String getAttractionsAddress() {
+		return attractionsAddress;
 	}
-	public void setAttractions_address(String attractions_address) {
-		this.attractions_address = attractions_address;
+	public void setAttractionsAddress(String attractionsAddress) {
+		this.attractionsAddress = attractionsAddress;
 	}
 	public String getDescriptions() {
 		return descriptions;
@@ -71,29 +71,29 @@ public class AttractionBean {
 	public void setDescriptions(String descriptions) {
 		this.descriptions = descriptions;
 	}
-	public String getOpen_time() {
-		return open_time;
+	public String getOpenTime() {
+		return openTime;
 	}
-	public void setOpen_time(String open_time) {
-		this.open_time = open_time;
+	public void setOpenTime(String openTime) {
+		this.openTime = openTime;
 	}
-	public String getClose_time() {
-		return close_time;
+	public String getCloseTime() {
+		return closeTime;
 	}
-	public void setClose_time(String close_time) {
-		this.close_time = close_time;
+	public void setCloseTime(String closeTime) {
+		this.closeTime = closeTime;
 	}
-	public String getContact_number() {
-		return contact_number;
+	public String getContactNumber() {
+		return contactNumber;
 	}
-	public void setContact_number(String contact_number) {
-		this.contact_number = contact_number;
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
 	}
-	public Integer getTimes_purchased() {
-		return times_purchased;
+	public Integer getTimesPurchased() {
+		return timesPurchased;
 	}
-	public void setTimes_purchased(Integer times_purchased) {
-		this.times_purchased = times_purchased;
+	public void setTimesPurchased(Integer timesPurchased) {
+		this.timesPurchased = timesPurchased;
 	}
 	
 }
