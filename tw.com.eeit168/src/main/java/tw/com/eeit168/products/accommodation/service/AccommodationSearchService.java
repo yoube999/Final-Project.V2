@@ -1,10 +1,8 @@
 package tw.com.eeit168.products.accommodation.service;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +11,12 @@ import tw.com.eeit168.products.accommodation.model.Accommodation;
 import tw.com.eeit168.products.accommodation.model.AccommodationInventory;
 import tw.com.eeit168.products.accommodation.model.AccommodationPrice;
 import tw.com.eeit168.products.accommodation.model.AccommodationRoomType;
+import tw.com.eeit168.products.accommodation.model.SelectAccommodationInventoryRoomtypePriceView;
 import tw.com.eeit168.products.accommodation.repository.AccommodationInventoryRepository;
+import tw.com.eeit168.products.accommodation.repository.AccommodationInventoryRepositoryDAOImpl;
 import tw.com.eeit168.products.accommodation.repository.AccommodationPriceRepository;
+import tw.com.eeit168.products.accommodation.repository.AccommodationRepository;
+import tw.com.eeit168.products.accommodation.repository.AccommodationRepositoryDAOImpl;
 import tw.com.eeit168.products.accommodation.repository.AccommodationRoomTypeRepository;
 import tw.com.eeit168.products.accommodation.util.RoomCombinationFinder;
 
@@ -41,25 +43,33 @@ public class AccommodationSearchService {
 	@Autowired
 	private AccommodationPriceRepository accommodationPriceRepository;
 
+	@Autowired
+	private AccommodationRepositoryDAOImpl accommodationRepositoryDAOImpl;
+
+	@Autowired
+	private AccommodationInventoryRepositoryDAOImpl accommodationInventoryRepositoryDAOImpl;
+
+	@Autowired
+	private AccommodationRepository accommodationRepository;
+
 	public List<Accommodation> findAccommodationName(String keyword) {
-		if (keyword != null && !keyword.trim().isEmpty()) {
-			String hql = "FROM Accommodation WHERE accommodationName LIKE :keyword OR accommodationAddress LIKE :keyword";
-			Query<Accommodation> query = getSession().createQuery(hql, Accommodation.class);
-			query.setParameter("keyword", "%" + keyword + "%");
-			return query.list();
-		}
-		return Collections.emptyList(); // Return an empty list if the keyword is null or empty
+		return accommodationRepository.findAccommodationName(keyword);
 	}
 
-	public List<AccommodationInventory> findAccommodationsByDate(java.sql.Date checkInDate,
-			java.sql.Date checkOutDate) {
-		String hql = "FROM AccommodationInventory WHERE availabilityDate BETWEEN :checkInDate AND :checkOutDate";
-		Query<AccommodationInventory> query = getSession().createQuery(hql, AccommodationInventory.class);
-		query.setParameter("checkInDate", checkInDate);
-		query.setParameter("checkOutDate", checkOutDate);
-
-		return query.list();
+	public List<Accommodation> selectTop5() {
+		return accommodationRepository.selectTop5();
 	}
+
+	public List<SelectAccommodationInventoryRoomtypePriceView> findByAvailabilityDateBetween(java.sql.Date checkinDate,
+			java.sql.Date checkoutDate) {
+				return accommodationRepository.findByAvailabilityDateBetween(checkinDate, checkoutDate);
+
+	}
+
+//	public List<AccommodationInventory> findByAvailabilityDateBetween(java.sql.Date checkInDate,
+//			java.sql.Date checkOutDate) {
+//		return accommodationInventoryRepositoryDAOImpl.findByAvailabilityDateBetween(checkInDate, checkOutDate);
+//	}
 
 	public List<AccommodationInventory> findAccommodationsByRooms(Integer requiredRooms) {
 		return accommodationInventoryRepository.findByAvailableRoomsGreaterThanEqual(requiredRooms);
@@ -70,11 +80,46 @@ public class AccommodationSearchService {
 		return combinationFinder.findCombinations(totalGuests, requiredRooms);
 	}
 
-	public List<AccommodationPrice> getPricesInPriceRangeForWeekdaysAndWeekends(int minWeekdayPrice,
-			int maxWeekdayPrice, int minWeekendPrice, int maxWeekendPrice) {
-		return accommodationPriceRepository.findByWeekdayPriceBetweenAndWeekendPriceBetween(minWeekdayPrice,
-				maxWeekdayPrice, minWeekendPrice, maxWeekendPrice);
+	public List<SelectAccommodationInventoryRoomtypePriceView> findAllByWeekdayPriceRange(Integer minPrice,
+			Integer maxPrice) {
+		return accommodationRepository.findAllByWeekdayPriceRange(minPrice, maxPrice);
 	}
+
+	public List<SelectAccommodationInventoryRoomtypePriceView> findAllByWeekendPriceRange(Integer minPrice,
+			Integer maxPrice) {
+		return accommodationRepository.findAllByWeekendPriceRange(minPrice, maxPrice);
+	}
+//	public List<SelectAccommodationInventoryRoomtypePriceView> getPricesInPriceRangeForWeekdaysAndWeekends(Integer minWeekdayPrice,
+//			Integer maxWeekdayPrice, Integer minWeekendPrice, Integer maxWeekendPrice) {
+//		System.out.println("6");
+//		
+//		return accommodationPriceRepository.findByWeekdayPriceBetweenAndWeekendPriceBetween(minWeekdayPrice,
+//				maxWeekdayPrice, minWeekendPrice, maxWeekendPrice);
+//	}
+
+	public List<SelectAccommodationInventoryRoomtypePriceView> findAllByWeekdayPriceDesc() {
+
+		return accommodationRepository.findAllByWeekdayPriceDesc();
+	}
+//	public List<Accommodation> findAccommodationName(String keyword) {
+//		if (keyword != null && !keyword.trim().isEmpty()) {
+//			String hql = "FROM Accommodation WHERE accommodationName LIKE :keyword OR accommodationAddress LIKE :keyword";
+//			Query<Accommodation> query = getSession().createQuery(hql, Accommodation.class);
+//			query.setParameter("keyword", "%" + keyword + "%");
+//			return query.list();
+//		}
+//		return Collections.emptyList(); // Return an empty list if the keyword is null or empty
+//	}
+
+//	public List<AccommodationInventory> findAccommodationsByDate(java.sql.Date checkInDate,
+//			java.sql.Date checkOutDate) {
+//		String hql = "FROM AccommodationInventory WHERE availabilityDate BETWEEN :checkInDate AND :checkOutDate";
+//		Query<AccommodationInventory> query = getSession().createQuery(hql, AccommodationInventory.class);
+//		query.setParameter("checkInDate", checkInDate);
+//		query.setParameter("checkOutDate", checkOutDate);
+//
+//		return query.list();
+//	}
 
 //	public class RoomCombinationFinder {
 //

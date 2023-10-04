@@ -25,10 +25,10 @@ public class AccommodationPrice {
 	private Integer roomTypeId;
 	
 	@Column(name = "weekday_price", nullable = false)
-	private int weekdayPrice;
+	private Integer weekdayPrice;
 	
 	@Column(name = "weekend_price", nullable = false)
-	private int weekendPrice;
+	private Integer weekendPrice;
 
 	public Integer getPriceId() {
 		return priceId;
@@ -54,19 +54,19 @@ public class AccommodationPrice {
 		this.roomTypeId = roomTypeId;
 	}
 
-	public int getWeekdayPrice() {
+	public Integer getWeekdayPrice() {
 		return weekdayPrice;
 	}
 
-	public void setWeekdayPrice(int weekdayPrice) {
+	public void setWeekdayPrice(Integer weekdayPrice) {
 		this.weekdayPrice = weekdayPrice;
 	}
 
-	public int getWeekendPrice() {
+	public Integer getWeekendPrice() {
 		return weekendPrice;
 	}
 
-	public void setWeekendPrice(int weekendPrice) {
+	public void setWeekendPrice(Integer weekendPrice) {
 		this.weekendPrice = weekendPrice;
 	}
 
@@ -76,6 +76,7 @@ public class AccommodationPrice {
 				+ roomTypeId + ", weekdayPrice=" + weekdayPrice + ", weekendPrice=" + weekendPrice + "]";
 	}
 
+	
 	
 
 	
