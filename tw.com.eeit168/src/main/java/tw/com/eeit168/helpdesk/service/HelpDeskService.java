@@ -43,7 +43,6 @@ public class HelpDeskService {
 	// 宣告存放圖片的實體路徑
 	private static final String IMAGE_UPLOAD_PATH = "C:\\Final-Project-workspace\\images\\";
 
-	
 	/**
 	 * 寫入案件單，需再加上圖片上傳功能
 	 * 
@@ -287,17 +286,17 @@ public class HelpDeskService {
 			MimeMessage message = javaMailSender.createMimeMessage();
 			// 寫入Email主旨、內容
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);
-			
+
 			// Eamil、主旨和內容若為空防呆
-			if(email != null && Subject != null && Text != null) {
+			if (email != null && Subject != null && Text != null) {
 				helper.setTo(email);
 				helper.setSubject(Subject);
 				helper.setText(Text);
-				
+
 				javaMailSender.send(message);
 				return true;
 			}
-			
+
 			// 未寄送成功回傳false
 			return false;
 		} catch (MessagingException e) {
@@ -306,49 +305,6 @@ public class HelpDeskService {
 			return false;
 		}
 
-	}
-	
-	/**
-	 * 將csv檔案轉成json字串
-	 * 
-	 * 
-	 */
-	public String convertCsvToJson(String csvFilePath) {
-
-		try {
-
-			// 創建CSV讀取器
-			FileReader reader = new FileReader(csvFilePath);
-			CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build();
-
-			// 開始解析CSV數據
-			String[] nextRecord;
-			JSONObject jsonObject = new JSONObject();
-			int recordCount = 0;
-
-			while ((nextRecord = csvReader.readNext()) != null) {
-				String recordKey = "record" + recordCount;
-				jsonObject.put(recordKey, nextRecord);
-				recordCount++;
-			}
-			
-			// 將JSON對象轉換為JSON字符串
-            String jsonText = jsonObject.toString();
-
-            return jsonText;
-            
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (CsvValidationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return null;
 	}
 
 }
