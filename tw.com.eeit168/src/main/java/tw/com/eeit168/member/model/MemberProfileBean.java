@@ -56,19 +56,19 @@ public class MemberProfileBean {
 
 	@Override
 	public String toString() {
-		return "CustomerBean [memberProfileId=" + member_profile_id + ", user_account=" + user_account
+		return "CustomerBean [member_profile_id=" + member_profile_id + ", user_account=" + user_account
 				+ ", user_password=" + user_password + ", username=" + username + ", birthday=" + birthday + ", gender="
 				+ gender + ", phone_number=" + phone_number + ", registration_date=" + registration_date
 				+ ", account_status=" + account_status + ", member_level=" + member_level + ", verification_code="
 				+ verification_code + ", attempts=" + attempts + "]";
 	}
 
-	public Integer getMemberProfileId() {
+	public Integer getMember_profile_id() {
 		return member_profile_id;
 	}
 
-	public void setMemberProfileId(Integer memberProfileId) {
-		this.member_profile_id = memberProfileId;
+	public void setMemberProfileId(Integer member_profile_id) {
+		this.member_profile_id = member_profile_id;
 	}
 
 	public String getUser_account() {

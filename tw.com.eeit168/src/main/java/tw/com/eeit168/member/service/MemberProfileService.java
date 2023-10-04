@@ -16,7 +16,8 @@ import jakarta.mail.internet.MimeMessage;
 import tw.com.eeit168.member.dao.MemberProfileInterFace;
 import tw.com.eeit168.member.model.MemberProfileBean;
 
-@Service
+@Service  
+@Transactional
 public class MemberProfileService {
 
     private MemberProfileInterFace memberProfileInterFace;
@@ -28,7 +29,7 @@ public class MemberProfileService {
         this.javaMailSender = javaMailSender;
     }
 
-    @Transactional
+ 
     public MemberProfileBean login(JsonNode jsonNode) {
         // 从JsonNode中获取用户名和密码
         String user_account = jsonNode.get("user_account").asText();

@@ -49,8 +49,7 @@ public class CreditCardService {
 
 
     // 通過會員配置 ID 查詢信用卡列表
-    public List<CreditCardBean> findCreditCardsByMemberProfileIdFromJson(JsonNode jsonNode) {
-        int memberProfileId = jsonNode.get("member_profile_id").asInt();
-        return creditCardInterFace.selectCreditCardsByMemberProfileId(memberProfileId);
+    public List<CreditCardBean> findCreditCardsByMemberProfileId(int member_profile_id) {
+        return creditCardInterFace.selectCreditCardsByMemberProfileId(member_profile_id);
     }
 }

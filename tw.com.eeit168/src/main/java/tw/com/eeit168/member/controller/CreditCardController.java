@@ -38,8 +38,10 @@ public class CreditCardController {
 
 
 
-    @GetMapping("/member/cards")
-    public List<CreditCardBean> findCreditCardsByMemberProfileId(@RequestBody JsonNode jsonNode) {
-        return creditCardService.findCreditCardsByMemberProfileIdFromJson(jsonNode);
+    @GetMapping("/member/cards/{member_profile_id}")
+    public List<CreditCardBean> findCreditCardsByMemberProfileId(@PathVariable("member_profile_id") int member_profile_id) {
+        // 在方法中使用 memberProfileId 参数
+        // 调用服务方法并传递 memberProfileId
+        return creditCardService.findCreditCardsByMemberProfileId(member_profile_id);
     }
 }

@@ -169,7 +169,7 @@ public class HelpDeskController {
 		JSONArray array = new JSONArray();
 		if (CustomerUsers != null && !CustomerUsers.isEmpty()) {
 			for (MemberProfileBean CustomerUser : CustomerUsers) {
-				JSONObject item = new JSONObject().put("member_profile_id", CustomerUser.getMemberProfileId())
+				JSONObject item = new JSONObject().put("member_profile_id", CustomerUser.getMember_profile_id())
 						.put("username", CustomerUser.getUsername());
 
 				array = array.put(item);
