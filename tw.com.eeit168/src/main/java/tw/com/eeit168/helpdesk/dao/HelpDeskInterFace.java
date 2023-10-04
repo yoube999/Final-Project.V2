@@ -18,6 +18,5 @@ public interface HelpDeskInterFace {
 	public abstract HelpDeskBean modifyHelpdeskStatus(HelpDeskBean bean);
 
 	public abstract List<MemberProfileBean> selectCustomerUser(JSONObject obj);
-	
-	public abstract String convertCsvToJson(String csvFilePath);
+
 }

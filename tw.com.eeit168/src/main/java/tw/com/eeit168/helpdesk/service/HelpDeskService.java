@@ -1,6 +1,8 @@
 package tw.com.eeit168.helpdesk.service;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
@@ -13,6 +15,10 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvValidationException;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -300,6 +306,49 @@ public class HelpDeskService {
 			return false;
 		}
 
+	}
+	
+	/**
+	 * 將csv檔案轉成json字串
+	 * 
+	 * 
+	 */
+	public String convertCsvToJson(String csvFilePath) {
+
+		try {
+
+			// 創建CSV讀取器
+			FileReader reader = new FileReader(csvFilePath);
+			CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build();
+
+			// 開始解析CSV數據
+			String[] nextRecord;
+			JSONObject jsonObject = new JSONObject();
+			int recordCount = 0;
+
+			while ((nextRecord = csvReader.readNext()) != null) {
+				String recordKey = "record" + recordCount;
+				jsonObject.put(recordKey, nextRecord);
+				recordCount++;
+			}
+			
+			// 將JSON對象轉換為JSON字符串
+            String jsonText = jsonObject.toString();
+
+            return jsonText;
+            
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CsvValidationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 
 }
