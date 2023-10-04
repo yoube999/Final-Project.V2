@@ -1,7 +1,5 @@
 package tw.com.eeit168.helpdesk.service;
 
-import java.util.Optional;
-
 import org.hibernate.Session;
 import org.json.JSONException;
 import org.json.JSONObject;
