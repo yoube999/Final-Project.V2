@@ -1,4 +1,4 @@
-package tw.com.eeit168.helpdesk.Repository;
+package tw.com.eeit168.helpdesk.dao;
 
 public interface HelpDeskUpdateRecordInterFace {
 
