@@ -17,6 +17,7 @@ import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
 
 import tw.com.eeit168.helpdesk.util.CsvFieldMapping;
+import tw.com.eeit168.products.accommodation.model.Accommodation;
 import tw.com.eeit168.products.accommodation.repository.AccommodationRepository;
 import tw.com.eeit168.products.restaurant.model.RestaurantBean;
 import tw.com.eeit168.products.restaurant.repository.RestaurantRepository;
@@ -114,8 +115,49 @@ public class HelpDeskProductsService {
 					restaurantBean.setTimesPurchased(obj.getInt("times_purchased"));
 					restaurantBean.setDescriptions(obj.getString("descriptions"));
 
-					// 將RestaurantBean對象保存到數據庫
+					// 將RestaurantBean對象保存到資料庫
 					restaurantRepository.save(restaurantBean);
+				}
+
+				return true;
+
+			} catch (JSONException e) {
+				e.printStackTrace();
+				return false;
+			}
+
+		} else {
+			return false;
+		}
+
+	}
+	
+	/**
+	 * 新增景點商品
+	 * 
+	 * @return insert成功回傳true，反之false
+	 */
+	public boolean insertAccommodationProducts(String restaurantData) {
+
+		if (restaurantData != null) {
+			try {
+				JSONArray array = new JSONArray(restaurantData);
+
+				// 這個for迴圈的目的是遍歷JSON數組中的每個JSON對象。在每次迭代中，它從JSON數組中獲取一個JSON對象，然後將該JSON對象轉換為您的自定義Java類型
+				// Accommodation。
+				for (int i = 0; i < array.length(); i++) {
+					JSONObject obj = array.getJSONObject(i);
+
+					// 將JSON數據轉換為Accommodation對象
+					Accommodation restaurantBean = new Accommodation();
+					restaurantBean.setAccommodationName(obj.getString("accommodation_name"));
+					restaurantBean.setAccommodationAddress(obj.getString("accommodation_address"));
+					restaurantBean.setContactNumber(obj.getString("contact_number"));
+					restaurantBean.setTimesPurchased(obj.getInt("times_purchased"));
+					restaurantBean.setDescriptions(obj.getString("descriptions"));
+
+					// 將Accommodation對象保存到資料庫
+					accommodationRepository.save(restaurantBean);
 				}
 
 				return true;
