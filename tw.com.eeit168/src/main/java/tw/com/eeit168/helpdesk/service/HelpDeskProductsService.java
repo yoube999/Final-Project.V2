@@ -1,8 +1,8 @@
 package tw.com.eeit168.helpdesk.service;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
@@ -31,12 +32,13 @@ public class HelpDeskProductsService {
 	 * 
 	 * 
 	 */
-	public String convertCsvToJson(String csvFilePath) {
+	public String convertCsvToJson(MultipartFile csvFile) {
 
 		try {
 
 			// 創建CSV讀取器
-			FileReader reader = new FileReader(csvFilePath);
+			// 將MultipartFile轉換為Reader
+			Reader reader = new InputStreamReader(csvFile.getInputStream());
 			CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build();
 
 			// 開始解析CSV數據
@@ -45,14 +47,20 @@ public class HelpDeskProductsService {
 
 			while ((nextRecord = csvReader.readNext()) != null) {
 				JSONObject obj = new JSONObject();
-				obj.put("restaurant_name", nextRecord[0]);
-				obj.put("restaurant_address", nextRecord[1]);
-				obj.put("contact_number", nextRecord[2]);
-				obj.put("price", Integer.parseInt(nextRecord[3]));
-				obj.put("times_purchased", Integer.parseInt(nextRecord[4]));
-				obj.put("descriptions", nextRecord[5]);
+				try {
+					obj.put("restaurant_name", nextRecord[0]);
+					obj.put("restaurant_address", nextRecord[1]);
+					obj.put("contact_number", nextRecord[2]);
+					obj.put("price", Integer.parseInt(nextRecord[3]));
+					obj.put("times_purchased", Integer.parseInt(nextRecord[4]));
+					obj.put("descriptions", nextRecord[5]);
 
-				array.put(obj);
+					array.put(obj);
+				} catch (ArrayIndexOutOfBoundsException e) {
+					// 上傳csv檔案內容格式錯誤
+					e.printStackTrace();
+					return null; // 返回錯誤消息給客戶端
+				}
 
 			}
 
@@ -61,13 +69,16 @@ public class HelpDeskProductsService {
 
 			return jsonText;
 
-		} catch (FileNotFoundException e) {
+		} catch (IOException e) {
 			// 需改成跳轉至錯誤頁面
 			e.printStackTrace();
 		} catch (CsvValidationException e) {
 			// 需改成跳轉至錯誤頁面
 			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (NumberFormatException e) {
+			// 需改成跳轉至錯誤頁面
+			e.printStackTrace();
+		} catch (JSONException e) {
 			// 需改成跳轉至錯誤頁面
 			e.printStackTrace();
 		}
@@ -86,7 +97,8 @@ public class HelpDeskProductsService {
 			try {
 				JSONArray array = new JSONArray(restaurantData);
 
-				// 這個for迴圈的目的是遍歷JSON數組中的每個JSON對象。在每次迭代中，它從JSON數組中獲取一個JSON對象，然後將該JSON對象轉換為您的自定義Java類型 RestaurantBean。
+				// 這個for迴圈的目的是遍歷JSON數組中的每個JSON對象。在每次迭代中，它從JSON數組中獲取一個JSON對象，然後將該JSON對象轉換為您的自定義Java類型
+				// RestaurantBean。
 				for (int i = 0; i < array.length(); i++) {
 					JSONObject obj = array.getJSONObject(i);
 

@@ -3,6 +3,7 @@ package tw.com.eeit168.helpdesk;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.transaction.annotation.Transactional;
 
 import tw.com.eeit168.helpdesk.service.HelpDeskProductsService;
@@ -16,9 +17,13 @@ public class HelpDeskTest {
 
 //	@Test
 	public void testConvertCsvToJson() {
-		String csvFilePath = "C://Users//User//Downloads//期末餐館測試資料.csv"; // 將路徑替換為您的CSV文件路徑
-		String jsonResult = helpDeskProductsService.convertCsvToJson(csvFilePath);
+		String content = "restaurant_name,restaurant_address,contact_number,price,times_purchased,descriptions\n"
+                + "Restaurant1,Address1,123456,100,5,Description1\n"
+                + "Restaurant2,Address2,789012,200,10,Description2";
+        MockMultipartFile csvFile = new MockMultipartFile("csvFile", "test.csv", "text/csv", content.getBytes());
 
+        String jsonResult = helpDeskProductsService.convertCsvToJson(csvFile);
+        
 		System.out.println(jsonResult);
 
 	}
@@ -26,8 +31,12 @@ public class HelpDeskTest {
 	@Test
 	public void testinsertRestaurantProducts(){
 		
-		String csvFilePath = "C://Users//User//Downloads//期末餐館測試資料.csv"; // 將路徑替換為您的CSV文件路徑
-		String jsonResult = helpDeskProductsService.convertCsvToJson(csvFilePath);
+		String content = "restaurant_name,restaurant_address,contact_number,price,times_purchased,descriptions\n"
+                + "Restaurant1,Address1,123456,100,5,Description1\n"
+                + "Restaurant2,Address2,789012,200,10,Description2";
+        MockMultipartFile csvFile = new MockMultipartFile("csvFile", "test.csv", "text/csv", content.getBytes());
+
+        String jsonResult = helpDeskProductsService.convertCsvToJson(csvFile);
 		String restaurantData = jsonResult;
 		System.out.println(restaurantData);
 		
