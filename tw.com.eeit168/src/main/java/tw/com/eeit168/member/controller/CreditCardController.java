@@ -26,9 +26,10 @@ public class CreditCardController {
     @Autowired
     private CreditCardService creditCardService;
 
-    @PostMapping("/member")
-    public void insertCreditCard(@RequestBody JsonNode jsonNode) throws ParseException {
-        creditCardService.insertCreditCardFromJson(jsonNode);
+    @PostMapping("/member/insert-credit-card/{member_profile_id}")
+    public void insertCreditCard(@RequestBody JsonNode jsonNode, @PathVariable("member_profile_id") int memberProfileId) throws ParseException {
+        // memberProfileId 在这里已经是整数类型，不需要手动转换
+        creditCardService.insertCreditCardFromJson(jsonNode, memberProfileId);
     }
 
     @DeleteMapping("/member")
@@ -39,9 +40,7 @@ public class CreditCardController {
 
 
     @GetMapping("/member/cards/{member_profile_id}")
-    public List<CreditCardBean> findCreditCardsByMemberProfileId(@PathVariable("member_profile_id") int member_profile_id) {
-        // 在方法中使用 memberProfileId 参数
-        // 调用服务方法并传递 memberProfileId
-        return creditCardService.findCreditCardsByMemberProfileId(member_profile_id);
+        public List<CreditCardBean> findCreditCardsByMemberProfileId(@PathVariable("member_profile_id") int member_profile_id) {
+            return creditCardService.findCreditCardsByMemberProfileId(member_profile_id);
+        }
     }
-}

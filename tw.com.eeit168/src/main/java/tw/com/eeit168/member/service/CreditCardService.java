@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -14,14 +15,14 @@ import tw.com.eeit168.member.dao.CreditCardInterFace;
 import tw.com.eeit168.member.model.CreditCardBean;
 
 @Service
+@Transactional
 public class CreditCardService {
 
     @Autowired
     private CreditCardInterFace creditCardInterFace;
 
  // 新增信用卡
-    public void insertCreditCardFromJson(JsonNode jsonNode) throws ParseException {
-        int memberProfileId = jsonNode.get("member_profile_id").asInt();
+    public void insertCreditCardFromJson(JsonNode jsonNode, int memberProfileId) throws ParseException {
         String cardName = jsonNode.get("card_name").asText();
         String cardType = jsonNode.get("card_type").asText();
         String cardNumber = jsonNode.get("card_number").asText();
