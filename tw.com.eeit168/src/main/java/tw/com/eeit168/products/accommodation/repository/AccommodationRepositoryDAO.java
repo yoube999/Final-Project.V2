@@ -11,7 +11,7 @@ import tw.com.eeit168.products.accommodation.model.SelectAccommodationInventoryR
 public interface AccommodationRepositoryDAO {
 	public List<Accommodation> findAccommodationName(String keyword);
 
-	public List<Accommodation> selectTop5();
+	public List<SelectAccommodationInventoryRoomtypePriceView> selectTop5();
 	
 	List<SelectAccommodationInventoryRoomtypePriceView> findByAvailabilityDateBetween(
 	        java.sql.Date checkinDate, java.sql.Date checkoutDate);

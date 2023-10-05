@@ -41,6 +41,13 @@ public class AccommodationAjaxController {
 		JSONObject responseJson = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
 		
+		// Check if the keyword is null or empty
+		if(keyword == null || keyword.isEmpty()) {
+			responseJson.put("error", "搜索欄不能為空");
+			return responseJson.toString();
+		}
+		
+		
 		List<Accommodation> accommodations = accommodationRepository.findAccommodationName(keyword);
 		if(accommodations != null && !accommodations.isEmpty()) {
 			for(Accommodation accommodation: accommodations) {
@@ -52,8 +59,11 @@ public class AccommodationAjaxController {
 				.put("contactNumber", accommodation.getContactNumber())
 				.put("timesPurchased", accommodation.getTimesPurchased());
 				jsonArray = jsonArray.put(item);
+			} 
+		}else {
+				// 如果找不到資料，設定特定訊息
+				responseJson.put("error", "查無此資料");
 			}
-		}
 		responseJson.put("list", jsonArray);
 		return responseJson.toString();
 	}
@@ -62,14 +72,12 @@ public class AccommodationAjaxController {
 	public String selectTop5() {
 		JSONObject responseJson = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
-		List<Accommodation> top5 = accommodationRepository.selectTop5();
+		List<SelectAccommodationInventoryRoomtypePriceView> top5 = accommodationRepository.selectTop5();
 		if(top5 != null && !top5.isEmpty()) {
-			for(Accommodation accommodation: top5) {
+			for(SelectAccommodationInventoryRoomtypePriceView accommodation: top5) {
 				JSONObject item = new JSONObject()
 						.put("accommodationName", accommodation.getAccommodationName())
-						.put("accommodationAddress", accommodation.getAccommodationAddress())
-						.put("descriptions", accommodation.getDescriptions())
-						.put("contactNumber", accommodation.getContactNumber())
+						.put("weekdayPrice", accommodation.getWeekdayPrice())
 						.put("timesPurchased", accommodation.getTimesPurchased());
 				jsonArray = jsonArray.put(item);
 			}
@@ -189,6 +197,32 @@ public class AccommodationAjaxController {
 	    }
 	     return responseJson.toString();
 	 }
+//	 @GetMapping(path = {"/search/roomTypes"})
+//	 public String getRoomTypes(
+//			 @RequestParam("totalGuests") int totalGuests,
+//			 @RequestParam("requiredRooms") int requiredRooms) {
+//		 JSONObject responseJson = new JSONObject();
+//		 JSONArray jsonArray = new JSONArray();
+//		 
+//		 List<List<AccommodationRoomType>> roomTypeCombinations = accommodationSearchService.findRoomCombinations(totalGuests, requiredRooms);
+//		 if(roomTypeCombinations != null && !roomTypeCombinations.isEmpty()) {
+//			 for (List<AccommodationRoomType> roomTypeList : roomTypeCombinations) {
+//				 for (AccommodationRoomType accommodationRoomType : roomTypeList) {
+//					 // Access individual AccommodationRoomType properties and process them as needed
+//					 JSONObject item = new JSONObject()
+//							 .put("accommodationId", accommodationRoomType.getAccommodationId())
+//							 .put("roomTypeName", accommodationRoomType.getRoomTypeName())
+//							 .put("capacity", accommodationRoomType.getCapacity())
+//							 .put("bedsAmount", accommodationRoomType.getBedsAmount());
+//					 
+//					 jsonArray.put(item);
+//				 }
+//			 }
+//			 
+//			 responseJson.put("list", jsonArray);
+//		 }
+//		 return responseJson.toString();
+//	 }
 
 //	 @GetMapping(path = {"/search/PriceRange"})
 //	 public String searchAccommodationPrices(
@@ -270,7 +304,7 @@ public class AccommodationAjaxController {
 			responseJson.put("list", jsonArray);
 			return responseJson.toString();
 		}
-	 @GetMapping(path = {"/search/bypricedesc"}) //以價格搜尋(高-低)
+	 @GetMapping(path = {"/search/byweekdaypricedesc"}) //以價格搜尋(高-低)
 	 public String findAllByWeekdayPriceDesc() {
 		 JSONObject responseJson = new JSONObject();
 		 JSONArray jsonArray = new JSONArray();
@@ -285,6 +319,78 @@ public class AccommodationAjaxController {
 						 .put("roomTypeName", accommodationPrice.getRoomTypeName())
 						 .put("weekdayPrice", accommodationPrice.getWeekdayPrice())
 //						 .put("weekendPrice", accommodationPrice.getWeekendPrice())
+						 ;
+				 
+				 jsonArray = jsonArray.put(item);	 
+			 }
+		 }
+		 responseJson.put("list", jsonArray);
+		 return responseJson.toString();
+	 }
+	 
+	 @GetMapping(path = {"/search/byweekendpricedesc"}) //以價格搜尋(高-低)
+	 public String findAllByWeekendPriceDesc() {
+		 JSONObject responseJson = new JSONObject();
+		 JSONArray jsonArray = new JSONArray();
+		 
+		 List<SelectAccommodationInventoryRoomtypePriceView> findAllByWeekendPriceDesc = accommodationSearchService.findAllByWeekendPriceDesc();
+		
+		 
+		 if(findAllByWeekendPriceDesc != null && !findAllByWeekendPriceDesc.isEmpty()) {
+			 for(SelectAccommodationInventoryRoomtypePriceView accommodationPrice: findAllByWeekendPriceDesc) {
+				 JSONObject item = new JSONObject()
+						 .put("accommodationName", accommodationPrice.getAccommodationName())
+						 .put("roomTypeName", accommodationPrice.getRoomTypeName())
+//						 .put("weekdayPrice", accommodationPrice.getWeekdayPrice())
+						 .put("weekendPrice", accommodationPrice.getWeekendPrice())
+						 ;
+				 
+				 jsonArray = jsonArray.put(item);	 
+			 }
+		 }
+		 responseJson.put("list", jsonArray);
+		 return responseJson.toString();
+	 }
+	 
+	 @GetMapping(path = {"/search/byweekdaypriceasc"}) //以價格搜尋(高-低)
+	 public String findAllByWeekdayPriceAsc() {
+		 JSONObject responseJson = new JSONObject();
+		 JSONArray jsonArray = new JSONArray();
+		 
+		 List<SelectAccommodationInventoryRoomtypePriceView> findAllByWeekdayPriceAsc = accommodationSearchService.findAllByWeekdayPriceAsc();
+		 
+		 
+		 if(findAllByWeekdayPriceAsc != null && !findAllByWeekdayPriceAsc.isEmpty()) {
+			 for(SelectAccommodationInventoryRoomtypePriceView accommodationPrice: findAllByWeekdayPriceAsc) {
+				 JSONObject item = new JSONObject()
+						 .put("accommodationName", accommodationPrice.getAccommodationName())
+						 .put("roomTypeName", accommodationPrice.getRoomTypeName())
+						 .put("weekdayPrice", accommodationPrice.getWeekdayPrice())
+//						 .put("weekendPrice", accommodationPrice.getWeekendPrice())
+						 ;
+				 
+				 jsonArray = jsonArray.put(item);	 
+			 }
+		 }
+		 responseJson.put("list", jsonArray);
+		 return responseJson.toString();
+	 }
+	 
+	 @GetMapping(path = {"/search/byweekendpriceasc"}) //以價格搜尋(高-低)
+	 public String findAllByWeekendPriceAsc() {
+		 JSONObject responseJson = new JSONObject();
+		 JSONArray jsonArray = new JSONArray();
+		 
+		 List<SelectAccommodationInventoryRoomtypePriceView> findAllByWeekendPriceAsc = accommodationSearchService.findAllByWeekendPriceAsc();
+		
+		 
+		 if(findAllByWeekendPriceAsc != null && !findAllByWeekendPriceAsc.isEmpty()) {
+			 for(SelectAccommodationInventoryRoomtypePriceView accommodationPrice: findAllByWeekendPriceAsc) {
+				 JSONObject item = new JSONObject()
+						 .put("accommodationName", accommodationPrice.getAccommodationName())
+						 .put("roomTypeName", accommodationPrice.getRoomTypeName())
+//						 .put("weekdayPrice", accommodationPrice.getWeekdayPrice())
+						 .put("weekendPrice", accommodationPrice.getWeekendPrice())
 						 ;
 				 
 				 jsonArray = jsonArray.put(item);	 

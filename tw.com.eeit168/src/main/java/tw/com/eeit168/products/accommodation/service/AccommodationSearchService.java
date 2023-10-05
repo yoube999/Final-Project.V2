@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import jakarta.persistence.PersistenceContext;
 import tw.com.eeit168.products.accommodation.model.Accommodation;
 import tw.com.eeit168.products.accommodation.model.AccommodationInventory;
-import tw.com.eeit168.products.accommodation.model.AccommodationPrice;
 import tw.com.eeit168.products.accommodation.model.AccommodationRoomType;
 import tw.com.eeit168.products.accommodation.model.SelectAccommodationInventoryRoomtypePriceView;
 import tw.com.eeit168.products.accommodation.repository.AccommodationInventoryRepository;
@@ -18,6 +17,7 @@ import tw.com.eeit168.products.accommodation.repository.AccommodationPriceReposi
 import tw.com.eeit168.products.accommodation.repository.AccommodationRepository;
 import tw.com.eeit168.products.accommodation.repository.AccommodationRepositoryDAOImpl;
 import tw.com.eeit168.products.accommodation.repository.AccommodationRoomTypeRepository;
+import tw.com.eeit168.products.accommodation.repository.SelectAccommodationInventoryRoomtypePriceViewRepository;
 import tw.com.eeit168.products.accommodation.util.RoomCombinationFinder;
 
 @Service
@@ -51,12 +51,14 @@ public class AccommodationSearchService {
 
 	@Autowired
 	private AccommodationRepository accommodationRepository;
-
+	
+	@Autowired
+	private SelectAccommodationInventoryRoomtypePriceViewRepository selectAccommodationInventoryRoomtypePriceViewRepository;
 	public List<Accommodation> findAccommodationName(String keyword) {
 		return accommodationRepository.findAccommodationName(keyword);
 	}
 
-	public List<Accommodation> selectTop5() {
+	public List<SelectAccommodationInventoryRoomtypePriceView> selectTop5() {
 		return accommodationRepository.selectTop5();
 	}
 
@@ -75,10 +77,21 @@ public class AccommodationSearchService {
 		return accommodationInventoryRepository.findByAvailableRoomsGreaterThanEqual(requiredRooms);
 	}
 
+	// 在 AccommodationSearchService 類別中的程式碼替換
+//	public List<List<SelectAccommodationInventoryRoomtypePriceView>> findRoomCombinations(int totalGuests, int requiredRooms) {
+//	    RoomCombinationFinder combinationFinder = new RoomCombinationFinder(selectAccommodationInventoryRoomtypePriceViewRepository);
+//	    // 改為使用 SelectAccommodationInventoryRoomtypePriceView
+//	    return combinationFinder.findCombinations(totalGuests, requiredRooms);
+//	}
+	
 	public List<List<AccommodationRoomType>> findRoomCombinations(int totalGuests, int requiredRooms) {
 		RoomCombinationFinder combinationFinder = new RoomCombinationFinder(accommodationRoomTypeRepository);
 		return combinationFinder.findCombinations(totalGuests, requiredRooms);
 	}
+//	public List<List<AccommodationRoomType>> findRoomCombinations(int totalGuests, int requiredRooms) {
+//		RoomCombinationFinder combinationFinder = new RoomCombinationFinder(accommodationRoomTypeRepository);
+//		return combinationFinder.findCombinations(totalGuests, requiredRooms);
+//	}
 
 	public List<SelectAccommodationInventoryRoomtypePriceView> findAllByWeekdayPriceRange(Integer minPrice,
 			Integer maxPrice) {
@@ -100,6 +113,18 @@ public class AccommodationSearchService {
 	public List<SelectAccommodationInventoryRoomtypePriceView> findAllByWeekdayPriceDesc() {
 
 		return accommodationRepository.findAllByWeekdayPriceDesc();
+	}
+	
+	public List<SelectAccommodationInventoryRoomtypePriceView> findAllByWeekendPriceDesc() {
+		return accommodationRepository.findAllByWeekendPriceDesc();
+	}
+	
+	public List<SelectAccommodationInventoryRoomtypePriceView> findAllByWeekdayPriceAsc() {
+		return accommodationRepository.findAllByWeekdayPriceAsc();
+	}
+	
+	public List<SelectAccommodationInventoryRoomtypePriceView> findAllByWeekendPriceAsc() {
+		return accommodationRepository.findAllByWeekendPriceAsc();
 	}
 //	public List<Accommodation> findAccommodationName(String keyword) {
 //		if (keyword != null && !keyword.trim().isEmpty()) {

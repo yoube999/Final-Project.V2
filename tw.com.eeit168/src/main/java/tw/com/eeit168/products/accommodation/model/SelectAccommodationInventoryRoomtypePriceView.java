@@ -1,5 +1,7 @@
 package tw.com.eeit168.products.accommodation.model;
 
+import java.util.Objects;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,6 +17,9 @@ public class SelectAccommodationInventoryRoomtypePriceView {
 	@Column(name = "inventory_id")
 	private Integer accommodationInventoryId;
 	
+	@Column(name = "accommodation_id")
+	private Integer accommodationId;
+	
 	@Column(name = "accommodation_name", nullable = false, columnDefinition = "nvarchar(255)")
 	private String accommodationName;
 	
@@ -27,11 +32,17 @@ public class SelectAccommodationInventoryRoomtypePriceView {
 	@Column(name = "available_rooms")
 	private Integer availableRooms;
 	
+	@Column(name = "beds_amount", nullable = false)
+	private Integer bedsAmount;
+	
 	@Column(name = "weekday_price", nullable = false)
 	private Integer weekdayPrice;
 	
 	@Column(name = "weekend_price", nullable = false)
 	private Integer weekendPrice;
+
+	@Column(name = "times_purchased", nullable = false)
+	private int timesPurchased;
 
 	public Integer getAccommodationInventoryId() {
 		return accommodationInventoryId;
@@ -39,6 +50,14 @@ public class SelectAccommodationInventoryRoomtypePriceView {
 
 	public void setAccommodationInventoryId(Integer accommodationInventoryId) {
 		this.accommodationInventoryId = accommodationInventoryId;
+	}
+
+	public Integer getAccommodationId() {
+		return accommodationId;
+	}
+
+	public void setAccommodationId(Integer accommodationId) {
+		this.accommodationId = accommodationId;
 	}
 
 	public String getAccommodationName() {
@@ -73,6 +92,14 @@ public class SelectAccommodationInventoryRoomtypePriceView {
 		this.availableRooms = availableRooms;
 	}
 
+	public Integer getBedsAmount() {
+		return bedsAmount;
+	}
+
+	public void setBedsAmount(Integer bedsAmount) {
+		this.bedsAmount = bedsAmount;
+	}
+
 	public Integer getWeekdayPrice() {
 		return weekdayPrice;
 	}
@@ -89,13 +116,28 @@ public class SelectAccommodationInventoryRoomtypePriceView {
 		this.weekendPrice = weekendPrice;
 	}
 
+	public int getTimesPurchased() {
+		return timesPurchased;
+	}
+
+	public void setTimesPurchased(int timesPurchased) {
+		this.timesPurchased = timesPurchased;
+	}
+
 	@Override
 	public String toString() {
 		return "SelectAccommodationInventoryRoomtypePriceView [accommodationInventoryId=" + accommodationInventoryId
-				+ ", accommodationName=" + accommodationName + ", roomTypeName=" + roomTypeName + ", availabilityDate="
-				+ availabilityDate + ", availableRooms=" + availableRooms + ", weekdayPrice=" + weekdayPrice
-				+ ", weekendPrice=" + weekendPrice + "]";
+				+ ", accommodationId=" + accommodationId + ", accommodationName=" + accommodationName
+				+ ", roomTypeName=" + roomTypeName + ", availabilityDate=" + availabilityDate + ", availableRooms="
+				+ availableRooms + ", bedsAmount=" + bedsAmount + ", weekdayPrice=" + weekdayPrice + ", weekendPrice="
+				+ weekendPrice + ", timesPurchased=" + timesPurchased + "]";
 	}
+	
+	
+
+	
+
+	
 
 	
 	

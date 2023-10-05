@@ -31,9 +31,9 @@ public class AccommodationRepositoryDAOImpl implements AccommodationRepositoryDA
 	}
 
 	// Top 5
-	public List<Accommodation> selectTop5() {
-		String hql = "from Accommodation order by timesPurchased desc";
-		return this.getSession().createQuery(hql, Accommodation.class).setMaxResults(5).list();
+	public List<SelectAccommodationInventoryRoomtypePriceView> selectTop5() {
+		String hql = "from SelectAccommodationInventoryRoomtypePriceView order by timesPurchased desc";
+		return this.getSession().createQuery(hql, SelectAccommodationInventoryRoomtypePriceView.class).setMaxResults(5).list();
 	}
 	
 	@Override
@@ -77,17 +77,17 @@ public class AccommodationRepositoryDAOImpl implements AccommodationRepositoryDA
 	}
 
 	public List<SelectAccommodationInventoryRoomtypePriceView> findAllByWeekendPriceDesc() {
-		String hql = "from AccommodationPrice order by weekendPrice desc";
+		String hql = "from SelectAccommodationInventoryRoomtypePriceView order by weekendPrice desc";
 		return this.getSession().createQuery(hql, SelectAccommodationInventoryRoomtypePriceView.class).list();
 	}
 
 	public List<SelectAccommodationInventoryRoomtypePriceView> findAllByWeekdayPriceAsc() {
-		String hql = "from AccommodationPrice order by weekdayPrice asc";
+		String hql = "from SelectAccommodationInventoryRoomtypePriceView order by weekdayPrice asc";
 		return this.getSession().createQuery(hql, SelectAccommodationInventoryRoomtypePriceView.class).list();
 	}
 
 	public List<SelectAccommodationInventoryRoomtypePriceView> findAllByWeekendPriceAsc() {
-		String hql = "from AccommodationPrice order by weekendPrice asc";
+		String hql = "from SelectAccommodationInventoryRoomtypePriceView order by weekendPrice asc";
 		return this.getSession().createQuery(hql, SelectAccommodationInventoryRoomtypePriceView.class).list();
 	}
 //	public List<AccommodationInventory> findByAvailabilityDateBetween(java.sql.Date checkInDate,
