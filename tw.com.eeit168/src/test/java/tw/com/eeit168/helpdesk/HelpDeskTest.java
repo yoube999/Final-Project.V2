@@ -14,7 +14,7 @@ public class HelpDeskTest {
 	@Autowired
 	private HelpDeskProductsService helpDeskProductsService;
 
-	@Test
+//	@Test
 	public void testConvertCsvToJson() {
 		String csvFilePath = "C://Users//User//Downloads//期末餐館測試資料.csv"; // 將路徑替換為您的CSV文件路徑
 		String jsonResult = helpDeskProductsService.convertCsvToJson(csvFilePath);
@@ -23,4 +23,16 @@ public class HelpDeskTest {
 
 	}
 
+	@Test
+	public void testinsertRestaurantProducts(){
+		
+		String csvFilePath = "C://Users//User//Downloads//期末餐館測試資料.csv"; // 將路徑替換為您的CSV文件路徑
+		String jsonResult = helpDeskProductsService.convertCsvToJson(csvFilePath);
+		String restaurantData = jsonResult;
+		System.out.println(restaurantData);
+		
+		boolean result = helpDeskProductsService.insertRestaurantProducts(restaurantData);
+		System.out.println(result);
+	}
+	
 }

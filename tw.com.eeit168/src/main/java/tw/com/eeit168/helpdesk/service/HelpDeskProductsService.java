@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
 
+import tw.com.eeit168.products.restaurant.model.RestaurantBean;
 import tw.com.eeit168.products.restaurant.repository.RestaurantRepository;
 
 @Service
@@ -22,9 +25,7 @@ public class HelpDeskProductsService {
 	// 調用Restaurant的JPARepository
 	@Autowired
 	private RestaurantRepository restaurantRepository;
-	
-	
-	
+
 	/**
 	 * 將csv檔案轉成json字串
 	 * 
@@ -40,48 +41,79 @@ public class HelpDeskProductsService {
 
 			// 開始解析CSV數據
 			String[] nextRecord;
-			JSONObject jsonObject = new JSONObject();
-			int recordCount = 0;
+			JSONArray array = new JSONArray();
 
 			while ((nextRecord = csvReader.readNext()) != null) {
-				String recordKey = "record" + recordCount;
-				jsonObject.put(recordKey, nextRecord);
-				recordCount++;
-			}
-			
-			// 將JSON對象轉換為JSON字符串
-            String jsonText = jsonObject.toString();
+				JSONObject obj = new JSONObject();
+				obj.put("restaurant_name", nextRecord[0]);
+				obj.put("restaurant_address", nextRecord[1]);
+				obj.put("contact_number", nextRecord[2]);
+				obj.put("price", Integer.parseInt(nextRecord[3]));
+				obj.put("times_purchased", Integer.parseInt(nextRecord[4]));
+				obj.put("descriptions", nextRecord[5]);
 
-            return jsonText;
-            
+				array.put(obj);
+
+			}
+
+			// 將JSON數組轉換為JSON字符串
+			String jsonText = array.toString();
+
+			return jsonText;
+
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			// 需改成跳轉至錯誤頁面
 			e.printStackTrace();
 		} catch (CsvValidationException e) {
-			// TODO Auto-generated catch block
+			// 需改成跳轉至錯誤頁面
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			// 需改成跳轉至錯誤頁面
 			e.printStackTrace();
 		}
 
 		return null;
 	}
-	
+
 	/**
 	 * 新增餐廳商品
 	 * 
-	 * @return 全部更新成功回傳true，反之false
+	 * @return insert成功回傳true，反之false
 	 */
-	public boolean insertRestaurantProducts(String jsonText) {
-		
-		
-		
-		
-		return false;
+	public boolean insertRestaurantProducts(String restaurantData) {
+
+		if (restaurantData != null) {
+			try {
+				JSONArray array = new JSONArray(restaurantData);
+
+				// 這個for迴圈的目的是遍歷JSON數組中的每個JSON對象。在每次迭代中，它從JSON數組中獲取一個JSON對象，然後將該JSON對象轉換為您的自定義Java類型 RestaurantBean。
+				for (int i = 0; i < array.length(); i++) {
+					JSONObject obj = array.getJSONObject(i);
+
+					// 將JSON數據轉換為RestaurantBean對象
+					RestaurantBean restaurantBean = new RestaurantBean();
+					restaurantBean.setRestaurantName(obj.getString("restaurant_name"));
+					restaurantBean.setRestaurantAddress(obj.getString("restaurant_address"));
+					restaurantBean.setContactNumber(obj.getString("contact_number"));
+					restaurantBean.setPrice(obj.getInt("price"));
+					restaurantBean.setTimesPurchased(obj.getInt("times_purchased"));
+					restaurantBean.setDescriptions(obj.getString("descriptions"));
+
+					// 將RestaurantBean對象保存到數據庫
+					restaurantRepository.save(restaurantBean);
+				}
+
+				return true;
+
+			} catch (JSONException e) {
+				e.printStackTrace();
+				return false;
+			}
+
+		} else {
+			return false;
+		}
+
 	}
-	
-	
-	
-	
+
 }
