@@ -9,7 +9,7 @@ import tw.com.eeit168.products.attraction.model.SelectAttractionsTicketView;
 
 public interface AttractionRepositoryDAO {
 
-	public List<AttractionBean> selectTop5();
+	public List<SelectAttractionsTicketView> selectTop5();
 	
 	public List<AttractionBean> findAllByPurchasedDesc();
 	

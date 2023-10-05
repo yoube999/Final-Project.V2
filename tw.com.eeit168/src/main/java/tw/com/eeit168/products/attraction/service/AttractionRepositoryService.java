@@ -44,7 +44,7 @@ public class AttractionRepositoryService {
 	}
 	
 	//Top5
-	public List<AttractionBean> selectTop5() {
+	public List<SelectAttractionsTicketView> selectTop5() {
 		return attractionRepository.selectTop5();
 	}
 	

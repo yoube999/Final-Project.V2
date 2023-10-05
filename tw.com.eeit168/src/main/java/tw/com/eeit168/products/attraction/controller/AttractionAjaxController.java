@@ -72,18 +72,13 @@ public class AttractionAjaxController {
 	public String selectTop5() {
 		JSONObject responseJson = new JSONObject();
 		JSONArray array = new JSONArray();
-		List<AttractionBean> result = attractionRepositoryService.selectTop5();
+		List<SelectAttractionsTicketView> result = attractionRepositoryService.selectTop5();
 		if(result != null && !result.isEmpty()) {
-			for(AttractionBean attraction :result) {
+			for(SelectAttractionsTicketView attraction :result) {
 				JSONObject item = new JSONObject()
-						.put("attractions_id", attraction.getAttractionsId())
 						.put("attractions_name", attraction.getAttractionsName())
-						.put("attractions_address", attraction.getAttractionsAddress())
-						.put("descriptions", attraction.getDescriptions())
-						.put("open_time", attraction.getOpenTime())
-						.put("close_time", attraction.getCloseTime())
-						.put("contact_number", attraction.getContactNumber())
-						.put("times_purchased", attraction.getTimesPurchased());
+						.put("times_purchased", attraction.getTimesPurchased())
+						.put("adult_price", attraction.getAdultPrice());
 				array = array.put(item);
 			}
 		}

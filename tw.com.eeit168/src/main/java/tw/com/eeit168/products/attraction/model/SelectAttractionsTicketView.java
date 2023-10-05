@@ -19,6 +19,9 @@ public class SelectAttractionsTicketView {
 	@Column(name = "attractions_name", columnDefinition = "nvarchar") //如有要用nvarchar必須要有此annotation
 	private String attractionsName;
 	
+	@Column(name = "times_purchased")
+	private Integer timesPurchased;
+	
 	@Column(name = "valid_date")
 	private java.sql.Date validDate;
 	
@@ -32,11 +35,11 @@ public class SelectAttractionsTicketView {
 	@Override
 	public String toString() {
 		return "SelectAttractionsTicketView [attractionsTicketId=" + attractionsTicketId + ", attractionsName="
-				+ attractionsName + ", validDate=" + validDate + ", adultPrice=" + adultPrice + ", childPrice="
-				+ childPrice + "]";
+				+ attractionsName + ", timesPurchased=" + timesPurchased + ", validDate=" + validDate + ", adultPrice="
+				+ adultPrice + ", childPrice=" + childPrice + "]";
 	}
 
-
+	
 	public Integer getAttractionsTicketId() {
 		return attractionsTicketId;
 	}
@@ -48,6 +51,12 @@ public class SelectAttractionsTicketView {
 	}
 	public void setAttractionsName(String attractionsName) {
 		this.attractionsName = attractionsName;
+	}
+	public Integer getTimesPurchased() {
+		return timesPurchased;
+	}
+	public void setTimesPurchased(Integer timesPurchased) {
+		this.timesPurchased = timesPurchased;
 	}
 	public java.sql.Date getValidDate() {
 		return validDate;

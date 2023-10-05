@@ -22,9 +22,9 @@ public class AttractionRepositoryDAOImpl implements AttractionRepositoryDAO {
 	}
 	
 	//Top5
-	public List<AttractionBean> selectTop5() {
-		String hql = "from AttractionBean order by timesPurchased desc";
-		return this.getSession().createQuery(hql, AttractionBean.class).setMaxResults(5).list();
+	public List<SelectAttractionsTicketView> selectTop5() {
+		String hql = "from SelectAttractionsTicketView order by timesPurchased desc";
+		return this.getSession().createQuery(hql, SelectAttractionsTicketView.class).setMaxResults(5).list();
 	}
 	
 	//以被購買次數搜尋(多-少)

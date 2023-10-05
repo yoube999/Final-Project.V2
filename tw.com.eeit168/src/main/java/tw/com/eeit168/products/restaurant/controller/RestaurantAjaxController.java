@@ -5,6 +5,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import tw.com.eeit168.products.restaurant.model.SelectRestaurantPictureView;
 import tw.com.eeit168.products.restaurant.service.RestaurantRepositoryService;
 
 @RestController //@Controller+@ResponseBody
+@CrossOrigin
 @RequestMapping(path = {"/product"})
 public class RestaurantAjaxController {
 	

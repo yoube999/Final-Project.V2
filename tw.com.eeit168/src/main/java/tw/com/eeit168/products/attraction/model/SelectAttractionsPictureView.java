@@ -19,6 +19,9 @@ public class SelectAttractionsPictureView {
 	@Column(name = "attractions_name", columnDefinition = "nvarchar") //如有要用nvarchar必須要有此annotation
 	private String attractionsName;
 	
+	@Column(name = "times_purchased")
+	private Integer timesPurchased;
+
 	@Column(name = "url_image")
 	private String urlImage;
 
@@ -26,9 +29,9 @@ public class SelectAttractionsPictureView {
 	@Override
 	public String toString() {
 		return "SelectAttractionsPictureView [attractionsPicturesId=" + attractionsPicturesId + ", attractionsName="
-				+ attractionsName + ", urlImage=" + urlImage + "]";
+				+ attractionsName + ", timesPurchased=" + timesPurchased + ", urlImage=" + urlImage + "]";
 	}
-	
+
 	
 	public Integer getAttractionsPicturesId() {
 		return attractionsPicturesId;
@@ -41,6 +44,12 @@ public class SelectAttractionsPictureView {
 	}
 	public void setAttractionsName(String attractionsName) {
 		this.attractionsName = attractionsName;
+	}
+	public Integer getTimesPurchased() {
+		return timesPurchased;
+	}
+	public void setTimesPurchased(Integer timesPurchased) {
+		this.timesPurchased = timesPurchased;
 	}
 	public String getUrlImage() {
 		return urlImage;
