@@ -16,6 +16,8 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
 
+import tw.com.eeit168.helpdesk.util.CsvFieldMapping;
+import tw.com.eeit168.products.accommodation.repository.AccommodationRepository;
 import tw.com.eeit168.products.restaurant.model.RestaurantBean;
 import tw.com.eeit168.products.restaurant.repository.RestaurantRepository;
 
@@ -27,12 +29,16 @@ public class HelpDeskProductsService {
 	@Autowired
 	private RestaurantRepository restaurantRepository;
 
+	// 調用Accommodation的JPARepository
+	@Autowired
+	private AccommodationRepository accommodationRepository;
+
 	/**
 	 * 將csv檔案轉成json字串
 	 * 
 	 * 
 	 */
-	public String convertCsvToJson(MultipartFile csvFile) {
+	public String convertCsvToJson(MultipartFile csvFile, CsvFieldMapping fieldMapping) {
 
 		try {
 
@@ -48,13 +54,10 @@ public class HelpDeskProductsService {
 			while ((nextRecord = csvReader.readNext()) != null) {
 				JSONObject obj = new JSONObject();
 				try {
-					obj.put("restaurant_name", nextRecord[0]);
-					obj.put("restaurant_address", nextRecord[1]);
-					obj.put("contact_number", nextRecord[2]);
-					obj.put("price", Integer.parseInt(nextRecord[3]));
-					obj.put("times_purchased", Integer.parseInt(nextRecord[4]));
-					obj.put("descriptions", nextRecord[5]);
-
+					for (int i = 0; i < fieldMapping.getFieldCount(); i++) {
+						String fieldName = fieldMapping.getFieldName(i);
+						obj.put(fieldName, nextRecord[i]);
+					}
 					array.put(obj);
 				} catch (ArrayIndexOutOfBoundsException e) {
 					// 上傳csv檔案內容格式錯誤

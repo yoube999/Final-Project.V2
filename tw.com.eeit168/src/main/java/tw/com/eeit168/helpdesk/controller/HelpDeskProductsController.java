@@ -2,6 +2,8 @@ package tw.com.eeit168.helpdesk.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import tw.com.eeit168.helpdesk.service.HelpDeskProductsService;
+import tw.com.eeit168.helpdesk.util.CsvFieldMapping;
 
 @RestController
 @RequestMapping("/eeit168/helpdeskproducts")
@@ -40,9 +43,13 @@ public class HelpDeskProductsController {
 			if (!directory.exists()) {
 				directory.mkdirs(); // 創建目錄及其父目錄（如果不存在）
 			}
+			
+			 // 創建 CsvFieldMapping 並設置字段映射
+	        List<String> fieldNames = Arrays.asList("restaurant_name", "restaurant_address", "contact_number", "price", "times_purchased", "descriptions");
+	        CsvFieldMapping fieldMapping = new CsvFieldMapping(fieldNames);
 
 			try {
-				String file = helpDeskProductsService.convertCsvToJson(csvFile);
+				String file = helpDeskProductsService.convertCsvToJson(csvFile, fieldMapping);
 				
 				boolean insert = helpDeskProductsService.insertRestaurantProducts(file);
 
