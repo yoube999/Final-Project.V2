@@ -4,9 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.Session;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.PersistenceContext;
 import tw.com.eeit168.products.attraction.model.AttractionBean;
@@ -16,7 +17,6 @@ import tw.com.eeit168.products.attraction.model.SelectAttractionsTicketView;
 import tw.com.eeit168.products.attraction.repository.AttractionRepository;
 
 @Service //註解類別處理運算邏輯(企業邏輯)
-@Transactional
 public class AttractionRepositoryService {
 
 	@Autowired
@@ -41,6 +41,79 @@ public class AttractionRepositoryService {
 	//搜尋全部
 	public List<AttractionBean> findAll(){
 		return attractionRepository.findAll();
+	}
+	
+	//新增
+	public AttractionBean create(String json) {
+		try {
+			JSONObject object = new JSONObject(json);
+			String attractionsName = object.isNull("attractionsName") ? null : object.getString("attractionsName");
+			String attractionsAddress = object.isNull("attractionsAddress") ? null : object.getString("attractionsAddress");
+			String descriptions = object.isNull("descriptions") ? null : object.getString("descriptions");
+			String openTime = object.isNull("openTime") ? null : object.getString("openTime");
+			String closeTime = object.isNull("closeTime") ? null : object.getString("closeTime");
+			String contactNumber = object.isNull("contactNumber") ? null : object.getString("contactNumber");
+			Integer timesPurchased = object.isNull("timesPurchased") ? null : object.getInt("timesPurchased");
+			AttractionBean insert = new AttractionBean();
+			insert.setAttractionsName(attractionsName);
+			insert.setAttractionsAddress(attractionsAddress);
+			insert.setDescriptions(descriptions);
+			insert.setOpenTime(openTime);
+			insert.setCloseTime(closeTime);
+			insert.setContactNumber(contactNumber);
+			insert.setTimesPurchased(timesPurchased);
+			insert.setProductStatus(true);
+			return attractionRepository.save(insert);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	//修改
+	public AttractionBean modify(String json) {
+		try {
+			JSONObject object = new JSONObject(json);
+			Integer attractionsId = object.isNull("attractionsId") ? null : object.getInt("attractionsId");
+			String attractionsName = object.isNull("attractionsName") ? null : object.getString("attractionsName");
+			String attractionsAddress = object.isNull("attractionsAddress") ? null : object.getString("attractionsAddress");
+			String descriptions = object.isNull("descriptions") ? null : object.getString("descriptions");
+			String openTime = object.isNull("openTime") ? null : object.getString("openTime");
+			String closeTime = object.isNull("closeTime") ? null : object.getString("closeTime");
+			String contactNumber = object.isNull("contactNumber") ? null : object.getString("contactNumber");
+			Integer timesPurchased = object.isNull("timesPurchased") ? null : object.getInt("timesPurchased");
+			boolean productStatus = object.isNull("productStatus") ? null : object.getBoolean("productStatus");
+			Optional<AttractionBean> result = attractionRepository.findById(attractionsId);
+			if(result != null && result.isPresent()) {
+				AttractionBean update = new AttractionBean();
+				update.setAttractionsId(attractionsId);
+				update.setAttractionsName(attractionsName);
+				update.setAttractionsAddress(attractionsAddress);
+				update.setDescriptions(descriptions);
+				update.setOpenTime(openTime);
+				update.setCloseTime(closeTime);
+				update.setContactNumber(contactNumber);
+				update.setTimesPurchased(timesPurchased);
+				update.setProductStatus(productStatus);
+				return attractionRepository.save(update);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	//刪除
+	public boolean remove(Integer id) {
+		try {
+			if(attractionRepository.existsById(id)) {
+				attractionRepository.deleteById(id);
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 	
 	//Top5
