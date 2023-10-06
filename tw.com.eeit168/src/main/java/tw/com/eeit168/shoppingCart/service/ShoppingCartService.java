@@ -1,4 +1,4 @@
-package tw.com.eeit168.products.shoppingCart.service;
+package tw.com.eeit168.shoppingCart.service;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import tw.com.eeit168.products.shoppingCart.dao.ShoppingCartDAO;
-import tw.com.eeit168.products.shoppingCart.model.ShoppingCartItem;
+import tw.com.eeit168.shoppingCart.dao.ShoppingCartDAO;
+import tw.com.eeit168.shoppingCart.model.ShoppingCartItem;
 
 @Service
 public class ShoppingCartService {

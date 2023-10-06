@@ -1,10 +1,10 @@
-package tw.com.eeit168.products.shoppingCart.dao;
+package tw.com.eeit168.shoppingCart.dao;
 
 import java.util.List;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import tw.com.eeit168.products.shoppingCart.model.ShoppingCartItem;
+import tw.com.eeit168.shoppingCart.model.ShoppingCartItem;
 
 public interface ShoppingCartDAO {
 	

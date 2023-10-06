@@ -33,13 +33,17 @@ public class RestaurantBean {
 	
 	@Column(name = "times_purchased")
 	private Integer timesPurchased;
+	
+	@Column(name = "product_status")
+	private boolean productStatus;
 
 	
 	@Override
 	public String toString() {
 		return "RestaurantBean [restaurantId=" + restaurantId + ", restaurantName=" + restaurantName
 				+ ", restaurantAddress=" + restaurantAddress + ", descriptions=" + descriptions + ", contactNumber="
-				+ contactNumber + ", price=" + price + ", timesPurchased=" + timesPurchased + "]";
+				+ contactNumber + ", price=" + price + ", timesPurchased=" + timesPurchased + ", productStatus="
+				+ productStatus + "]";
 	}
 
 
@@ -84,6 +88,12 @@ public class RestaurantBean {
 	}
 	public void setTimesPurchased(Integer timesPurchased) {
 		this.timesPurchased = timesPurchased;
+	}
+	public boolean isProductStatus() {
+		return productStatus;
+	}
+	public void setProductStatus(boolean productStatus) {
+		this.productStatus = productStatus;
 	}
 	
 }

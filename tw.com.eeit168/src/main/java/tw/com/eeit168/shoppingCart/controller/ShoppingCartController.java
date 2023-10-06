@@ -1,4 +1,4 @@
-package tw.com.eeit168.products.shoppingCart.controller;
+package tw.com.eeit168.shoppingCart.controller;
 
 import java.util.List;
 
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import tw.com.eeit168.products.shoppingCart.model.ShoppingCartItem;
-import tw.com.eeit168.products.shoppingCart.service.ShoppingCartService;
+import tw.com.eeit168.shoppingCart.model.ShoppingCartItem;
+import tw.com.eeit168.shoppingCart.service.ShoppingCartService;
 
 @RestController
 @RequestMapping(path = {"/shoppingcart"})

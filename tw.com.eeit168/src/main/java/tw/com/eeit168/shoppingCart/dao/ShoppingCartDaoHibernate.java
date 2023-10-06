@@ -1,4 +1,4 @@
-package tw.com.eeit168.products.shoppingCart.dao;
+package tw.com.eeit168.shoppingCart.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import tw.com.eeit168.products.shoppingCart.model.ShoppingCartItem;
+import tw.com.eeit168.shoppingCart.model.ShoppingCartItem;
 
 @Repository
 public class ShoppingCartDaoHibernate implements ShoppingCartDAO {

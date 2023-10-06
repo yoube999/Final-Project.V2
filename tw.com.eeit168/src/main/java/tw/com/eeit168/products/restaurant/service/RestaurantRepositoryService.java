@@ -4,9 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.Session;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.PersistenceContext;
 import tw.com.eeit168.products.restaurant.model.RestaurantBean;
@@ -15,7 +16,6 @@ import tw.com.eeit168.products.restaurant.model.SelectRestaurantPictureView;
 import tw.com.eeit168.products.restaurant.repository.RestaurantRepository;
 
 @Service //註解類別處理運算邏輯(企業邏輯)
-@Transactional
 public class RestaurantRepositoryService {
 	
 	@Autowired
@@ -40,6 +40,76 @@ public class RestaurantRepositoryService {
 	//搜尋全部
 	public List<RestaurantBean> findAll() {
 		return restaurantRepository.findAll();
+	}
+	
+	//新增
+	public RestaurantBean create(String json) {
+		try {
+			JSONObject object = new JSONObject(json);
+			String restaurantName = object.isNull("restaurantName") ? null : object.getString("restaurantName");
+			String restaurantAddress = object.isNull("restaurantAddress") ? null : object.getString("restaurantAddress");
+			String descriptions = object.isNull("descriptions") ? null : object.getString("descriptions");
+			String contactNumber = object.isNull("contactNumber") ? null : object.getString("contactNumber");
+			Integer price = object.isNull("price") ? null : object.getInt("price");
+			Integer timesPurchased = object.isNull("timesPurchased") ? null : object.getInt("timesPurchased");
+			boolean productStatus = object.isNull("productStatus") ? null : object.getBoolean("productStatus");
+			RestaurantBean insert = new RestaurantBean();
+			insert.setRestaurantName(restaurantName);
+			insert.setRestaurantAddress(restaurantAddress);
+			insert.setDescriptions(descriptions);
+			insert.setContactNumber(contactNumber);
+			insert.setPrice(price);
+			insert.setTimesPurchased(timesPurchased);
+			insert.setProductStatus(productStatus);
+			return restaurantRepository.save(insert);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	//修改
+	public RestaurantBean modify(String json) {
+		try {
+			JSONObject object = new JSONObject(json);
+			Integer restaurantId = object.isNull("restaurantId") ? null : object.getInt("restaurantId");
+			String restaurantName = object.isNull("restaurantName") ? null : object.getString("restaurantName");
+			String restaurantAddress = object.isNull("restaurantAddress") ? null : object.getString("restaurantAddress");
+			String descriptions = object.isNull("descriptions") ? null : object.getString("descriptions");
+			String contactNumber = object.isNull("contactNumber") ? null : object.getString("contactNumber");
+			Integer price = object.isNull("price") ? null : object.getInt("price");
+			Integer timesPurchased = object.isNull("timesPurchased") ? null : object.getInt("timesPurchased");
+			boolean productStatus = object.isNull("productStatus") ? null : object.getBoolean("productStatus");
+			Optional<RestaurantBean> result = restaurantRepository.findById(restaurantId);
+			if(result != null && result.isPresent()) {
+				RestaurantBean update = new RestaurantBean();
+				update.setRestaurantId(restaurantId);
+				update.setRestaurantName(restaurantName);
+				update.setRestaurantAddress(restaurantAddress);
+				update.setDescriptions(descriptions);
+				update.setContactNumber(contactNumber);
+				update.setPrice(price);
+				update.setTimesPurchased(timesPurchased);
+				update.setProductStatus(productStatus);
+				return restaurantRepository.save(update);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	//刪除
+	public boolean remove(Integer id) {
+		try {
+			if(restaurantRepository.existsById(id)) {
+				restaurantRepository.deleteById(id);
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 	
 	//Top5

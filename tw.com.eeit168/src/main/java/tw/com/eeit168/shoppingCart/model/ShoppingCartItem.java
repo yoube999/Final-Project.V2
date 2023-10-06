@@ -1,4 +1,4 @@
-package tw.com.eeit168.products.shoppingCart.model;
+package tw.com.eeit168.shoppingCart.model;
 
 public class ShoppingCartItem {
 	
