@@ -9,7 +9,6 @@ import org.hibernate.query.Query;
 
 import jakarta.persistence.PersistenceContext;
 import tw.com.eeit168.products.accommodation.model.Accommodation;
-import tw.com.eeit168.products.accommodation.model.AccommodationPrice;
 import tw.com.eeit168.products.accommodation.model.SelectAccommodationInventoryRoomtypePriceView;
 
 public class AccommodationRepositoryDAOImpl implements AccommodationRepositoryDAO {

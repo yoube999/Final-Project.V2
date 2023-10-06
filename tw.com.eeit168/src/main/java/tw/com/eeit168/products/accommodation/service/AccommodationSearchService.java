@@ -12,12 +12,8 @@ import tw.com.eeit168.products.accommodation.model.AccommodationInventory;
 import tw.com.eeit168.products.accommodation.model.AccommodationRoomType;
 import tw.com.eeit168.products.accommodation.model.SelectAccommodationInventoryRoomtypePriceView;
 import tw.com.eeit168.products.accommodation.repository.AccommodationInventoryRepository;
-import tw.com.eeit168.products.accommodation.repository.AccommodationInventoryRepositoryDAOImpl;
-import tw.com.eeit168.products.accommodation.repository.AccommodationPriceRepository;
 import tw.com.eeit168.products.accommodation.repository.AccommodationRepository;
-import tw.com.eeit168.products.accommodation.repository.AccommodationRepositoryDAOImpl;
 import tw.com.eeit168.products.accommodation.repository.AccommodationRoomTypeRepository;
-import tw.com.eeit168.products.accommodation.repository.SelectAccommodationInventoryRoomtypePriceViewRepository;
 import tw.com.eeit168.products.accommodation.util.RoomCombinationFinder;
 
 @Service
@@ -40,20 +36,20 @@ public class AccommodationSearchService {
 		this.accommodationRoomTypeRepository = accommodationRoomTypeRepository;
 	}
 
-	@Autowired
-	private AccommodationPriceRepository accommodationPriceRepository;
+//	@Autowired
+//	private AccommodationPriceRepository accommodationPriceRepository;
 
-	@Autowired
-	private AccommodationRepositoryDAOImpl accommodationRepositoryDAOImpl;
+//	@Autowired
+//	private AccommodationRepositoryDAOImpl accommodationRepositoryDAOImpl;
 
-	@Autowired
-	private AccommodationInventoryRepositoryDAOImpl accommodationInventoryRepositoryDAOImpl;
+//	@Autowired
+//	private AccommodationInventoryRepositoryDAOImpl accommodationInventoryRepositoryDAOImpl;
 
 	@Autowired
 	private AccommodationRepository accommodationRepository;
 	
-	@Autowired
-	private SelectAccommodationInventoryRoomtypePriceViewRepository selectAccommodationInventoryRoomtypePriceViewRepository;
+//	@Autowired
+//	private SelectAccommodationInventoryRoomtypePriceViewRepository selectAccommodationInventoryRoomtypePriceViewRepository;
 	public List<Accommodation> findAccommodationName(String keyword) {
 		return accommodationRepository.findAccommodationName(keyword);
 	}

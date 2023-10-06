@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import tw.com.eeit168.products.accommodation.model.Accommodation;
 import tw.com.eeit168.products.accommodation.model.AccommodationInventory;
-import tw.com.eeit168.products.accommodation.model.AccommodationPrice;
 import tw.com.eeit168.products.accommodation.model.AccommodationRoomType;
 import tw.com.eeit168.products.accommodation.model.SelectAccommodationInventoryRoomtypePriceView;
-import tw.com.eeit168.products.accommodation.repository.AccommodationPriceRepository;
 import tw.com.eeit168.products.accommodation.repository.AccommodationRepository;
 import tw.com.eeit168.products.accommodation.service.AccommodationSearchService;
 
@@ -30,8 +28,8 @@ public class AccommodationAjaxController {
 	@Autowired
 	private AccommodationRepository accommodationRepository;
 	
-	@Autowired
-	private AccommodationPriceRepository accommodationPriceRepository;
+//	@Autowired
+//	private AccommodationPriceRepository accommodationPriceRepository;
 	
 //	@Autowired
 //	private AccommodationRoomTypeRepository accommodationRoomTypeRepository;
@@ -48,7 +46,7 @@ public class AccommodationAjaxController {
 		}
 		
 		
-		List<Accommodation> accommodations = accommodationRepository.findAccommodationName(keyword);
+		List<Accommodation> accommodations = accommodationSearchService.findAccommodationName(keyword);
 		if(accommodations != null && !accommodations.isEmpty()) {
 			for(Accommodation accommodation: accommodations) {
 				JSONObject item = new JSONObject()

@@ -3,9 +3,6 @@ package tw.com.eeit168.products.accommodation.repository;
 import java.util.List;
 
 import tw.com.eeit168.products.accommodation.model.Accommodation;
-import tw.com.eeit168.products.accommodation.model.AccommodationInventory;
-import tw.com.eeit168.products.accommodation.model.AccommodationPrice;
-import tw.com.eeit168.products.accommodation.model.AccommodationRoomType;
 import tw.com.eeit168.products.accommodation.model.SelectAccommodationInventoryRoomtypePriceView;
 
 public interface AccommodationRepositoryDAO {
