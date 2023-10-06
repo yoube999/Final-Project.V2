@@ -84,11 +84,21 @@ public class Accommodation {
 		this.descriptions = descriptions;
 	}
 	
+	
+	public boolean isProductStatus() {
+		return productStatus;
+	}
+
+	public void setProductStatus(boolean productStatus) {
+		this.productStatus = productStatus;
+	}
+
 	@Override
 	public String toString() {
 		return "Accommodation [accommodationId=" + accommodationId + ", accommodationName=" + accommodationName
 				+ ", accommodationAddress=" + accommodationAddress + ", descriptions=" + descriptions
-				+ ", contactNumber=" + contactNumber + ", timesPurchased=" + timesPurchased + "]";
+				+ ", contactNumber=" + contactNumber + ", productStatus=" + productStatus + ", timesPurchased="
+				+ timesPurchased + "]";
 	}
 
 	

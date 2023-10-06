@@ -1,7 +1,23 @@
 package tw.com.eeit168.helpdesk.util;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvValidationException;
+
+@Service
+@Transactional
 // 用於表示 CSV 檔案中的字段映射
 public class CsvFieldMapping {
 	// 這是 CsvFieldMapping 類別的私有成員變數，它是一個 List 類型，用於存儲 CSV 檔案中的字段名稱。
@@ -25,4 +41,60 @@ public class CsvFieldMapping {
     public int getFieldCount() {
         return fieldNames.size();
     }
+    
+    /**
+	 * 將csv檔案轉成json字串
+	 * 
+	 * 
+	 */
+    public String convertCsvToJson(MultipartFile csvFile, CsvFieldMapping fieldMapping) {
+
+		try {
+
+			// 創建CSV讀取器
+			// 將MultipartFile轉換為Reader
+			Reader reader = new InputStreamReader(csvFile.getInputStream());
+			CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build();
+
+			// 開始解析CSV數據
+			String[] nextRecord;
+			JSONArray array = new JSONArray();
+
+			while ((nextRecord = csvReader.readNext()) != null) {
+				JSONObject obj = new JSONObject();
+				try {
+					for (int i = 0; i < fieldMapping.getFieldCount(); i++) {
+						String fieldName = fieldMapping.getFieldName(i);
+						obj.put(fieldName, nextRecord[i]);
+					}
+					array.put(obj);
+				} catch (ArrayIndexOutOfBoundsException e) {
+					// 上傳csv檔案內容格式錯誤
+					e.printStackTrace();
+					return null; // 返回錯誤消息給客戶端
+				}
+
+			}
+
+			// 將JSON數組轉換為JSON字符串
+			String jsonText = array.toString();
+
+			return jsonText;
+
+		} catch (IOException e) {
+			// 需改成跳轉至錯誤頁面
+			e.printStackTrace();
+		} catch (CsvValidationException e) {
+			// 需改成跳轉至錯誤頁面
+			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			// 需改成跳轉至錯誤頁面
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// 需改成跳轉至錯誤頁面
+			e.printStackTrace();
+		}
+
+		return null;
+	}
 }
