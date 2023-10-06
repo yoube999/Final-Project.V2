@@ -54,7 +54,7 @@ public class HelpDeskProductsService {
 					restaurantBean.setPrice(obj.getInt("price"));
 					restaurantBean.setTimesPurchased(obj.getInt("times_purchased"));
 					restaurantBean.setDescriptions(obj.getString("descriptions"));
-					restaurantBean.setProductStatus(true);	//前端不會送此欄位，後端ProductStatus欄位固定送true
+					restaurantBean.setProductStatus(true); // 前端不會送此欄位，後端ProductStatus欄位固定送true
 
 					// 將RestaurantBean對象保存到資料庫
 					restaurantRepository.save(restaurantBean);
@@ -96,7 +96,7 @@ public class HelpDeskProductsService {
 					restaurantBean.setContactNumber(obj.getString("contact_number"));
 					restaurantBean.setTimesPurchased(obj.getInt("times_purchased"));
 					restaurantBean.setDescriptions(obj.getString("descriptions"));
-					restaurantBean.setProductStatus(true);	//前端不會送此欄位，後端ProductStatus欄位固定送true
+					restaurantBean.setProductStatus(true); // 前端不會送此欄位，後端ProductStatus欄位固定送true
 
 					// 將Accommodation對象保存到資料庫
 					accommodationRepository.save(restaurantBean);
@@ -140,7 +140,7 @@ public class HelpDeskProductsService {
 					attractionBean.setCloseTime(obj.getString("close_time"));
 					attractionBean.setContactNumber(obj.getString("contact_number"));
 					attractionBean.setTimesPurchased(obj.getInt("times_purchased"));
-					attractionBean.setProductStatus(true);	//前端不會送此欄位，後端ProductStatus欄位固定送true
+					attractionBean.setProductStatus(true); // 前端不會送此欄位，後端ProductStatus欄位固定送true
 
 					// 將Accommodation對象保存到資料庫
 					attractionRepository.save(attractionBean);
@@ -154,6 +154,60 @@ public class HelpDeskProductsService {
 			}
 
 		} else {
+			return false;
+		}
+
+	}
+
+	/**
+	 * 更新餐廳商品
+	 * 
+	 * @param json JSON格式的請求，包含以下參數： { "restaurant_id": 餐廳ID, "restaurant_name":
+	 *             餐廳名稱, "restaurant_address": 餐廳地址, "contact_number": 電話, "price":
+	 *             價格, "descriptions": 商品介紹 }
+	 * 
+	 * @return insert成功回傳true，反之false
+	 */
+	public boolean modifyRestaurantProduct(String json) {
+
+		try {
+
+			JSONObject modifyInfo = new JSONObject(json);
+
+			Integer restaurantId = modifyInfo.getInt("restaurant_id");
+			String restaurantName = modifyInfo.getString("restaurant_name");
+			String restaurantAddress = modifyInfo.getString("restaurant_address");
+			String descriptions = modifyInfo.getString("descriptions");
+			String contactNumber = modifyInfo.getString("contact_number");
+			Integer price = modifyInfo.getInt("price");
+
+			// 宣告一個boolean檢查values不為null，若其中有null回傳false
+			boolean allValuesNotNull = restaurantId != null && restaurantName != null && restaurantAddress != null
+					&& descriptions != null && contactNumber != null && price != null;
+
+			if (allValuesNotNull) {
+				RestaurantBean product = restaurantRepository.findById(restaurantId).orElse(null);
+				// 判斷該ID是否有對應商品
+				if (product != null) {
+					product.setRestaurantName(restaurantName);
+					product.setRestaurantAddress(restaurantAddress);
+					product.setDescriptions(descriptions);
+					product.setContactNumber(contactNumber);
+					product.setPrice(price);
+
+					restaurantRepository.save(product);
+					return true;
+
+				} else {
+					return false; // 如果查不到ID，回傳false
+				}
+
+			} else {
+				return false; // 前端送來的欄位其中有null回傳false
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 			return false;
 		}
 

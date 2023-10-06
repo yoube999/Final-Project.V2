@@ -7,9 +7,13 @@ import java.util.List;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,9 +31,10 @@ public class HelpDeskProductsController {
 
 	@Autowired
 	private HelpDeskProductsService helpDeskProductsService;
-	
-	@Autowired CsvFieldMapping csvFieldMapping;
-	private 
+
+	@Autowired
+	CsvFieldMapping csvFieldMapping;
+	private
 
 	// 宣告獲取設置的暫存檔案目錄路徑
 	String tempDirectory = "C:/Final-Project-workspace/temp/directory/";
@@ -50,27 +55,28 @@ public class HelpDeskProductsController {
 			if (!directory.exists()) {
 				directory.mkdirs(); // 創建目錄及其父目錄（如果不存在）
 			}
-			
-			 // 創建 CsvFieldMapping 並設置字段映射
-	        List<String> fieldNames = Arrays.asList("restaurant_name", "restaurant_address", "contact_number", "price", "times_purchased", "descriptions");
-	        CsvFieldMapping fieldMapping = new CsvFieldMapping(fieldNames);
+
+			// 創建 CsvFieldMapping 並設置字段映射
+			List<String> fieldNames = Arrays.asList("restaurant_name", "restaurant_address", "contact_number", "price",
+					"times_purchased", "descriptions");
+			CsvFieldMapping fieldMapping = new CsvFieldMapping(fieldNames);
 
 			try {
 				String file = csvFieldMapping.convertCsvToJson(csvFile, fieldMapping);
-				
+
 				boolean insert = helpDeskProductsService.insertRestaurantProducts(file);
 
 				// 刪除暫存檔案
 				csvFile.getInputStream().close(); // 關閉檔案流
 				// 將暫存檔案從伺服器暫存路徑移至指定路徑
 				csvFile.transferTo(
-						new File("C:/Final-Project-workspace/temp/directory/" + csvFile.getOriginalFilename())); 
+						new File("C:/Final-Project-workspace/temp/directory/" + csvFile.getOriginalFilename()));
 
 				// 刪除指定路徑的暫存檔案
-				File fileToDelete = new File("C:/Final-Project-workspace/temp/directory/" + csvFile.getOriginalFilename());
+				File fileToDelete = new File(
+						"C:/Final-Project-workspace/temp/directory/" + csvFile.getOriginalFilename());
 				fileToDelete.delete();
-				
-				
+
 				if (insert) {
 					// 若前端收到true時需顯示成功訊息
 					responseJson.put("message", "新增商品成功");
@@ -119,27 +125,28 @@ public class HelpDeskProductsController {
 			if (!directory.exists()) {
 				directory.mkdirs(); // 創建目錄及其父目錄（如果不存在）
 			}
-			
-			 // 創建 CsvFieldMapping 並設置字段映射
-	        List<String> fieldNames = Arrays.asList("accommodation_name", "accommodation_address", "contact_number", "times_purchased", "descriptions");
-	        CsvFieldMapping fieldMapping = new CsvFieldMapping(fieldNames);
+
+			// 創建 CsvFieldMapping 並設置字段映射
+			List<String> fieldNames = Arrays.asList("accommodation_name", "accommodation_address", "contact_number",
+					"times_purchased", "descriptions");
+			CsvFieldMapping fieldMapping = new CsvFieldMapping(fieldNames);
 
 			try {
 				String file = csvFieldMapping.convertCsvToJson(csvFile, fieldMapping);
-				
+
 				boolean insert = helpDeskProductsService.insertAccommodationProducts(file);
 
 				// 刪除暫存檔案
 				csvFile.getInputStream().close(); // 關閉檔案流
 				// 將暫存檔案從伺服器暫存路徑移至指定路徑
 				csvFile.transferTo(
-						new File("C:/Final-Project-workspace/temp/directory/" + csvFile.getOriginalFilename())); 
+						new File("C:/Final-Project-workspace/temp/directory/" + csvFile.getOriginalFilename()));
 
 				// 刪除指定路徑的暫存檔案
-				File fileToDelete = new File("C:/Final-Project-workspace/temp/directory/" + csvFile.getOriginalFilename());
+				File fileToDelete = new File(
+						"C:/Final-Project-workspace/temp/directory/" + csvFile.getOriginalFilename());
 				fileToDelete.delete();
-				
-				
+
 				if (insert) {
 					// 若前端收到true時需顯示成功訊息
 					responseJson.put("message", "新增商品成功");
@@ -171,8 +178,7 @@ public class HelpDeskProductsController {
 		responseJson.put("success", "error");
 		return responseJson.toString();
 	}
-	
-	
+
 	/**
 	 * 讀取景點csv檔案，透過api轉成json格式再Insert to DB
 	 * 
@@ -189,27 +195,28 @@ public class HelpDeskProductsController {
 			if (!directory.exists()) {
 				directory.mkdirs(); // 創建目錄及其父目錄（如果不存在）
 			}
-			
-			 // 創建 CsvFieldMapping 並設置字段映射
-	        List<String> fieldNames = Arrays.asList("attractions_name", "attractions_address","descriptions", "open_time", "close_time", "contact_number", "times_purchased");
-	        CsvFieldMapping fieldMapping = new CsvFieldMapping(fieldNames);
+
+			// 創建 CsvFieldMapping 並設置字段映射
+			List<String> fieldNames = Arrays.asList("attractions_name", "attractions_address", "descriptions",
+					"open_time", "close_time", "contact_number", "times_purchased");
+			CsvFieldMapping fieldMapping = new CsvFieldMapping(fieldNames);
 
 			try {
 				String file = csvFieldMapping.convertCsvToJson(csvFile, fieldMapping);
-				
+
 				boolean insert = helpDeskProductsService.insertAttractionProducts(file);
 
 				// 刪除暫存檔案
 				csvFile.getInputStream().close(); // 關閉檔案流
 				// 將暫存檔案從伺服器暫存路徑移至指定路徑
 				csvFile.transferTo(
-						new File("C:/Final-Project-workspace/temp/directory/" + csvFile.getOriginalFilename())); 
+						new File("C:/Final-Project-workspace/temp/directory/" + csvFile.getOriginalFilename()));
 
 				// 刪除指定路徑的暫存檔案
-				File fileToDelete = new File("C:/Final-Project-workspace/temp/directory/" + csvFile.getOriginalFilename());
+				File fileToDelete = new File(
+						"C:/Final-Project-workspace/temp/directory/" + csvFile.getOriginalFilename());
 				fileToDelete.delete();
-				
-				
+
 				if (insert) {
 					// 若前端收到true時需顯示成功訊息
 					responseJson.put("message", "新增商品成功");
@@ -241,5 +248,27 @@ public class HelpDeskProductsController {
 		responseJson.put("success", "error");
 		return responseJson.toString();
 	}
-	
+
+	/**
+	 * 更新餐廳商品
+	 * 
+	 */
+	@PutMapping("/modifyProduct/restaurant")
+	public ResponseEntity<String> modifyRestaurantProduct(@RequestBody(required = false) String json) {
+
+		// 判斷前端送的Header是否為JSON，需再加上跳轉錯誤頁面
+		if (json == null || json.isEmpty()) {
+			return ResponseEntity.badRequest().body("請提供有效的JSON數據");
+		}
+
+		boolean result = helpDeskProductsService.modifyRestaurantProduct(json);
+
+		if (result) {
+			return ResponseEntity.ok("修改商品成功");
+		} else {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("修改商品失敗，請確認送出編輯是否正確");
+		}
+
+	}
+
 }

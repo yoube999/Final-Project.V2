@@ -52,8 +52,6 @@ public class HelpDeskUpdateRecordController {
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("審核訂單失敗，請確認送出訂單編號是否正確");
 			}
 
-		} catch (JSONException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("無效的JSON格式");
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("更新過程中出現異常，請聯絡IT人員");
 		}
