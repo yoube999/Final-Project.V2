@@ -271,4 +271,47 @@ public class HelpDeskProductsController {
 
 	}
 
+	/**
+	 * 更新飯店商品
+	 * 
+	 */
+	@PutMapping("/modifyProduct/accommodation")
+	public ResponseEntity<String> modifyAccommodationProduct(@RequestBody(required = false) String json) {
+
+		// 判斷前端送的Header是否為JSON，需再加上跳轉錯誤頁面
+		if (json == null || json.isEmpty()) {
+			return ResponseEntity.badRequest().body("請提供有效的JSON數據");
+		}
+
+		boolean result = helpDeskProductsService.modifyAccommodationProduct(json);
+
+		if (result) {
+			return ResponseEntity.ok("修改商品成功");
+		} else {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("修改商品失敗，請確認送出編輯是否正確");
+		}
+
+	}
+	
+	/**
+	 * 更新景點商品
+	 * 
+	 */
+	@PutMapping("/modifyProduct/attraction")
+	public ResponseEntity<String> modifyAttractionProduct(@RequestBody(required = false) String json) {
+
+		// 判斷前端送的Header是否為JSON，需再加上跳轉錯誤頁面
+		if (json == null || json.isEmpty()) {
+			return ResponseEntity.badRequest().body("請提供有效的JSON數據");
+		}
+
+		boolean result = helpDeskProductsService.modifyAttractionProduct(json);
+
+		if (result) {
+			return ResponseEntity.ok("修改商品成功");
+		} else {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("修改商品失敗，請確認送出編輯是否正確");
+		}
+
+	}
 }

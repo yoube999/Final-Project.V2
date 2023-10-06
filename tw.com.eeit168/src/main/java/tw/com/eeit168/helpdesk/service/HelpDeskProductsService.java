@@ -206,11 +206,119 @@ public class HelpDeskProductsService {
 				return false; // 前端送來的欄位其中有null回傳false
 			}
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
 
 	}
 
+	/**
+	 * 更新飯店商品
+	 * 
+	 * @param json JSON格式的請求，包含以下參數： { "accommodation_id": 飯店ID, "accommodation_name":
+	 *             飯店名稱, "accommodation_address": 飯店地址, "contact_number": 電話, 
+	 *             "descriptions": 商品介紹 }
+	 * 
+	 * @return insert成功回傳true，反之false
+	 */
+	public boolean modifyAccommodationProduct(String json) {
+
+		try {
+
+			JSONObject modifyInfo = new JSONObject(json);
+
+			Integer accommodationId = modifyInfo.getInt("accommodation_id");
+			String accommodationName = modifyInfo.getString("accommodation_name");
+			String accommodationAddress = modifyInfo.getString("accommodation_address");
+			String descriptions = modifyInfo.getString("descriptions");
+			String contactNumber = modifyInfo.getString("contact_number");
+
+			// 宣告一個boolean檢查values不為null，若其中有null回傳false
+			boolean allValuesNotNull = accommodationId != null && accommodationName != null && accommodationAddress != null
+					&& descriptions != null && contactNumber != null;
+
+			if (allValuesNotNull) {
+				Accommodation product = accommodationRepository.findById(accommodationId).orElse(null);
+				// 判斷該ID是否有對應商品
+				if (product != null) {
+					product.setAccommodationId(accommodationId);
+					product.setAccommodationName(accommodationName);
+					product.setAccommodationAddress(accommodationAddress);
+					product.setDescriptions(descriptions);
+					product.setContactNumber(contactNumber);
+
+					accommodationRepository.save(product);
+					return true;
+
+				} else {
+					return false; // 如果查不到ID，回傳false
+				}
+
+			} else {
+				return false; // 前端送來的欄位其中有null回傳false
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+	
+	/**
+	 * 更新景點商品
+	 * 
+	 * @param json JSON格式的請求，包含以下參數： { "attractions_id": 景點ID, "attractions_name":
+	 *             景點名稱, "attractions_address": 景點地址, "descriptions": 商品介紹, "openTime": 開門時間, 
+	 *             "closeTime": 關門時間, "contact_number": 電話 }
+	 * 
+	 * @return insert成功回傳true，反之false
+	 */
+	public boolean modifyAttractionProduct(String json) {
+
+		try {
+
+			JSONObject modifyInfo = new JSONObject(json);
+
+			Integer attractionsId = modifyInfo.getInt("attractions_id");
+			String attractionsName = modifyInfo.getString("attractions_name");
+			String attractionsAddress = modifyInfo.getString("attractions_address");
+			String descriptions = modifyInfo.getString("descriptions");
+			String openTime = modifyInfo.getString("open_time");
+			String closeTime = modifyInfo.getString("close_time");
+			String contactNumber = modifyInfo.getString("contact_number");
+
+			// 宣告一個boolean檢查values不為null，若其中有null回傳false
+			boolean allValuesNotNull = attractionsId != null && attractionsName != null && attractionsAddress != null
+					&& descriptions != null && openTime != null && closeTime != null && contactNumber != null;
+
+			if (allValuesNotNull) {
+				AttractionBean product = attractionRepository.findById(attractionsId).orElse(null);
+				// 判斷該ID是否有對應商品
+				if (product != null) {
+					product.setAttractionsName(attractionsName);
+					product.setAttractionsAddress(attractionsAddress);
+					product.setDescriptions(descriptions);
+					product.setOpenTime(openTime);
+					product.setCloseTime(closeTime);
+					product.setContactNumber(contactNumber);
+
+					attractionRepository.save(product);
+					return true;
+
+				} else {
+					return false; // 如果查不到ID，回傳false
+				}
+
+			} else {
+				return false; // 前端送來的欄位其中有null回傳false
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+	
+	
+	
 }
