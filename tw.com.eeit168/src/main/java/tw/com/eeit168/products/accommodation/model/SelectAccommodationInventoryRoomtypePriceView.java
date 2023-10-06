@@ -1,12 +1,13 @@
 package tw.com.eeit168.products.accommodation.model;
 
-import java.util.Objects;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity//是JPA(Java Persistence API)中的一個重要註解，用於定義資料庫實體類別，讓開發者可以使用Java程式碼來操作資料庫中的資料
@@ -17,8 +18,9 @@ public class SelectAccommodationInventoryRoomtypePriceView {
 	@Column(name = "inventory_id")
 	private Integer accommodationInventoryId;
 	
-	@Column(name = "accommodation_id")
-	private Integer accommodationId;
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "accommodation_id", insertable = false, updatable = false)
+    private Accommodation accommodationId;
 	
 	@Column(name = "accommodation_name", nullable = false, columnDefinition = "nvarchar(255)")
 	private String accommodationName;
@@ -52,11 +54,11 @@ public class SelectAccommodationInventoryRoomtypePriceView {
 		this.accommodationInventoryId = accommodationInventoryId;
 	}
 
-	public Integer getAccommodationId() {
+	public Accommodation getAccommodationId() {
 		return accommodationId;
 	}
 
-	public void setAccommodationId(Integer accommodationId) {
+	public void setAccommodationId(Accommodation accommodationId) {
 		this.accommodationId = accommodationId;
 	}
 
@@ -132,6 +134,7 @@ public class SelectAccommodationInventoryRoomtypePriceView {
 				+ availableRooms + ", bedsAmount=" + bedsAmount + ", weekdayPrice=" + weekdayPrice + ", weekendPrice="
 				+ weekendPrice + ", timesPurchased=" + timesPurchased + "]";
 	}
+
 	
 	
 

@@ -29,6 +29,9 @@ public class Accommodation {
 	@Column(name = "contact_number", nullable = false)
 	private String contactNumber;
 	
+	@Column(name = "product_status", nullable = false)
+	private boolean productStatus; 
+	
 	@Column(name = "times_purchased", nullable = false)
 	private int timesPurchased;
 

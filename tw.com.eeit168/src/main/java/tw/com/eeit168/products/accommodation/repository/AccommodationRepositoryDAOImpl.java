@@ -32,9 +32,24 @@ public class AccommodationRepositoryDAOImpl implements AccommodationRepositoryDA
 
 	// Top 5
 	public List<SelectAccommodationInventoryRoomtypePriceView> selectTop5() {
-		String hql = "from SelectAccommodationInventoryRoomtypePriceView order by timesPurchased desc";
-		return this.getSession().createQuery(hql, SelectAccommodationInventoryRoomtypePriceView.class).setMaxResults(5).list();
+		String hql = "SELECT sairp " +
+	             "FROM SelectAccommodationInventoryRoomtypePriceView sairp " +
+	             "WHERE sairp.accommodationId IN (" +
+	             "    SELECT a.accommodationId " +
+	             "    FROM Accommodation a " +
+	             ") " +
+	             "ORDER BY sairp.weekdayPrice ASC, sairp.accommodationId.timesPurchased DESC";
+
+
+	    return this.getSession().createQuery(hql, SelectAccommodationInventoryRoomtypePriceView.class)
+	                          .setMaxResults(5)
+	                          .list();
 	}
+
+//	public List<SelectAccommodationInventoryRoomtypePriceView> selectTop5() {
+//		String hql = "from SelectAccommodationInventoryRoomtypePriceView order by timesPurchased desc";
+//		return this.getSession().createQuery(hql, SelectAccommodationInventoryRoomtypePriceView.class).setMaxResults(5).list();
+//	}
 	
 	@Override
 	public List<SelectAccommodationInventoryRoomtypePriceView> findByAvailabilityDateBetween(Date checkinDate,
