@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -74,9 +74,54 @@ public class MemberProfileController {
 			return e.getMessage();
 		}
 	}
+	@PostMapping("/update")
+	public ResponseEntity<String> updateMemberInfo(
+	    @RequestParam String user_account,
+	    @RequestBody JsonNode jsonNode
+	) {
+	    try {
+	        // 添加 JSON 数据验证逻辑
 
-    @GetMapping("/profile/{user_account}")
-    public MemberProfileBean getProfile(@PathVariable("user_account") String user_account) {
-        return memberProfileService.getProfileInfo(user_account);
-    }
-}
+	        // 检查是否存在 user_password 字段
+	        if (!jsonNode.has("user_password")) {
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("缺少 user_password 字段");
+	        }
+
+	        // 检查是否存在 gender 字段
+	        if (!jsonNode.has("gender")) {
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("缺少 gender 字段");
+	        }
+
+	        // 检查 user_password 字段的值是否为字符串
+	        if (!jsonNode.get("user_password").isTextual()) {
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("user_password 字段的值不是字符串");
+	        }
+
+	        // 检查 gender 字段的值是否为字符串
+	        if (!jsonNode.get("gender").isTextual()) {
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("gender 字段的值不是字符串");
+	        }
+
+
+	        memberProfileService.updateMemberInfo(user_account, jsonNode);
+	        return ResponseEntity.ok("会员资料更新成功");
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("会员资料更新失败");
+	    }
+	}
+	}
+
+
+//	@GetMapping("/profile")
+//	public ResponseEntity<Object> getProfileInfo(@CookieValue(name = "member_profile_id", required = false) Integer member_profile_id) {
+//	    if (member_profile_id == null) {
+//	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("无法获取 member_profile_id");
+//	    }
+//
+//	    // 使用 member_profile_id 來查詢會員資料
+//	    MemberProfileBean profile = memberProfileService.getProfileInfo(member_profile_id);
+//	    if (profile != null) {
+//	        return ResponseEntity.ok(profile);
+//	    } else {
+//	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("找不到会员信息");
+//	    }

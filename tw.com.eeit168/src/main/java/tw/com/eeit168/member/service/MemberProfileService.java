@@ -1,5 +1,6 @@
 package tw.com.eeit168.member.service;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -22,6 +23,8 @@ public class MemberProfileService {
 
     private MemberProfileInterFace memberProfileInterFace;
     private JavaMailSender javaMailSender;
+
+
 
     @Autowired
     public MemberProfileService(MemberProfileInterFace memberProfileInterFace, JavaMailSender javaMailSender) {
@@ -180,23 +183,62 @@ public class MemberProfileService {
             throw e;
         }
     }
+    
+    
+    public void updateMemberInfo(String user_account, JsonNode jsonNode) throws Exception {
+        // 直接使用 memberProfileInterFace 查询会员记录
+        MemberProfileBean existingMember = memberProfileInterFace.select(user_account);
 
-    // 根据用户帐号获取用户资料
-    @Transactional(readOnly = true)
-    public MemberProfileBean getProfileInfo(String user_account) {
-        MemberProfileBean profile = memberProfileInterFace.select(user_account);
-        if (profile != null) {
-            // 只返回帐号、姓名、生日、手机号码、性别等信息
-            MemberProfileBean simplifiedProfile = new MemberProfileBean();
-            simplifiedProfile.setUser_account(profile.getUser_account());
-            simplifiedProfile.setUsername(profile.getUsername());
-            simplifiedProfile.setBirthday(profile.getBirthday());
-            simplifiedProfile.setGender(profile.getGender());
-            simplifiedProfile.setPhone_number(profile.getPhone_number());
+        if (existingMember == null) {
+            throw new Exception("找不到要更新的会员记录");
+        }
 
-            return simplifiedProfile;
-        } else {
-            return null;
+        try {
+            // 从请求 JSON 中获取字段值
+            String user_password = jsonNode.get("user_password").asText();
+            String username = jsonNode.get("username").asText();
+            String gender = jsonNode.get("gender").asText();
+            String phone_number = jsonNode.get("phone_number").asText();
+            String birthday = jsonNode.get("birthday").asText();
+
+            // 解析生日字符串为 Date 对象
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date birthdayDate = sdf.parse(birthday);
+
+            // 更新会员信息
+            existingMember.setUser_password(user_password);
+            existingMember.setUsername(username);
+            existingMember.setGender(gender);
+            existingMember.setPhone_number(phone_number);
+            existingMember.setBirthday(birthdayDate);
+            
+            
+            memberProfileInterFace.update(existingMember);
+
+            // 不需要调用保存方法，因为查询到的对象已经与数据库关联
+        } catch (ParseException e) {
+            // 处理 ParseException，您可以选择抛出自定义异常或以其他方式处理它
+            e.printStackTrace(); // 这里只是简单的打印异常堆栈信息
         }
     }
 }
+
+    // 根据用户帐号获取用户资料
+//    @Transactional(readOnly = true)
+//    public MemberProfileBean getProfileInfo(int member_profile_id) {
+//        MemberProfileBean profile = memberProfileInterFace.select(member_profile_id);
+//        if (profile != null) {
+//            // 只返回帐号、姓名、生日、手机号码、性别等信息
+//            MemberProfileBean simplifiedProfile = new MemberProfileBean();
+//            simplifiedProfile.setUser_account(profile.getUser_account());
+//            simplifiedProfile.setUsername(profile.getUsername());
+//            simplifiedProfile.setBirthday(profile.getBirthday());
+//            simplifiedProfile.setGender(profile.getGender());
+//            simplifiedProfile.setPhone_number(profile.getPhone_number());
+//
+//            return simplifiedProfile;
+//        } else {
+//            return null;
+//        }
+//    }
+

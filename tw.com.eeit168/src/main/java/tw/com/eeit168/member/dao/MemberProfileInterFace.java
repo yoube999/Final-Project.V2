@@ -15,4 +15,14 @@ public interface MemberProfileInterFace {
 	
 	//忘記密碼的更新
 	public abstract void update(MemberProfileBean member);
+
+
+	
+	MemberProfileBean selectByProfileId(int member_profile_id);
+
+
+	MemberProfileBean select(int member_profile_id);
+	
+	
+	
 }

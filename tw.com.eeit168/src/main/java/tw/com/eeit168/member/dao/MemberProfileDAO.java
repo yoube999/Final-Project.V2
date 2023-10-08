@@ -44,6 +44,18 @@ import tw.com.eeit168.member.model.MemberProfileBean;
 	            this.getSession().update(memberProfileBean);
 	        }
 	    }
+
+		@Override
+		public MemberProfileBean selectByProfileId(int member_profile_id) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public MemberProfileBean select(int member_profile_id) {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
 
 	
