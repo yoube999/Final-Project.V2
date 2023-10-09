@@ -1,11 +1,11 @@
 package tw.com.eeit168.helpdesk;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import tw.com.eeit168.helpdesk.service.HelpDeskProcessService;
 import tw.com.eeit168.helpdesk.service.HelpDeskProductsService;
 import tw.com.eeit168.helpdesk.service.HelpDeskService;
 
@@ -15,10 +15,9 @@ public class HelpDeskTest {
 
 	@Autowired
 	private HelpDeskProductsService helpDeskProductsService;
-	
+
 	@Autowired
 	private HelpDeskService helpDeskService;
-	
 
 //	@Test
 //	public void testConvertCsvToJson() {
@@ -48,8 +47,15 @@ public class HelpDeskTest {
 //		boolean result = helpDeskProductsService.insertRestaurantProducts(restaurantData);
 //		System.out.println(result);
 //	}
-	
-    
-	
-	
+
+	@Test
+	public void testremoveProduct() {
+		Integer productId = 1;
+
+		boolean result = helpDeskProductsService.removeAccommodationProduct(productId);
+
+		System.out.println(result);
+
+	}
+
 }

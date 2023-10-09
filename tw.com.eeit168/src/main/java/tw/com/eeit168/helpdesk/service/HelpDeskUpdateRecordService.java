@@ -10,8 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import jakarta.persistence.PersistenceContext;
 import tw.com.eeit168.helpdesk.repository.HelpDeskUpdateRecordRepository;
 import tw.com.eeit168.products.RecordBean;
+import tw.com.eeit168.products.accommodation.model.Accommodation;
 import tw.com.eeit168.products.accommodation.model.AccommodationOrder;
 import tw.com.eeit168.products.accommodation.repository.AccommodationOrderRepository;
+import tw.com.eeit168.products.accommodation.repository.AccommodationRepository;
 import tw.com.eeit168.products.attraction.model.ReservationAttractionBean;
 import tw.com.eeit168.products.attraction.repository.ReservationAttractionRepository;
 import tw.com.eeit168.products.restaurant.model.ReservationRestuarantBean;
@@ -43,10 +45,8 @@ public class HelpDeskUpdateRecordService {
 	/**
 	 * 更新會員主訂單審查狀態及其子訂單狀態
 	 * 
-	 * @param json JSON格式的請求，包含以下參數： { 
-	 * 				"record_id": 訂單ID, 
-	 * 				"newStatus": 欲更新的狀態（ value：結單、退貨完成）
-	 *              }
+	 * @param json JSON格式的請求，包含以下參數： { "record_id": 訂單ID, "newStatus": 欲更新的狀態（
+	 *             value：結單、退貨完成） }
 	 * @return 全部更新成功回傳true，反之false
 	 */
 	public boolean updateRecord(String json) {

@@ -5,19 +5,24 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.service.annotation.GetExchange;
 
 import tw.com.eeit168.helpdesk.service.HelpDeskProductsService;
 import tw.com.eeit168.helpdesk.util.CsvFieldMapping;
@@ -292,7 +297,7 @@ public class HelpDeskProductsController {
 		}
 
 	}
-	
+
 	/**
 	 * 更新景點商品
 	 * 
@@ -311,6 +316,76 @@ public class HelpDeskProductsController {
 			return ResponseEntity.ok("修改商品成功");
 		} else {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("修改商品失敗，請確認送出編輯是否正確");
+		}
+
+	}
+
+	/**
+	 * 下架餐廳商品，變更商品productStatus
+	 * 
+	 * 
+	 */
+	@GetMapping("/removeProduct/restaurant/{restaurantId}")
+	public String removeRestaurantProduct(@PathVariable(name = "restaurantId") Integer restaurantId) {
+		JSONObject responseJson = new JSONObject();
+
+		boolean result = helpDeskProductsService.removeRestaurantProduct(restaurantId);
+
+		if (result) {
+			responseJson.put("message", "下架商品成功");
+			responseJson.put("success", "true");
+			return responseJson.toString();
+		} else {
+			responseJson.put("message", "下架商品發生錯誤，請聯絡IT人員");
+			responseJson.put("success", "false");
+			return responseJson.toString();
+		}
+
+	}
+	
+	/**
+	 * 下架飯店商品，變更商品productStatus
+	 * 
+	 * 
+	 */
+	@GetMapping("/removeProduct/accommodation/{productId}")
+	public String removeAccommodationProduct(@PathVariable(name = "productId") Integer productId) {
+		JSONObject responseJson = new JSONObject();
+
+		boolean result = helpDeskProductsService.removeAccommodationProduct(productId);
+
+		if (result) {
+			responseJson.put("message", "下架商品成功");
+			responseJson.put("success", "true");
+			return responseJson.toString();
+		} else {
+			responseJson.put("message", "下架商品發生錯誤，請聯絡IT人員");
+			responseJson.put("success", "false");
+			return responseJson.toString();
+		}
+
+	}
+
+	
+	/**
+	 * 下架飯店商品，變更商品productStatus
+	 * 
+	 * 
+	 */
+	@GetMapping("/removeProduct/attractions/{attractionsId}")
+	public String removeAttractionsProduct(@PathVariable(name = "attractionsId") Integer attractionsId) {
+		JSONObject responseJson = new JSONObject();
+
+		boolean result = helpDeskProductsService.removeAccommodationProduct(attractionsId);
+
+		if (result) {
+			responseJson.put("message", "下架商品成功");
+			responseJson.put("success", "true");
+			return responseJson.toString();
+		} else {
+			responseJson.put("message", "下架商品發生錯誤，請聯絡IT人員");
+			responseJson.put("success", "false");
+			return responseJson.toString();
 		}
 
 	}

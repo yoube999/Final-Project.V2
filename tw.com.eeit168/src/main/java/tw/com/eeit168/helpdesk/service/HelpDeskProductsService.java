@@ -319,6 +319,80 @@ public class HelpDeskProductsService {
 
 	}
 	
+	/**
+	 * 下架餐廳商品，變更商品productStatus
+	 * 
+	 * @param Integer "restaurant_id": 餐廳ID
+	 * @return 全部更新成功回傳true，反之false
+	 */
+	public boolean removeRestaurantProduct(Integer restaurantId) {
+
+		if (restaurantId != null) {
+			RestaurantBean restaurantProduct = restaurantRepository.findById(restaurantId).orElse(null);
+			if (restaurantProduct != null) {
+				restaurantProduct.setProductStatus(false);
+				restaurantRepository.save(restaurantProduct);
+				return true;
+			} else {
+				return false; // 如果查不到ID，回傳false
+			}
+
+		} else {
+
+			return false; // 如果未帶入productId，回傳false
+		}
+
+	}
 	
+	
+	/**
+	 * 下架飯店商品，變更商品productStatus
+	 * 
+	 * @param Integer "accommodation_id"
+	 * @return 全部更新成功回傳true，反之false
+	 */
+	public boolean removeAccommodationProduct(Integer productId) {
+
+		if (productId != null) {
+			Accommodation accommodationProduct = accommodationRepository.findById(productId).orElse(null);
+			if (accommodationProduct != null) {
+				accommodationProduct.setProductStatus(false);
+				accommodationRepository.save(accommodationProduct);
+				return true;
+			} else {
+				return false; // 如果查不到ID，回傳false
+			}
+
+		} else {
+
+			return false; // 如果未帶入productId，回傳false
+		}
+
+	}
+	
+	/**
+	 * 下架景點商品，變更景點productStatus
+	 * 
+	 * @param Integer "attractions_id": 飯店ID
+	 * @return 全部更新成功回傳true，反之false
+	 */
+	public boolean removeAttractionsProduct(Integer attractionsId) {
+
+		if (attractionsId != null) {
+			AttractionBean attractionsProduct = attractionRepository.findById(attractionsId).orElse(null);
+			if (attractionsProduct != null) {
+				attractionsProduct.setProductStatus(false);
+				attractionRepository.save(attractionsProduct);
+				return true;
+			} else {
+				return false; // 如果查不到ID，回傳false
+			}
+
+		} else {
+
+			return false; // 如果未帶入productId，回傳false
+		}
+
+	}
 	
 }
