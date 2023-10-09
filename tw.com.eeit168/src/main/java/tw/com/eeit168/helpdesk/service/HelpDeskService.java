@@ -1,11 +1,6 @@
 package tw.com.eeit168.helpdesk.service;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,16 +9,14 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
-import com.opencsv.exceptions.CsvValidationException;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import tw.com.eeit168.helpdesk.dao.HelpDeskDAO;
 import tw.com.eeit168.helpdesk.model.HelpDeskBean;
+import tw.com.eeit168.helpdesk.util.PictureFactory;
 import tw.com.eeit168.member.model.MemberProfileBean;
 
 @Service
@@ -39,9 +32,11 @@ public class HelpDeskService {
 
 	@Autowired
 	private HelpDeskDAO helpDeskDAO;
+	
+	@Autowired
+	private PictureFactory pictureFactory;
 
-	// 宣告存放圖片的實體路徑
-	private static final String IMAGE_UPLOAD_PATH = "C:\\Final-Project-workspace\\images\\";
+	
 
 	/**
 	 * 寫入案件單，需再加上圖片上傳功能
@@ -93,7 +88,7 @@ public class HelpDeskService {
 	 * 
 	 * 
 	 */
-	public HelpDeskBean createTicket(String json, MultipartFile image) {
+	public HelpDeskBean createTicket(String json,@RequestParam("image") MultipartFile image) {
 
 		try {
 			// 使用JSON格式包案件內容
@@ -118,7 +113,7 @@ public class HelpDeskService {
 			insert.setWay_to_contact(way_to_contact);
 			// 實現此方法以將圖片儲存到資料庫並返回 URL
 			if (image != null && !image.isEmpty()) {
-				String imageUrl = saveImages(image);
+				String imageUrl = pictureFactory.saveImages(image);
 				insert.setAttachment(imageUrl);
 			}
 			// 建立案件時客服人員固定為null
@@ -138,45 +133,7 @@ public class HelpDeskService {
 		return null;
 	}
 
-	/**
-	 * 上傳圖片邏輯
-	 * 
-	 * 
-	 */
-	private String saveImages(MultipartFile image) {
-
-		try {
-			// 取得上傳路徑並new File物件
-			File uploadDir = new File(IMAGE_UPLOAD_PATH);
-			if (!uploadDir.exists()) {
-				// 如果目錄不存在，則創建它
-				uploadDir.mkdirs();
-			}
-
-			// 獲取圖片的原始文件名
-			String originalFilename = image.getOriginalFilename();
-
-			// 產生一個唯一的文件名，以避免命名衝突
-			String uniqueFilename = UUID.randomUUID().toString() + "_" + originalFilename;
-
-			// 組合最終的文件路徑
-			String filePath = IMAGE_UPLOAD_PATH + uniqueFilename;
-
-			File dest = new File(filePath);
-			image.transferTo(dest);
-
-			// 返回圖片的 URL
-			return "file://" + filePath;
-		} catch (IllegalStateException e) {
-			// 需改寫成跳轉至錯誤頁面
-			e.printStackTrace();
-		} catch (IOException e) {
-			// 需改寫成跳轉至錯誤頁面
-			e.printStackTrace();
-		}
-
-		return null;
-	}
+	
 
 	/**
 	 * 查詢案件
@@ -226,29 +183,6 @@ public class HelpDeskService {
 		return null;
 	}
 
-//	/**
-//	 * 顯示案件內容時，畫面上顯示圖片url，點擊後開啟圖片
-//	 * 
-//	 * 
-//	 */
-//	public byte[] selectPicture(Integer helpdesk_id) {
-//		
-//		// 先查詢該案件資料，取得附件URL
-//		HelpDeskBean pictureURL = helpDeskInterFace.selectTicketById(helpdesk_id);
-//		if(pictureURL != null && helpdesk_id != null && pictureURL.getAttachment() != null) {
-//			
-//			try {
-//				// 將字串轉換為位元組數組
-//				byte[] imageData = pictureURL.getAttachment().getBytes(StandardCharsets.UTF_8);
-//				return imageData;
-//			} catch (Exception e) {
-//				// 需改寫成跳轉至錯誤頁面
-//				e.printStackTrace();
-//				return null;
-//			}
-//		}
-//		return null;
-//	}
 
 	/**
 	 * 前端載入處理中/結案案件詳細頁面時，處理人員下拉選單查詢API
