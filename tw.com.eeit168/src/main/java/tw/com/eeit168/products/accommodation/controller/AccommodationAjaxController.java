@@ -5,18 +5,26 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import tw.com.eeit168.products.accommodation.model.Accommodation;
 import tw.com.eeit168.products.accommodation.model.AccommodationInventory;
+import tw.com.eeit168.products.accommodation.model.AccommodationPhotos;
 import tw.com.eeit168.products.accommodation.model.AccommodationRoomType;
 import tw.com.eeit168.products.accommodation.model.SelectAccommodationInventoryRoomtypePriceView;
+import tw.com.eeit168.products.accommodation.repository.AccommodationPhotosRepository;
 import tw.com.eeit168.products.accommodation.repository.AccommodationRepository;
 import tw.com.eeit168.products.accommodation.service.AccommodationSearchService;
+import tw.com.eeit168.products.accommodation.util.ImageToBase64Converter;
 
 @RestController
 @RequestMapping("/eeit168/accommodation")
@@ -27,6 +35,8 @@ public class AccommodationAjaxController {
 	private AccommodationSearchService accommodationSearchService;
 	@Autowired
 	private AccommodationRepository accommodationRepository;
+	@Autowired
+	private AccommodationPhotosRepository accommodationPhotosRepository;
 	
 //	@Autowired
 //	private AccommodationPriceRepository accommodationPriceRepository;
@@ -146,6 +156,31 @@ public class AccommodationAjaxController {
 //		responseJson.put("list", jsonArray);
 //		return responseJson.toString();
 //	}
+	
+	@PostMapping("/{accommodationId}/photos")
+    public ResponseEntity<String> uploadImage(@PathVariable Integer accommodationId, @RequestParam("file") MultipartFile file) {
+        try {
+            // Convert the image to Base64
+            String base64Image = ImageToBase64Converter.convertToBase64(file);
+
+            // Save the base64Image to the accommodation_photo table
+            AccommodationPhotos accommodationPhotos = new AccommodationPhotos();
+            accommodationPhotos.setAccommodationId(accommodationId);
+            accommodationPhotos.setPhotoUrl(base64Image);
+            accommodationPhotosRepository.save(accommodationPhotos);
+
+            // For simplicity, just return the base64 image
+            return ResponseEntity.ok("Base64 image: " + base64Image);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Image upload failed: " + e.getMessage());
+        }
+    }
+
+ @GetMapping("/photos/{photoId}")
+ public String getPhotoUrl(@PathVariable Integer photoId) {
+	 String photoUrlById = accommodationSearchService.getPhotoUrlById(photoId);
+	 return photoUrlById;
+ }
 	
 	@GetMapping(path = {"/search/requiredRooms"})
 	public String searchAccommodationsByCriteria(

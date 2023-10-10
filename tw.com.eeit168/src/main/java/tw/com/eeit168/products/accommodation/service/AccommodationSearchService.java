@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 import jakarta.persistence.PersistenceContext;
 import tw.com.eeit168.products.accommodation.model.Accommodation;
 import tw.com.eeit168.products.accommodation.model.AccommodationInventory;
+import tw.com.eeit168.products.accommodation.model.AccommodationPhotos;
 import tw.com.eeit168.products.accommodation.model.AccommodationRoomType;
 import tw.com.eeit168.products.accommodation.model.SelectAccommodationInventoryRoomtypePriceView;
 import tw.com.eeit168.products.accommodation.repository.AccommodationInventoryRepository;
+import tw.com.eeit168.products.accommodation.repository.AccommodationPictureRepository;
 import tw.com.eeit168.products.accommodation.repository.AccommodationRepository;
 import tw.com.eeit168.products.accommodation.repository.AccommodationRoomTypeRepository;
 import tw.com.eeit168.products.accommodation.util.RoomCombinationFinder;
@@ -35,6 +37,9 @@ public class AccommodationSearchService {
 	public void setAccommodationRoomTypeRepository(AccommodationRoomTypeRepository accommodationRoomTypeRepository) {
 		this.accommodationRoomTypeRepository = accommodationRoomTypeRepository;
 	}
+	
+	@Autowired
+	private AccommodationPictureRepository accommodationPictureRepository;
 
 //	@Autowired
 //	private AccommodationPriceRepository accommodationPriceRepository;
@@ -50,6 +55,15 @@ public class AccommodationSearchService {
 	
 //	@Autowired
 //	private SelectAccommodationInventoryRoomtypePriceViewRepository selectAccommodationInventoryRoomtypePriceViewRepository;
+	
+	public String getPhotoUrlById(Integer photoId) {
+		// Here, you would fetch the photo URL from your database based on the photoId
+        // Example assuming Photo has a field named "photoUrl"
+        // Replace this with actual logic to fetch the photo URL based on photoId
+		AccommodationPhotos photo = accommodationPictureRepository.findById(photoId).orElse(null);
+		return (photo != null)? photo.getPhotoUrl():null;
+	}
+	
 	public List<Accommodation> findAccommodationName(String keyword) {
 		return accommodationRepository.findAccommodationName(keyword);
 	}
@@ -122,6 +136,8 @@ public class AccommodationSearchService {
 	public List<SelectAccommodationInventoryRoomtypePriceView> findAllByWeekendPriceAsc() {
 		return accommodationRepository.findAllByWeekendPriceAsc();
 	}
+	
+	
 //	public List<Accommodation> findAccommodationName(String keyword) {
 //		if (keyword != null && !keyword.trim().isEmpty()) {
 //			String hql = "FROM Accommodation WHERE accommodationName LIKE :keyword OR accommodationAddress LIKE :keyword";
