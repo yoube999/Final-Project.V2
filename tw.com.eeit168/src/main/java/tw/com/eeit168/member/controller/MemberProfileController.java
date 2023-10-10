@@ -32,20 +32,21 @@ public class MemberProfileController {
 	// 登入Post送字串
 	@PostMapping("/login")
 	public ResponseEntity<Object> login(@RequestBody JsonNode jsonNode) {
-	    MemberProfileBean memberProfileBean = memberProfileService.login(jsonNode);
-	    if (memberProfileBean != null) {
-	        return ResponseEntity.ok(memberProfileBean); // 登录成功，返回完整的 MemberProfileBean 对象
-	    } else {
-	        String errorMessage = "登入失敗";
-	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage); // 登录失败，返回 401 未授权状态和错误消息
-	    }
+		MemberProfileBean memberProfileBean = memberProfileService.login(jsonNode);
+		if (memberProfileBean != null) {
+			return ResponseEntity.ok(memberProfileBean); // 登录成功，返回完整的 MemberProfileBean 对象
+		} else {
+			String errorMessage = "登入失敗";
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage); // 登录失败，返回 401 未授权状态和错误消息
+		}
 	}
 
 	// 註冊送Post送Json
 	@PostMapping("/register")
-	public String register(@RequestBody JsonNode jsonNode) {
+	public String register(@RequestBody JsonNode jsonNode,
+			@RequestParam(name = "setCustomer", required = false) boolean setCustomerService) {
 		try {
-			memberProfileService.registerMember(jsonNode);
+			memberProfileService.registerMember(jsonNode, setCustomerService);	// 一般會員註冊時不送setCustomerService
 			return "註冊成功";
 		} catch (Exception e) {
 			return e.getMessage();
@@ -74,43 +75,39 @@ public class MemberProfileController {
 			return e.getMessage();
 		}
 	}
+
 	@PostMapping("/update")
-	public ResponseEntity<String> updateMemberInfo(
-	    @RequestParam String user_account,
-	    @RequestBody JsonNode jsonNode
-	) {
-	    try {
-	        // 添加 JSON 数据验证逻辑
+	public ResponseEntity<String> updateMemberInfo(@RequestParam String user_account, @RequestBody JsonNode jsonNode) {
+		try {
+			// 添加 JSON 数据验证逻辑
 
-	        // 检查是否存在 user_password 字段
-	        if (!jsonNode.has("user_password")) {
-	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("缺少 user_password 字段");
-	        }
+			// 检查是否存在 user_password 字段
+			if (!jsonNode.has("user_password")) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("缺少 user_password 字段");
+			}
 
-	        // 检查是否存在 gender 字段
-	        if (!jsonNode.has("gender")) {
-	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("缺少 gender 字段");
-	        }
+			// 检查是否存在 gender 字段
+			if (!jsonNode.has("gender")) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("缺少 gender 字段");
+			}
 
-	        // 检查 user_password 字段的值是否为字符串
-	        if (!jsonNode.get("user_password").isTextual()) {
-	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("user_password 字段的值不是字符串");
-	        }
+			// 检查 user_password 字段的值是否为字符串
+			if (!jsonNode.get("user_password").isTextual()) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("user_password 字段的值不是字符串");
+			}
 
-	        // 检查 gender 字段的值是否为字符串
-	        if (!jsonNode.get("gender").isTextual()) {
-	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("gender 字段的值不是字符串");
-	        }
+			// 检查 gender 字段的值是否为字符串
+			if (!jsonNode.get("gender").isTextual()) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("gender 字段的值不是字符串");
+			}
 
-
-	        memberProfileService.updateMemberInfo(user_account, jsonNode);
-	        return ResponseEntity.ok("会员资料更新成功");
-	    } catch (Exception e) {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("会员资料更新失败");
-	    }
+			memberProfileService.updateMemberInfo(user_account, jsonNode);
+			return ResponseEntity.ok("會員資料更新成功");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("會員資料更新失敗");
+		}
 	}
-	}
-
+}
 
 //	@GetMapping("/profile")
 //	public ResponseEntity<Object> getProfileInfo(@CookieValue(name = "member_profile_id", required = false) Integer member_profile_id) {
