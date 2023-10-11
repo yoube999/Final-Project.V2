@@ -12,10 +12,12 @@ import tw.com.eeit168.products.accommodation.model.AccommodationInventory;
 import tw.com.eeit168.products.accommodation.model.AccommodationPhotos;
 import tw.com.eeit168.products.accommodation.model.AccommodationRoomType;
 import tw.com.eeit168.products.accommodation.model.SelectAccommodationInventoryRoomtypePriceView;
+import tw.com.eeit168.products.accommodation.model.SelectAccommodationPhotosPriceView;
 import tw.com.eeit168.products.accommodation.repository.AccommodationInventoryRepository;
 import tw.com.eeit168.products.accommodation.repository.AccommodationPictureRepository;
 import tw.com.eeit168.products.accommodation.repository.AccommodationRepository;
 import tw.com.eeit168.products.accommodation.repository.AccommodationRoomTypeRepository;
+import tw.com.eeit168.products.accommodation.repository.SelectAccommodationPhotosPriceViewRepository;
 import tw.com.eeit168.products.accommodation.util.RoomCombinationFinder;
 
 @Service
@@ -53,6 +55,9 @@ public class AccommodationSearchService {
 	@Autowired
 	private AccommodationRepository accommodationRepository;
 	
+	@Autowired
+	private SelectAccommodationPhotosPriceViewRepository selectAccommodationPhotosPriceViewRepository;
+	
 //	@Autowired
 //	private SelectAccommodationInventoryRoomtypePriceViewRepository selectAccommodationInventoryRoomtypePriceViewRepository;
 	
@@ -60,6 +65,11 @@ public class AccommodationSearchService {
 	public List<Accommodation> getAllAccommodations() {
         return accommodationRepository.findAll();
     }
+	
+	//findAll SelectAccommodationPhotosPriceViewRepository
+	public List<SelectAccommodationPhotosPriceView> getAllAccommodationsInfo(){
+		return selectAccommodationPhotosPriceViewRepository.findAll();
+	}
 	
 	public String getPhotoUrlByAccommodationId(Integer accommodationId) {
         // 根據 accommodationId 查詢相應的圖片 URL

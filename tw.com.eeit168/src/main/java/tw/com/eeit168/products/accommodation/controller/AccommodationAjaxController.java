@@ -21,8 +21,10 @@ import tw.com.eeit168.products.accommodation.model.AccommodationInventory;
 import tw.com.eeit168.products.accommodation.model.AccommodationPhotos;
 import tw.com.eeit168.products.accommodation.model.AccommodationRoomType;
 import tw.com.eeit168.products.accommodation.model.SelectAccommodationInventoryRoomtypePriceView;
+import tw.com.eeit168.products.accommodation.model.SelectAccommodationPhotosPriceView;
 import tw.com.eeit168.products.accommodation.repository.AccommodationPhotosRepository;
 import tw.com.eeit168.products.accommodation.repository.AccommodationRepository;
+import tw.com.eeit168.products.accommodation.repository.SelectAccommodationPhotosPriceViewRepository;
 import tw.com.eeit168.products.accommodation.service.AccommodationSearchService;
 import tw.com.eeit168.products.accommodation.util.ImageToBase64Converter;
 
@@ -47,6 +49,11 @@ public class AccommodationAjaxController {
 	@GetMapping(path = {"/findAll"})
     public List<Accommodation> getAllAccommodations() {
         return accommodationSearchService.getAllAccommodations();
+    }
+	
+	@GetMapping(path = {"/findAllmain"})
+    public List<SelectAccommodationPhotosPriceView> getAllAccommodationsInfo() {
+        return accommodationSearchService.getAllAccommodationsInfo();
     }
 	
 	@GetMapping("/{accommodationId}/photos")
