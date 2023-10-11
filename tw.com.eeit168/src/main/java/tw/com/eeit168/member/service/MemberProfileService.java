@@ -187,7 +187,7 @@ public class MemberProfileService {
 		}
 	}
 
-	public void updateMemberInfo(String user_account, JsonNode jsonNode) throws Exception {
+	public boolean updateMemberInfo(String user_account, JsonNode jsonNode) throws Exception {
 		// 直接使用 memberProfileInterFace 查询会员记录
 		MemberProfileBean existingMember = memberProfileInterFace.select(user_account);
 
@@ -216,10 +216,12 @@ public class MemberProfileService {
 
 			memberProfileInterFace.update(existingMember);
 
+			return true;
 			// 不需要调用保存方法，因为查询到的对象已经与数据库关联
 		} catch (ParseException e) {
 			// 处理 ParseException，您可以选择抛出自定义异常或以其他方式处理它
 			e.printStackTrace(); // 这里只是简单的打印异常堆栈信息
+			return false;
 		}
 	}
 }

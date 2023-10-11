@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import tw.com.eeit168.helpdesk.dao.HelpDeskMemberDAOImpl;
 import tw.com.eeit168.helpdesk.repository.HelpDeskMemberRepository;
 import tw.com.eeit168.member.model.MemberProfileBean;

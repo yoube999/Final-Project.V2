@@ -6,8 +6,6 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import tw.com.eeit168.helpdesk.service.HelpDeskMemberService;
 import tw.com.eeit168.member.model.MemberProfileBean;
+import tw.com.eeit168.member.service.MemberProfileService;
 
 @RestController
 @RequestMapping("/eeit168/helpdeskmember")
@@ -24,6 +25,9 @@ public class HelpDeskMemberController {
 
 	@Autowired
 	private HelpDeskMemberService helpDeskMemberService;
+
+	@Autowired
+	private MemberProfileService memberProfileService;
 
 	/**
 	 * 前端點擊編輯客服人員頁面時，顯示客服人員清單
@@ -54,8 +58,9 @@ public class HelpDeskMemberController {
 		if (members != null && !members.isEmpty()) {
 			for (MemberProfileBean member : members) {
 				JSONObject item = new JSONObject().put("member_profile_id", member.getMember_profile_id())
-						.put("username", member.getUsername()).put("gender", member.getGender())
-						.put("birthday", member.getBirthday()).put("phone_number", member.getPhone_number());
+						.put("user_account", member.getUser_account()).put("username", member.getUsername())
+						.put("gender", member.getGender()).put("birthday", member.getBirthday())
+						.put("phone_number", member.getPhone_number());
 
 				array = array.put(item);
 			}
@@ -76,13 +81,13 @@ public class HelpDeskMemberController {
 	 * @return boolean
 	 */
 	@GetMapping("/removeCustomerService/{memberProfileId}")
-	public String removeCustomerService(@PathVariable("memberProfileId")Integer memberProfileId) {
+	public String removeCustomerService(@PathVariable("memberProfileId") Integer memberProfileId) {
 		JSONObject responseJson = new JSONObject();
 
 		boolean result = helpDeskMemberService.removeCustomerService(memberProfileId);
 
 		if (result) {
-			// 若前端收到false時需顯示錯誤訊息
+			// 若前端收到true時需顯示成功訊息
 			responseJson.put("message", "刪除客服人員成功");
 			responseJson.put("success", "true");
 			return responseJson.toString();
@@ -92,6 +97,35 @@ public class HelpDeskMemberController {
 			responseJson.put("success", "false");
 			return responseJson.toString();
 		}
+	}
+
+	/**
+	 * 編輯客服人員資料
+	 * 
+	 * @param member_profile_id: 客服人員ID
+	 * 
+	 * @return boolean
+	 */
+	@PostMapping("/updateCustomerService")
+	public String updateCustomerService(@RequestBody JsonNode jsonNode) {
+		JSONObject responseJson = new JSONObject();
+		String user_account = jsonNode.get("user_account").asText();
+
+		try {
+			boolean result = memberProfileService.updateMemberInfo(user_account, jsonNode);
+			System.out.println(result);
+			if (result) {
+				// 若前端收到true時需顯示成功訊息
+				responseJson.put("message", "編輯客服人員資料成功");
+				responseJson.put("success", true);
+				return responseJson.toString();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		responseJson.put("message", "編輯客服人員資料失敗，請聯絡IT人員");
+		responseJson.put("success", false);
+		return responseJson.toString();
 	}
 
 }
