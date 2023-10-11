@@ -112,6 +112,11 @@ public class RestaurantRepositoryService {
 		return false;
 	}
 	
+	//判斷id是否存在
+	public boolean exists(Integer id) {
+		return restaurantRepository.existsById(id);
+	}
+	
 	//Top5
 	public List<RestaurantBean> selectTop5() {
 		return restaurantRepository.selectTop5();

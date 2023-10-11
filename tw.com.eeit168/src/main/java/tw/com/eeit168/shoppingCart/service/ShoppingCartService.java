@@ -35,11 +35,6 @@ public class ShoppingCartService {
 	public void updateItem(Integer itemId, Integer newQuantity) {
 		shoppingCartDAO.updateItem(itemId, newQuantity);
 	}
-		
-	//計算價格
-	public double getTotalPrice() {
-		return shoppingCartDAO.getTotalPrice();
-	}
 	
 	public List<ShoppingCartItem> getCartItemFromCookie(HttpServletRequest request) {
 		return shoppingCartDAO.getCartItemFromCookie(null);
@@ -56,5 +51,29 @@ public class ShoppingCartService {
 	public void saveCartToCookie(HttpServletResponse response, List<ShoppingCartItem> cartItems) {
 		shoppingCartDAO.saveCartToCookie(response, cartItems);
 	}
+	
+//	private List<ShoppingCartItem> items = new ArrayList<>();
+//	
+//	public void addItem(ShoppingCartItem item) {
+//		items.add(item);
+//	}
+//	
+//	public void removeItem(Integer id) {
+//		items.removeIf(item -> item.getItemId().equals(id));
+//	}
+//	
+//	public void clearCart() {
+//		items.clear();
+//	}
+//	
+//	public List<ShoppingCartItem> getItem() {
+//		return items;
+//	}
+//	
+//	public double getTotalPrice() {
+//		return items.stream().mapToDouble(item -> item.getPrice() * item.getQuantity()).sum();
+//	}
+	
+	
 	
 }

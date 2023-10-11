@@ -14,7 +14,7 @@ public class ShoppingCartItem {
 	public ShoppingCartItem() {
 		
 	}
-
+	
 	public ShoppingCartItem(Integer itemId, String itemName, Integer quantity, double price) {
 		super();
 		this.itemId = itemId;
@@ -22,7 +22,14 @@ public class ShoppingCartItem {
 		this.quantity = quantity;
 		this.price = price;
 	}
-	
+
+
+	@Override
+	public String toString() {
+		return "ShoppingCartItem [itemId=" + itemId + ", itemName=" + itemName + ", quantity=" + quantity + ", price="
+				+ price + "]";
+	}
+
 	
 	public Integer getItemId() {
 		return itemId;
@@ -47,11 +54,6 @@ public class ShoppingCartItem {
 	}
 	public void setPrice(double price) {
 		this.price = price;
-	}	
-	
-	
-	public double getTotalPrice() {
-		return price * quantity;
 	}
-	
+
 }

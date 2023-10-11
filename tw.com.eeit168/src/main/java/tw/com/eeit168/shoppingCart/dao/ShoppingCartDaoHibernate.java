@@ -46,15 +46,6 @@ public class ShoppingCartDaoHibernate implements ShoppingCartDAO {
 		}
 	}
 	
-	//計算價格
-	public double getTotalPrice() {
-		double totalPrice = 0;
-		for(ShoppingCartItem items : cartItems) {
-			totalPrice += items.getTotalPrice();
-		}
-		return totalPrice;
-	}
-	
 	public List<ShoppingCartItem> getCartItemFromCookie(HttpServletRequest request) {
 		Cookie[] cookies = request.getCookies();
 		if(cookies != null) {

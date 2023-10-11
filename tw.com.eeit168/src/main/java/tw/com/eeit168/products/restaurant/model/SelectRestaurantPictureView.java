@@ -19,6 +19,12 @@ public class SelectRestaurantPictureView {
 	@Column(name = "restaurant_name", columnDefinition = "nvarchar") //如有要用nvarchar必須要有此annotation )
 	private String restaurantName;
 	
+	@Column(name = "price")
+	private Integer price;
+	
+	@Column(name = "descriptions", columnDefinition = "nvarchar") //如有要用nvarchar必須要有此annotation )
+	private String descriptions;
+	
 	@Column(name = "url_image")
 	private String urlImage;
 
@@ -26,7 +32,8 @@ public class SelectRestaurantPictureView {
 	@Override
 	public String toString() {
 		return "SelectRestaurantPictureView [restaurantPicturesId=" + restaurantPicturesId + ", restaurantName="
-				+ restaurantName + ", urlImage=" + urlImage + "]";
+				+ restaurantName + ", price=" + price + ", descriptions=" + descriptions + ", urlImage=" + urlImage
+				+ "]";
 	}
 
 	
@@ -41,6 +48,18 @@ public class SelectRestaurantPictureView {
 	}
 	public void setRestaurantName(String restaurantName) {
 		this.restaurantName = restaurantName;
+	}
+	public Integer getPrice() {
+		return price;
+	}
+	public void setPrice(Integer price) {
+		this.price = price;
+	}
+	public String getDescriptions() {
+		return descriptions;
+	}
+	public void setDescriptions(String descriptions) {
+		this.descriptions = descriptions;
 	}
 	public String getUrlImage() {
 		return urlImage;

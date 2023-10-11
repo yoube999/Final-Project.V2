@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import tw.com.eeit168.shoppingCart.model.ShoppingCartItem;
 import tw.com.eeit168.shoppingCart.service.ShoppingCartService;
 
 @RestController
+@CrossOrigin
 @RequestMapping(path = {"/shoppingcart"})
 public class ShoppingCartController {
 
@@ -28,21 +30,21 @@ public class ShoppingCartController {
 	public String viewCart(HttpServletRequest request, Model model) {
 		List<ShoppingCartItem> itemFromCookie = shoppingCartService.getCartItemFromCookie(request);
 		model.addAttribute("cartItems", itemFromCookie);
-		return "cart";
+		return "redirect:/shoppingcart";
 	}
 	
 	@PostMapping(path = {"/addItem"})
 	public String addItem(HttpServletRequest request, HttpServletResponse response, @RequestBody ShoppingCartItem item) {
 		shoppingCartService.addItem(item);
 		shoppingCartService.saveCartToCookie(response, shoppingCartService.getCartItems());
-		return "redirect:/cart";
+		return "redirect:/shoppingcart";
 	}
 	
 	@DeleteMapping(path = {"/removeItem/{itemId}"})
 	public String removeItem(HttpServletRequest request, HttpServletResponse response, @PathVariable Integer itemId) {
 		shoppingCartService.removeItem(itemId);
 		shoppingCartService.saveCartToCookie(response, shoppingCartService.getCartItems());
-		return "redirect:/cart";
+		return "redirect:/shoppingcart";
 	}
 	
 }

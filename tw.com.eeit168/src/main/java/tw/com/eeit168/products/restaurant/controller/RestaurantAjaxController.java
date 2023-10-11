@@ -6,16 +6,24 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import tw.com.eeit168.products.restaurant.model.RestaurantBean;
+import tw.com.eeit168.products.restaurant.model.RestaurantPictureBean;
 import tw.com.eeit168.products.restaurant.model.SelectRestaurantInventoryView;
 import tw.com.eeit168.products.restaurant.model.SelectRestaurantPictureView;
+import tw.com.eeit168.products.restaurant.service.RestaurantPictureRepositoryService;
 import tw.com.eeit168.products.restaurant.service.RestaurantRepositoryService;
+import tw.com.eeit168.products.restaurant.service.SelectRestaurantPictureRepositoryService;
 
 @RestController //@Controller+@ResponseBody
 @CrossOrigin
@@ -24,6 +32,12 @@ public class RestaurantAjaxController {
 	
 	@Autowired
 	private RestaurantRepositoryService restaurantRepositoryService;
+	
+	@Autowired
+	private RestaurantPictureRepositoryService restaurantPictureRepositoryService;
+	
+	@Autowired
+	private SelectRestaurantPictureRepositoryService selectRestaurantPictureRepositoryService;
 		
 	@GetMapping(path = {"/restaurant/{restaurant_id}"}) //以id搜尋
 	public String findById(@PathVariable(name = "restaurant_id") Integer id) {
@@ -64,6 +78,64 @@ public class RestaurantAjaxController {
 			}
 		}
 		responseJson.put("list", array);
+		return responseJson.toString();
+	}
+	
+	@PostMapping(path = {"/restaurant/insert"}) //新增
+	public String create(@RequestBody String body) {
+		JSONObject responseJson = new JSONObject();
+		JSONObject object = new JSONObject(body);
+		Integer restaurantId = object.isNull("restaurantId") ? null : object.getInt("restaurantId");
+		if(restaurantRepositoryService.exists(restaurantId)) {
+			responseJson.put("message", "id已存在，新增失敗");
+			responseJson.put("success", false);
+		} else {
+			RestaurantBean result = restaurantRepositoryService.create(body);
+			if(result == null) {
+				responseJson.put("message", "新增失敗");
+				responseJson.put("success", false);
+			} else {
+				responseJson.put("message", "新增成功");
+				responseJson.put("success", true);
+			}
+		}
+		return responseJson.toString();
+	}
+	
+	@PutMapping(path = {"/restaurant/{restaurantId}"}) //修改
+	public String modify(@PathVariable(name = "restaurantId") Integer id, @RequestBody String body) {
+		JSONObject responseJson = new JSONObject();
+		if(!restaurantRepositoryService.exists(id)) {
+			responseJson.put("message", "id不存在");
+			responseJson.put("success", false);
+		} else {
+			RestaurantBean result = restaurantRepositoryService.modify(body);
+			if(result == null) {
+				responseJson.put("message", "修改失敗");
+				responseJson.put("success", false);
+			} else {
+				responseJson.put("message", "修改成功");
+				responseJson.put("success", true);
+			}
+		}
+		return responseJson.toString();
+	}
+	
+	@DeleteMapping(path = {"/restaurant/{restaurantId}"}) //刪除
+	public String remove(@PathVariable(name = "restaurantId") Integer id) {
+		JSONObject responseJson = new JSONObject();
+		if(!restaurantRepositoryService.exists(id)) {
+			responseJson.put("message", "id不存在");
+			responseJson.put("success", false);
+		} else {
+			if(restaurantRepositoryService.remove(id)) {
+				responseJson.put("message", "刪除成功");
+				responseJson.put("success", true);
+			} else {
+				responseJson.put("message", "刪除失敗");
+				responseJson.put("success", false);
+			}
+		}
 		return responseJson.toString();
 	}
 
@@ -214,5 +286,44 @@ public class RestaurantAjaxController {
 		responseJson.put("list", array);
 		return responseJson.toString();
 	}
-
+	
+	@PostMapping(path = {"/restaurant/picture"}) //新增照片
+	public String createImage(@RequestParam("file") MultipartFile file, String body) {
+		JSONObject responseJson = new JSONObject();
+		RestaurantPictureBean restaurantPicture = null;
+		try {
+			restaurantPicture = restaurantPictureRepositoryService.create(body, file);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(restaurantPicture == null) {
+			responseJson.put("message", "新增失敗");
+			responseJson.put("success", false);
+		} else {
+			responseJson.put("message", "新增成功");
+			responseJson.put("success", true);
+		}
+		return responseJson.toString();
+	}
+	
+	@GetMapping(path = {"/restaurant/allandpicture"})
+	public String findRestaurantList() {
+		JSONObject responseJson = new JSONObject();
+		JSONArray array = new JSONArray();
+		List<SelectRestaurantPictureView> result = selectRestaurantPictureRepositoryService.findAll();
+		if(result != null && !result.isEmpty()) {
+			for(SelectRestaurantPictureView picture : result) {
+				JSONObject item = new JSONObject()
+						.put("restaurant_pictures_id", picture.getRestaurantPicturesId())
+						.put("restaurant_name", picture.getRestaurantName())
+						.put("price", picture.getPrice())
+						.put("descriptions", picture.getDescriptions())
+						.put("url_image", picture.getUrlImage());
+				array = array.put(item);
+			}
+		}
+		responseJson.put("list", array);
+		return responseJson.toString();
+	}
+	
 }

@@ -16,8 +16,6 @@ public interface ShoppingCartDAO {
 	
 	public void updateItem(Integer itemId, Integer newQuantity);
 	
-	public double getTotalPrice();
-	
 	public List<ShoppingCartItem> getCartItemFromCookie(HttpServletRequest request);
 	
 	public List<ShoppingCartItem> parseCartCookie(String cartCookieValue);
