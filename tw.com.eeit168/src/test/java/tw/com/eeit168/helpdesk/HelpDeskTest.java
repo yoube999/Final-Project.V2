@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import tw.com.eeit168.helpdesk.service.HelpDeskProcessService;
+import tw.com.eeit168.helpdesk.service.HelpDeskMemberService;
 import tw.com.eeit168.helpdesk.service.HelpDeskProductsService;
 import tw.com.eeit168.helpdesk.service.HelpDeskService;
 
@@ -18,6 +18,9 @@ public class HelpDeskTest {
 
 	@Autowired
 	private HelpDeskService helpDeskService;
+	
+	@Autowired
+	private HelpDeskMemberService helpDeskMemberService;
 
 //	@Test
 //	public void testConvertCsvToJson() {
@@ -48,7 +51,7 @@ public class HelpDeskTest {
 //		System.out.println(result);
 //	}
 
-	@Test
+//	@Test
 	public void testremoveProduct() {
 		Integer productId = 1;
 
@@ -58,4 +61,13 @@ public class HelpDeskTest {
 
 	}
 
+	@Test
+	public void testremoveCustomerService() {
+		Integer memberProfileId = 4;
+
+		boolean result = helpDeskMemberService.removeCustomerService(memberProfileId);
+
+		System.out.println(result);
+
+	}
 }
