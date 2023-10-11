@@ -1,6 +1,6 @@
 package tw.com.eeit168.shoppingCart.model;
 
-public class ShoppingCartItem {
+public class Item {
 	
 	private Integer itemId;
 	
@@ -11,11 +11,11 @@ public class ShoppingCartItem {
 	private double price;
 
 	
-	public ShoppingCartItem() {
+	public Item() {
 		
 	}
 
-	public ShoppingCartItem(Integer itemId, String itemName, Integer quantity, double price) {
+	public Item(Integer itemId, String itemName, Integer quantity, double price) {
 		super();
 		this.itemId = itemId;
 		this.itemName = itemName;
