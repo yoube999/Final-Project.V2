@@ -56,6 +56,19 @@ public class AccommodationSearchService {
 //	@Autowired
 //	private SelectAccommodationInventoryRoomtypePriceViewRepository selectAccommodationInventoryRoomtypePriceViewRepository;
 	
+	//findAll Accommodation
+	public List<Accommodation> getAllAccommodations() {
+        return accommodationRepository.findAll();
+    }
+	
+	public String getPhotoUrlByAccommodationId(Integer accommodationId) {
+        // 根據 accommodationId 查詢相應的圖片 URL
+        // 這裡假設 AccommodationPhotoRepository 可以根據 accommodationId 查詢相關圖片
+        String photoUrl = accommodationPictureRepository.findPhotoUrlByAccommodationId(accommodationId);
+        return photoUrl;
+    }
+	
+	
 	public String getPhotoUrlById(Integer photoId) {
 		// Here, you would fetch the photo URL from your database based on the photoId
         // Example assuming Photo has a field named "photoUrl"

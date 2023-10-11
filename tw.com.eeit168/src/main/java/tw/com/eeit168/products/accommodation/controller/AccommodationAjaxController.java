@@ -43,6 +43,29 @@ public class AccommodationAjaxController {
 	
 //	@Autowired
 //	private AccommodationRoomTypeRepository accommodationRoomTypeRepository;
+	
+	@GetMapping(path = {"/findAll"})
+    public List<Accommodation> getAllAccommodations() {
+        return accommodationSearchService.getAllAccommodations();
+    }
+	
+	@GetMapping("/{accommodationId}/photos")
+	public ResponseEntity<String> getAccommodationPhotos(@PathVariable Integer accommodationId) {
+	    try {
+	        String photoUrl = accommodationSearchService.getPhotoUrlByAccommodationId(accommodationId);
+
+	        JSONObject jsonResponse = new JSONObject();
+	        jsonResponse.put("photoUrl", photoUrl);
+
+	        return ResponseEntity.ok(jsonResponse.toString());
+	    } catch (Exception e) {
+	        JSONObject errorResponse = new JSONObject();
+	        errorResponse.put("error", "Error retrieving photo URL.");
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse.toString());
+	    }
+	}
+	
+	
 	@GetMapping(path = {"/search/keyword"})
 	public String searchAccommodations(
 			@RequestParam(value = "keyword", required = false) String keyword){
@@ -176,11 +199,15 @@ public class AccommodationAjaxController {
         }
     }
 
- @GetMapping("/photos/{photoId}")
- public String getPhotoUrl(@PathVariable Integer photoId) {
-	 String photoUrlById = accommodationSearchService.getPhotoUrlById(photoId);
-	 return photoUrlById;
- }
+	@GetMapping("/photos/{photoId}")
+	public String getPhotoUrl(@PathVariable Integer photoId) {
+	    String photoUrlById = accommodationSearchService.getPhotoUrlById(photoId);
+
+	    JSONObject responseJson = new JSONObject();
+	    responseJson.put("photoUrl", photoUrlById);
+
+	    return responseJson.toString();
+	}
 	
 	@GetMapping(path = {"/search/requiredRooms"})
 	public String searchAccommodationsByCriteria(
