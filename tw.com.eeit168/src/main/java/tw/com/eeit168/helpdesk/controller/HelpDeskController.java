@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,11 +43,11 @@ public class HelpDeskController {
 	 * 
 	 */
 	@PostMapping("/createTicket")
-	public String createTicket(@RequestBody(required = true) String json,
-			@RequestPart(required = false) MultipartFile image) {
+	public String createTicket(String json,
+			@RequestParam(required = false) MultipartFile image) {
 		JSONObject responseJson = new JSONObject();
 
-		HelpDeskBean helpdesk = helpDeskService.createTicket(json);
+		HelpDeskBean helpdesk = helpDeskService.createTicket(json, image);
 		if (helpdesk != null) {
 			// 若前端收到true時需顯示成功訊息
 			responseJson.put("message", "新增案件成功");

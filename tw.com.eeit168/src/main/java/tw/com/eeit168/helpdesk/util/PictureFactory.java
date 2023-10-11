@@ -19,7 +19,7 @@ import tw.com.eeit168.helpdesk.model.HelpDeskBean;
 public class PictureFactory {
 
 	// 宣告存放圖片的實體路徑
-	private static final String IMAGE_UPLOAD_PATH = "C:\\Final-Project-workspace\\images\\";
+	private static final String IMAGE_UPLOAD_PATH = "C://Final-Project-workspace//images//";
 
 	@Autowired
 	private HelpDeskInterFace helpDeskInterFace;
@@ -52,7 +52,7 @@ public class PictureFactory {
 			image.transferTo(dest);
 
 			// 返回圖片的 URL
-			return "file://" + filePath;
+			return filePath;
 		} catch (IllegalStateException e) {
 			// 需改寫成跳轉至錯誤頁面
 			e.printStackTrace();
