@@ -8,4 +8,6 @@ import tw.com.eeit168.products.accommodation.model.SelectAccommodationPhotosPric
 
 public interface SelectAccommodationPhotosPriceViewDAO {
 	public abstract List<SelectAccommodationPhotosPriceView> selectAll(JSONObject obj);
+	
+	public long count(JSONObject obj);
 }

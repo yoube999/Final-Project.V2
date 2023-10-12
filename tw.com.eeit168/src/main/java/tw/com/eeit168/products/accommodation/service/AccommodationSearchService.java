@@ -66,6 +66,18 @@ public class AccommodationSearchService {
 //	@Autowired
 //	private SelectAccommodationInventoryRoomtypePriceViewRepository selectAccommodationInventoryRoomtypePriceViewRepository;
 	
+	//分頁count
+	public long count(String json) {
+		try {
+			JSONObject obj = new JSONObject(json);
+			return selectAccommodationPhotosPriceViewDAOHibernate.count(obj);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	
 	//findAll Accommodation
 	public List<Accommodation> getAllAccommodations() {
         return accommodationRepository.findAll();

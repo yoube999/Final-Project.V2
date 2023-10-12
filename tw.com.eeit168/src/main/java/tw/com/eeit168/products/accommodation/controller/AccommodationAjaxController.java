@@ -56,6 +56,9 @@ public class AccommodationAjaxController {
 	public String selectAll(@RequestBody String json) {
 		JSONObject responseJson = new JSONObject();
 		
+		long count = accommodationSearchService.count(json);
+		responseJson.put("count", count);
+		
 		List<SelectAccommodationPhotosPriceView> accommodations = accommodationSearchService.selectAll(json);
 		JSONArray jsonArray = new JSONArray();
 		if(accommodations != null && !accommodations.isEmpty()) {
