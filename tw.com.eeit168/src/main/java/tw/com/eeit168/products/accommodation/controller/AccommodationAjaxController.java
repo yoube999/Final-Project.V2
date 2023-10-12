@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +25,6 @@ import tw.com.eeit168.products.accommodation.model.SelectAccommodationInventoryR
 import tw.com.eeit168.products.accommodation.model.SelectAccommodationPhotosPriceView;
 import tw.com.eeit168.products.accommodation.repository.AccommodationPhotosRepository;
 import tw.com.eeit168.products.accommodation.repository.AccommodationRepository;
-import tw.com.eeit168.products.accommodation.repository.SelectAccommodationPhotosPriceViewRepository;
 import tw.com.eeit168.products.accommodation.service.AccommodationSearchService;
 import tw.com.eeit168.products.accommodation.util.ImageToBase64Converter;
 
@@ -50,6 +50,29 @@ public class AccommodationAjaxController {
     public List<Accommodation> getAllAccommodations() {
         return accommodationSearchService.getAllAccommodations();
     }
+	
+	//抓出所有資料以及分頁功能
+	@PostMapping("/selectAllMain")
+	public String selectAll(@RequestBody String json) {
+		JSONObject responseJson = new JSONObject();
+		
+		List<SelectAccommodationPhotosPriceView> accommodations = accommodationSearchService.selectAll(json);
+		JSONArray jsonArray = new JSONArray();
+		if(accommodations != null && !accommodations.isEmpty()) {
+			for(SelectAccommodationPhotosPriceView accommodation: accommodations) {
+				JSONObject item = new JSONObject()
+						.put("accommodationPhotoId", accommodation.getAccommodationPhotoId())
+						.put("accommodationId", accommodation.getAccommodationId())
+						.put("accommodationName", accommodation.getAccommodationName())
+						.put("descriptions", accommodation.getDescriptions())
+						.put("photoUrl", accommodation.getPhotoUrl())
+						.put("minWeekdayPrice", accommodation.getMinWeekdayPrice());
+				jsonArray = jsonArray.put(item);
+			}
+		}
+		responseJson.put("list", jsonArray);
+		return responseJson.toString();
+	}
 	
 	@GetMapping(path = {"/findAllmain"})
     public List<SelectAccommodationPhotosPriceView> getAllAccommodationsInfo() {

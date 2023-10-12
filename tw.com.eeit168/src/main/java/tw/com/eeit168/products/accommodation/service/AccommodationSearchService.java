@@ -3,10 +3,13 @@ package tw.com.eeit168.products.accommodation.service;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.persistence.PersistenceContext;
+import tw.com.eeit168.products.accommodation.dao.SelectAccommodationPhotosPriceViewDAOHibernate;
 import tw.com.eeit168.products.accommodation.model.Accommodation;
 import tw.com.eeit168.products.accommodation.model.AccommodationInventory;
 import tw.com.eeit168.products.accommodation.model.AccommodationPhotos;
@@ -58,6 +61,8 @@ public class AccommodationSearchService {
 	@Autowired
 	private SelectAccommodationPhotosPriceViewRepository selectAccommodationPhotosPriceViewRepository;
 	
+	@Autowired
+	private SelectAccommodationPhotosPriceViewDAOHibernate selectAccommodationPhotosPriceViewDAOHibernate;
 //	@Autowired
 //	private SelectAccommodationInventoryRoomtypePriceViewRepository selectAccommodationInventoryRoomtypePriceViewRepository;
 	
@@ -65,6 +70,18 @@ public class AccommodationSearchService {
 	public List<Accommodation> getAllAccommodations() {
         return accommodationRepository.findAll();
     }
+	
+	//抓出所有資料以及分頁功能
+	public List<SelectAccommodationPhotosPriceView> selectAll(String json) {
+		try {
+			JSONObject jsonObject = new JSONObject(json);
+			return selectAccommodationPhotosPriceViewDAOHibernate.selectAll(jsonObject);
+		} catch(JSONException e) {
+			// 需改寫成跳轉至錯誤頁面
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	//findAll SelectAccommodationPhotosPriceViewRepository
 	public List<SelectAccommodationPhotosPriceView> getAllAccommodationsInfo(){
