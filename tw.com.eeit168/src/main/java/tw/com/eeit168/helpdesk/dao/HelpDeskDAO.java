@@ -92,6 +92,9 @@ public class HelpDeskDAO implements HelpDeskInterFace {
 		}
 
 		TypedQuery<HelpDeskBean> typedQuery = this.getSession().createQuery(criteriaQuery).setFetchSize(start * row);
+		if (start != 0) {
+	        typedQuery = typedQuery.setFirstResult(start);
+	    }
 		if (row != 0) {
 			typedQuery = typedQuery.setMaxResults(row);
 		}

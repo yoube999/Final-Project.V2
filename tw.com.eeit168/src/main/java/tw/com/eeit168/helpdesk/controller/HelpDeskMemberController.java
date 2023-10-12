@@ -113,7 +113,6 @@ public class HelpDeskMemberController {
 
 		try {
 			boolean result = memberProfileService.updateMemberInfo(user_account, jsonNode);
-			System.out.println(result);
 			if (result) {
 				// 若前端收到true時需顯示成功訊息
 				responseJson.put("message", "編輯客服人員資料成功");

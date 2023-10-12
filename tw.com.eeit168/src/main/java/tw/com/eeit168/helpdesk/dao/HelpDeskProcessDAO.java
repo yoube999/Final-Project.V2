@@ -93,6 +93,9 @@ public class HelpDeskProcessDAO implements HelpDeskProcessInterFace {
 
 		TypedQuery<HelpDeskProcessBean> typedQuery = this.getSession().createQuery(criteriaQuery)
 				.setFetchSize(start * row);
+		if (start != 0) {
+	        typedQuery = typedQuery.setFirstResult(start);
+	    }
 		if (row != 0) {
 			typedQuery = typedQuery.setMaxResults(row);
 		}
