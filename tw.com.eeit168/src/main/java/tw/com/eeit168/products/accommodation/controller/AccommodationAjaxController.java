@@ -82,6 +82,11 @@ public class AccommodationAjaxController {
         return accommodationSearchService.getAllAccommodationsInfo();
     }
 	
+	@GetMapping("/{accommodationId}/allphotos")
+	public List<AccommodationPhotos>getAllAccommodationPhotos(@PathVariable Integer accommodationId){
+		return accommodationSearchService.selectAllPhotos(accommodationId);
+	}
+	
 	@GetMapping("/{accommodationId}/photos")
 	public ResponseEntity<String> getAccommodationPhotos(@PathVariable Integer accommodationId) {
 	    try {

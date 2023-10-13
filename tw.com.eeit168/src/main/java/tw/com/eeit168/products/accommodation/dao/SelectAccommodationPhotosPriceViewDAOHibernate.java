@@ -87,9 +87,9 @@ public class SelectAccommodationPhotosPriceViewDAOHibernate implements SelectAcc
 		try {
 			TypedQuery<SelectAccommodationPhotosPriceView> typedQuery = this.getSession().createQuery(criteriaQuery)
 					.setFirstResult(startIndex);
-			if (start != 0) {
-				typedQuery = typedQuery.setFirstResult((start - 1) * row);
-			}
+//			if (start != 0) {
+//				typedQuery = typedQuery.setFirstResult((start - 1) * row);
+//			}
 			if (row != 0) {
 				typedQuery = typedQuery.setMaxResults(row);
 			}

@@ -17,6 +17,7 @@ import tw.com.eeit168.products.accommodation.model.AccommodationRoomType;
 import tw.com.eeit168.products.accommodation.model.SelectAccommodationInventoryRoomtypePriceView;
 import tw.com.eeit168.products.accommodation.model.SelectAccommodationPhotosPriceView;
 import tw.com.eeit168.products.accommodation.repository.AccommodationInventoryRepository;
+import tw.com.eeit168.products.accommodation.repository.AccommodationPhotosRepository;
 import tw.com.eeit168.products.accommodation.repository.AccommodationPictureRepository;
 import tw.com.eeit168.products.accommodation.repository.AccommodationRepository;
 import tw.com.eeit168.products.accommodation.repository.AccommodationRoomTypeRepository;
@@ -63,6 +64,10 @@ public class AccommodationSearchService {
 	
 	@Autowired
 	private SelectAccommodationPhotosPriceViewDAOHibernate selectAccommodationPhotosPriceViewDAOHibernate;
+
+	@Autowired
+	private AccommodationPhotosRepository accommodationPhotosRepository;
+	
 //	@Autowired
 //	private SelectAccommodationInventoryRoomtypePriceViewRepository selectAccommodationInventoryRoomtypePriceViewRepository;
 	
@@ -93,6 +98,11 @@ public class AccommodationSearchService {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	//findAll Accommodation photos by accommodationId
+	public List<AccommodationPhotos> selectAllPhotos(Integer accommodationId){
+		return accommodationPhotosRepository.findByAccommodationId(accommodationId);
 	}
 	
 	//findAll SelectAccommodationPhotosPriceViewRepository
