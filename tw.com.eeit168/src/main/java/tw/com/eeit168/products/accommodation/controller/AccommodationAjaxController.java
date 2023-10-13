@@ -83,8 +83,18 @@ public class AccommodationAjaxController {
     }
 	
 	@GetMapping("/{accommodationId}/allphotos")
-	public List<AccommodationPhotos>getAllAccommodationPhotos(@PathVariable Integer accommodationId){
-		return accommodationSearchService.selectAllPhotos(accommodationId);
+	public String getAllAccommodationPhotos(@PathVariable Integer accommodationId){
+		JSONObject responseJson = new JSONObject();
+		List<AccommodationPhotos> selectAllPhotos = accommodationSearchService.selectAllPhotos(accommodationId);
+		JSONArray jsonArray = new JSONArray();
+		
+		for(AccommodationPhotos photo: selectAllPhotos) {
+			JSONObject item = new JSONObject().put("photoUrl", photo.getPhotoUrl());
+			jsonArray.put(item);
+		}
+		
+		responseJson.put("photos", jsonArray);
+		return responseJson.toString();
 	}
 	
 	@GetMapping("/{accommodationId}/photos")
