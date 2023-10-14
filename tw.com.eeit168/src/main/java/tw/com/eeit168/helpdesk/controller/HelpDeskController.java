@@ -9,6 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +28,7 @@ import tw.com.eeit168.member.model.MemberProfileBean;
 import tw.com.eeit168.products.restaurant.util.DatetimeConverter;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/eeit168/helpdesk")
 
 public class HelpDeskController {
@@ -45,6 +47,7 @@ public class HelpDeskController {
 	@PostMapping("/createTicket")
 	public String createTicket(String json,
 			@RequestParam(required = false) MultipartFile image) {
+		System.out.println(json);
 		JSONObject responseJson = new JSONObject();
 
 		HelpDeskBean helpdesk = helpDeskService.createTicket(json, image);
