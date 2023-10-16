@@ -12,7 +12,10 @@ public interface AccommodationRepositoryDAO {
 	
 	List<SelectAccommodationInventoryRoomtypePriceView> findByAvailabilityDateBetween(
 	        java.sql.Date checkinDate, java.sql.Date checkoutDate);
-
+	
+	List<SelectAccommodationInventoryRoomtypePriceView> findByAccommodationIdAndAvailabilityDateBetween(
+            Integer accommodationId, java.sql.Date checkinDate, java.sql.Date checkoutDate);
+	
 	public List<SelectAccommodationInventoryRoomtypePriceView> findAllByWeekdayPriceRange(Integer minPrice,
 			Integer maxPrice);
 

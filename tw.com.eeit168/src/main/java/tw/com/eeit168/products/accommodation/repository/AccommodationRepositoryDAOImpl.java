@@ -114,5 +114,23 @@ public class AccommodationRepositoryDAOImpl implements AccommodationRepositoryDA
 //		return query.list();
 //	}
 
+	@Override
+	public List<SelectAccommodationInventoryRoomtypePriceView> findByAccommodationIdAndAvailabilityDateBetween(
+			Integer accommodationId, Date checkinDate, Date checkoutDate) {
+		String hql = "FROM SelectAccommodationInventoryRoomtypePriceView "
+	            + "WHERE accommodationId = :accommodationId "
+	            + "AND availabilityDate BETWEEN :checkinDate AND :checkoutDate "
+	            + "AND availableRooms > 0";
+		
+		Query<SelectAccommodationInventoryRoomtypePriceView> query = this.getSession()
+	            .createQuery(hql, SelectAccommodationInventoryRoomtypePriceView.class);
+	    query.setParameter("accommodationId", accommodationId);
+	    query.setParameter("checkinDate", new java.sql.Date(checkinDate.getTime()));
+	    query.setParameter("checkoutDate", new java.sql.Date(checkoutDate.getTime()));
+
+	    return query.getResultList();
+		
+	}
+
 	
 }

@@ -1,10 +1,12 @@
 package tw.com.eeit168.products.accommodation.controller;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -47,8 +49,24 @@ public class AccommodationAjaxController {
 //	private AccommodationRoomTypeRepository accommodationRoomTypeRepository;
 	
 	@GetMapping(path = {"/findAll"})
-    public List<Accommodation> getAllAccommodations() {
-        return accommodationSearchService.getAllAccommodations();
+    public String getAllAccommodations() {
+		JSONObject responseJson = new JSONObject();
+		List<Accommodation> accommodations = accommodationSearchService.getAllAccommodations();
+		JSONArray jsonArray = new JSONArray();
+		if(accommodations != null && !accommodations.isEmpty()) {
+			for(Accommodation accommodation: accommodations) {
+				JSONObject item = new JSONObject()
+						.put("accommodationId", accommodation.getAccommodationId())
+						.put("accommodationName", accommodation.getAccommodationName())
+						.put("accommodationAddress", accommodation.getAccommodationAddress())
+						.put("descriptions", accommodation.getDescriptions())
+						.put("contactNumber", accommodation.getContactNumber())
+						.put("timesPurchased", accommodation.getTimesPurchased());
+						jsonArray = jsonArray.put(item);
+			}
+		}
+		responseJson.put("list", jsonArray);
+        return responseJson.toString();
     }
 	
 	//抓出所有資料以及分頁功能
@@ -76,6 +94,45 @@ public class AccommodationAjaxController {
 		responseJson.put("list", jsonArray);
 		return responseJson.toString();
 	}
+	
+	@GetMapping(path = {"/findbyaccommodationId/{accommodationId}"})
+	public String getAccommodationDetailsById(@PathVariable Integer accommodationId) {
+		JSONObject responseJson = new JSONObject();
+		List<Accommodation> getAccommodationDetailsById = accommodationSearchService.getAccommodationById(accommodationId);
+		JSONArray jsonArray = new JSONArray();
+		if(getAccommodationDetailsById != null && !getAccommodationDetailsById.isEmpty()) {
+			for(Accommodation accommodation: getAccommodationDetailsById) {
+				JSONObject item = new JSONObject()
+						.put("accommodationName", accommodation.getAccommodationName())
+						.put("accommodationAddress", accommodation.getAccommodationAddress())
+						.put("descriptions", accommodation.getDescriptions())
+						.put("contactNumber", accommodation.getContactNumber())
+						.put("timesPurchased", accommodation.getTimesPurchased());
+						jsonArray = jsonArray.put(item);
+			}
+		}
+		responseJson.put("list", jsonArray);
+        return responseJson.toString();
+	}
+	
+	//總價
+	@GetMapping("/{accommodationId}/calculateTotalPrice")
+	public String calculateTotalPrice(@PathVariable Integer accommodationId,
+	                                  @RequestParam("checkInDate")  Date checkInDate,
+	                                  @RequestParam("checkOutDate")  Date checkOutDate,
+	                                  @RequestParam("roomTypeName") String roomTypeName) {
+	    JSONObject responseJson = new JSONObject();
+	    
+	    try {
+	        Integer totalPrice = accommodationSearchService.calculateTotalPrice(accommodationId, checkInDate, checkOutDate, roomTypeName);
+	        responseJson.put("totalPrice", totalPrice);
+	    } catch (Exception e) {
+	        responseJson.put("error", "Unable to calculate total price");
+	    }
+	    
+	    return responseJson.toString();
+	}
+
 	
 	@GetMapping(path = {"/findAllmain"})
     public List<SelectAccommodationPhotosPriceView> getAllAccommodationsInfo() {
@@ -165,8 +222,9 @@ public class AccommodationAjaxController {
 		return responseJson.toString();
 	}
 	
-	@GetMapping(path = {"/search/checkInOutDate"})
+	@GetMapping(path = {"/search/checkInOutDate/{accommodationId}"})
 	public String findByAvailabilityDateBetween(
+			@PathVariable("accommodationId")Integer accommodationId,
 			@RequestParam(value = "checkInDate") String checkInDate,
 			@RequestParam(value = "checkOutDate") String checkOutDate){
 		
@@ -187,14 +245,15 @@ public class AccommodationAjaxController {
 		JSONArray jsonArray = new JSONArray();
 		
 		
-		List<SelectAccommodationInventoryRoomtypePriceView> inventoryByDate = accommodationSearchService.findByAvailabilityDateBetween(sqlCheckInDate, sqlCheckOutDate);
+		List<SelectAccommodationInventoryRoomtypePriceView> inventoryByDate = accommodationSearchService.findByAccommodationIdAndAvailabilityDateBetween(accommodationId, sqlCheckInDate, sqlCheckOutDate);
 		if(inventoryByDate != null && !inventoryByDate.isEmpty()) {
 			for(SelectAccommodationInventoryRoomtypePriceView accommodationInventory: inventoryByDate) {
 				JSONObject item = new JSONObject()
 				.put("accommodationName", accommodationInventory.getAccommodationName())
 				.put("roomTypeName", accommodationInventory.getRoomTypeName())
 				.put("availabilityDate", accommodationInventory.getAvailabilityDate())
-				.put("availableRooms", accommodationInventory.getAvailableRooms());
+				.put("availableRooms", accommodationInventory.getAvailableRooms())
+				.put("weekdayPrice", accommodationInventory.getWeekdayPrice());
 				
 				 jsonArray = jsonArray.put(item);
 			}
@@ -202,6 +261,43 @@ public class AccommodationAjaxController {
 		responseJson.put("list", jsonArray);
 		return responseJson.toString();
 	}
+//	@GetMapping(path = {"/search/checkInOutDate"})
+//	public String findByAvailabilityDateBetween(
+//			@RequestParam(value = "checkInDate") String checkInDate,
+//			@RequestParam(value = "checkOutDate") String checkOutDate){
+//		
+//		System.out.println("Received checkInDate as string: " + checkInDate);
+//		System.out.println("Received checkOutDate as string: " + checkOutDate);
+//		
+//		// Convert the checkInDate from string to java.sql.Date
+//		java.sql.Date sqlCheckInDate = java.sql.Date.valueOf(checkInDate);
+//		java.sql.Date sqlCheckOutDate = java.sql.Date.valueOf(checkOutDate);
+//		
+//		System.out.println("Converted checkInDate to java.sql.Date: " + sqlCheckInDate);
+//		System.out.println("Converted checkOutDate to java.sql.Date: " + sqlCheckOutDate);
+//		
+//		System.out.println("Received checkinDate in the repository: " + sqlCheckInDate);
+//		System.out.println("Received checkoutDate in the repository: " + sqlCheckOutDate);
+//		
+//		JSONObject responseJson = new JSONObject();
+//		JSONArray jsonArray = new JSONArray();
+//		
+//		
+//		List<SelectAccommodationInventoryRoomtypePriceView> inventoryByDate = accommodationSearchService.findByAvailabilityDateBetween(sqlCheckInDate, sqlCheckOutDate);
+//		if(inventoryByDate != null && !inventoryByDate.isEmpty()) {
+//			for(SelectAccommodationInventoryRoomtypePriceView accommodationInventory: inventoryByDate) {
+//				JSONObject item = new JSONObject()
+//						.put("accommodationName", accommodationInventory.getAccommodationName())
+//						.put("roomTypeName", accommodationInventory.getRoomTypeName())
+//						.put("availabilityDate", accommodationInventory.getAvailabilityDate())
+//						.put("availableRooms", accommodationInventory.getAvailableRooms());
+//				
+//				jsonArray = jsonArray.put(item);
+//			}
+//		}
+//		responseJson.put("list", jsonArray);
+//		return responseJson.toString();
+//	}
 //	@GetMapping(path = {"/search/checkInOutDate"})
 //	public String searchAccommodationsByCriteria(
 //			@RequestParam(value = "checkInDate") String checkInDate,
@@ -279,14 +375,15 @@ public class AccommodationAjaxController {
 		return responseJson.toString();
 	}
 	
-	 @GetMapping(path = {"/search/roomTypes"})
+	 @GetMapping(path = {"/search/roomTypes/{accommodationId}"})
 	    public String getRoomTypes(
+	    		@PathVariable("accommodationId") int accommodationId,
 	            @RequestParam("totalGuests") int totalGuests,
 	            @RequestParam("requiredRooms") int requiredRooms) {
 		 JSONObject responseJson = new JSONObject();
 		 JSONArray jsonArray = new JSONArray();
 		 
-	     List<List<AccommodationRoomType>> roomTypeCombinations = accommodationSearchService.findRoomCombinations(totalGuests, requiredRooms);
+	     List<List<AccommodationRoomType>> roomTypeCombinations = accommodationSearchService.findRoomCombinations(accommodationId, totalGuests, requiredRooms);
 	     if(roomTypeCombinations != null && !roomTypeCombinations.isEmpty()) {
 	    	 for (List<AccommodationRoomType> roomTypeList : roomTypeCombinations) {
 	    		    for (AccommodationRoomType accommodationRoomType : roomTypeList) {

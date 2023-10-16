@@ -41,7 +41,7 @@ public class SelectAccommodationPhotosPriceViewDAOHibernate implements SelectAcc
 		String sortOrder = obj.isNull("sortOrder") ? null : obj.getString("sortOrder");// 查詢排序
 		
 		// Calculate the correct start index
-	    int startIndex = (start - 1) * row;
+	    int startIndex = (start) * row;
 	    
 	 // Check if startIndex is negative, set it to 0 if negative
 	    startIndex = Math.max(0, startIndex);

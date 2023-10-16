@@ -8,4 +8,5 @@ import tw.com.eeit168.products.accommodation.model.AccommodationRoomType;
 
 public interface AccommodationRoomTypeRepository extends JpaRepository<AccommodationRoomType, Integer>{
 	public List<AccommodationRoomType> findAllByOrderByCapacityDesc();
+	public List<AccommodationRoomType>findByAccommodationId(int accommodationId);
 }

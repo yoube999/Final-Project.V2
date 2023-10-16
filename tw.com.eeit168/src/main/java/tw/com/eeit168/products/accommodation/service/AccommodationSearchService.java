@@ -1,5 +1,6 @@
 package tw.com.eeit168.products.accommodation.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -21,6 +22,7 @@ import tw.com.eeit168.products.accommodation.repository.AccommodationPhotosRepos
 import tw.com.eeit168.products.accommodation.repository.AccommodationPictureRepository;
 import tw.com.eeit168.products.accommodation.repository.AccommodationRepository;
 import tw.com.eeit168.products.accommodation.repository.AccommodationRoomTypeRepository;
+import tw.com.eeit168.products.accommodation.repository.SelectAccommodationInventoryRoomtypePriceViewRepository;
 import tw.com.eeit168.products.accommodation.repository.SelectAccommodationPhotosPriceViewRepository;
 import tw.com.eeit168.products.accommodation.util.RoomCombinationFinder;
 
@@ -68,8 +70,8 @@ public class AccommodationSearchService {
 	@Autowired
 	private AccommodationPhotosRepository accommodationPhotosRepository;
 	
-//	@Autowired
-//	private SelectAccommodationInventoryRoomtypePriceViewRepository selectAccommodationInventoryRoomtypePriceViewRepository;
+	@Autowired
+	private SelectAccommodationInventoryRoomtypePriceViewRepository selectAccommodationInventoryRoomtypePriceViewRepository;
 	
 	//分頁count
 	public long count(String json) {
@@ -82,11 +84,36 @@ public class AccommodationSearchService {
 		return 0;
 	}
 	
+	//依據日期、房型、來做查詢價錢
+	 public List<SelectAccommodationInventoryRoomtypePriceView> findPricesByDateAndRoomType(Integer accommodationId, Date checkInDate, Date checkOutDate, String roomTypeName) {
+	        return selectAccommodationInventoryRoomtypePriceViewRepository.findByAvailabilityDateBetweenAndRoomTypeName(checkInDate, checkOutDate, roomTypeName);
+	    }
 	
+
+	    public Integer calculateTotalPrice(Integer accommodationId, Date checkInDate, Date checkOutDate, String roomTypeName) {
+	        List<SelectAccommodationInventoryRoomtypePriceView> prices = findPricesByDateAndRoomType(accommodationId, checkInDate, checkOutDate, roomTypeName);
+
+	        // 计算总价
+	        Integer totalPrice = 0;
+	        for (SelectAccommodationInventoryRoomtypePriceView price : prices) {
+	        	if(price.getAccommodationId().equals(accommodationId)) {
+					totalPrice += price.getWeekdayPrice(); // 这里假设使用平日价格计算总价，你可以根据实际情况调整
+	        		
+	        	}
+	        }
+
+	        return totalPrice;
+	    }
+	 
 	//findAll Accommodation
 	public List<Accommodation> getAllAccommodations() {
         return accommodationRepository.findAll();
     }
+	
+	//findAccommodationById
+	public List<Accommodation>getAccommodationById(Integer accommodationId){
+		return accommodationRepository.findByAccommodationId(accommodationId);
+	}
 	
 	//抓出所有資料以及分頁功能
 	public List<SelectAccommodationPhotosPriceView> selectAll(String json) {
@@ -137,9 +164,13 @@ public class AccommodationSearchService {
 	public List<SelectAccommodationInventoryRoomtypePriceView> findByAvailabilityDateBetween(java.sql.Date checkinDate,
 			java.sql.Date checkoutDate) {
 				return accommodationRepository.findByAvailabilityDateBetween(checkinDate, checkoutDate);
-
 	}
 
+	public List<SelectAccommodationInventoryRoomtypePriceView> findByAccommodationIdAndAvailabilityDateBetween(
+            Integer accommodationId, java.sql.Date checkinDate, java.sql.Date checkoutDate){
+			return accommodationRepository.findByAccommodationIdAndAvailabilityDateBetween(accommodationId, checkinDate, checkoutDate);
+	}
+	
 //	public List<AccommodationInventory> findByAvailabilityDateBetween(java.sql.Date checkInDate,
 //			java.sql.Date checkOutDate) {
 //		return accommodationInventoryRepositoryDAOImpl.findByAvailabilityDateBetween(checkInDate, checkOutDate);
@@ -156,9 +187,9 @@ public class AccommodationSearchService {
 //	    return combinationFinder.findCombinations(totalGuests, requiredRooms);
 //	}
 	
-	public List<List<AccommodationRoomType>> findRoomCombinations(int totalGuests, int requiredRooms) {
+	public List<List<AccommodationRoomType>> findRoomCombinations(int accommodationId, int totalGuests, int requiredRooms) {
 		RoomCombinationFinder combinationFinder = new RoomCombinationFinder(accommodationRoomTypeRepository);
-		return combinationFinder.findCombinations(totalGuests, requiredRooms);
+		return combinationFinder.findCombinations(accommodationId, totalGuests, requiredRooms);
 	}
 //	public List<List<AccommodationRoomType>> findRoomCombinations(int totalGuests, int requiredRooms) {
 //		RoomCombinationFinder combinationFinder = new RoomCombinationFinder(accommodationRoomTypeRepository);

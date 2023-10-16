@@ -18,9 +18,9 @@ public class SelectAccommodationInventoryRoomtypePriceView {
 	@Column(name = "inventory_id")
 	private Integer accommodationInventoryId;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+//	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "accommodation_id", insertable = false, updatable = false)
-    private Accommodation accommodationId;
+    private Integer accommodationId;
 	
 	@Column(name = "accommodation_name", nullable = false, columnDefinition = "nvarchar(255)")
 	private String accommodationName;
@@ -54,11 +54,11 @@ public class SelectAccommodationInventoryRoomtypePriceView {
 		this.accommodationInventoryId = accommodationInventoryId;
 	}
 
-	public Accommodation getAccommodationId() {
+	public Integer getAccommodationId() {
 		return accommodationId;
 	}
 
-	public void setAccommodationId(Accommodation accommodationId) {
+	public void setAccommodationId(Integer accommodationId) {
 		this.accommodationId = accommodationId;
 	}
 
@@ -134,13 +134,6 @@ public class SelectAccommodationInventoryRoomtypePriceView {
 				+ availableRooms + ", bedsAmount=" + bedsAmount + ", weekdayPrice=" + weekdayPrice + ", weekendPrice="
 				+ weekendPrice + ", timesPurchased=" + timesPurchased + "]";
 	}
-
-	
-	
-
-	
-
-	
 
 	
 	
