@@ -116,6 +116,11 @@ public class AttractionRepositoryService {
 		return false;
 	}
 	
+	//id是否存在
+	public boolean exists(Integer id) {
+		return attractionRepository.existsById(id);
+	}
+	
 	//Top5
 	public List<SelectAttractionsTicketView> selectTop5() {
 		return attractionRepository.selectTop5();

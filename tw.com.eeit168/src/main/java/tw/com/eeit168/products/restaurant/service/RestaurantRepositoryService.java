@@ -148,8 +148,8 @@ public class RestaurantRepositoryService {
 	}
 	
 	//用餐廳名稱搜尋圖片
-	public List<SelectRestaurantPictureView> findPictureByName(String name) {
-		return restaurantRepository.findPictureByName(name);
+	public List<SelectRestaurantPictureView> findPictureByName(String restaurantName) {
+		return restaurantRepository.findPictureByName(restaurantName);
 	}
 	
 } 

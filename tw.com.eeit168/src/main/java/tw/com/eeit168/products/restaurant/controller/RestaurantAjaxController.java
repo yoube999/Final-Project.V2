@@ -270,10 +270,10 @@ public class RestaurantAjaxController {
 	}
 	
 	@GetMapping(path = {"/restaurant/searchpicture"}) //用餐廳名稱搜尋圖片
-	public String findPictureByName(@RequestParam(value = "name") String name) {
+	public String findPictureByName(@RequestParam(value = "restaurantName") String restaurantName) {
 		JSONObject responseJson = new JSONObject();
 		JSONArray array = new JSONArray();
-		List<SelectRestaurantPictureView> result = restaurantRepositoryService.findPictureByName(name);
+		List<SelectRestaurantPictureView> result = restaurantRepositoryService.findPictureByName(restaurantName);
 		if(result != null && !result.isEmpty()) {
 			for(SelectRestaurantPictureView restaurant : result) {
 				JSONObject item = new JSONObject()
@@ -306,7 +306,7 @@ public class RestaurantAjaxController {
 		return responseJson.toString();
 	}
 	
-	@GetMapping(path = {"/restaurant/allandpicture"})
+	@GetMapping(path = {"/restaurant/allandpicture"}) //找餐廳List資料
 	public String findRestaurantList() {
 		JSONObject responseJson = new JSONObject();
 		JSONArray array = new JSONArray();

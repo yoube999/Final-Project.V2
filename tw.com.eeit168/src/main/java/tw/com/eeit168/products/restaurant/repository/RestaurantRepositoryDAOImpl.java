@@ -64,11 +64,11 @@ public class RestaurantRepositoryDAOImpl implements RestaurantRepositoryDAO {
 	}
 	
 	//用餐廳名稱搜尋圖片
-	public List<SelectRestaurantPictureView> findPictureByName(String name) {
-		if(name != null && !name.isEmpty()) {
-			String hql = "from SelectRestaurantPictureView where restaurantName = :name";
+	public List<SelectRestaurantPictureView> findPictureByName(String restaurantName) {
+		if(restaurantName != null && !restaurantName.isEmpty()) {
+			String hql = "from SelectRestaurantPictureView where restaurantName = :restaurantName";
 			Query<SelectRestaurantPictureView> result = this.getSession().createQuery(hql, SelectRestaurantPictureView.class);
-			result.setParameter("name", name);
+			result.setParameter("restaurantName", restaurantName);
 			return result.list();
 		}
 		return Collections.emptyList();

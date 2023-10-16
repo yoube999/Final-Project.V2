@@ -10,12 +10,13 @@ import tw.com.eeit168.products.restaurant.model.RestaurantPictureBean;
 import tw.com.eeit168.products.restaurant.repository.RestaurantPictureRepository;
 import tw.com.eeit168.products.restaurant.util.ImageConvert;
 
-@Service
+@Service //註解類別處理運算邏輯(企業邏輯)
 public class RestaurantPictureRepositoryService {
 	
 	@Autowired
 	private RestaurantPictureRepository restaurantPictureRepository;
 	
+	//新增照片
 	public RestaurantPictureBean create(String json, MultipartFile file) {
 		try {
 			JSONObject object = new JSONObject(json);
@@ -33,6 +34,7 @@ public class RestaurantPictureRepositoryService {
 		return null;
 	}
 
+	//判斷id是否存在
 	public boolean exists(Integer id) {
 		return restaurantPictureRepository.existsById(id);
 	}

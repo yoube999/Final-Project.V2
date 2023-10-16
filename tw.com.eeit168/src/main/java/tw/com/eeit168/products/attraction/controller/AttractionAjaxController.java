@@ -5,24 +5,37 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import tw.com.eeit168.products.attraction.model.AttractionBean;
+import tw.com.eeit168.products.attraction.model.AttractionPictureBean;
 import tw.com.eeit168.products.attraction.model.SelectAttractionsInventoryView;
 import tw.com.eeit168.products.attraction.model.SelectAttractionsPictureView;
 import tw.com.eeit168.products.attraction.model.SelectAttractionsTicketView;
+import tw.com.eeit168.products.attraction.service.AttractionPictureRepositoryService;
 import tw.com.eeit168.products.attraction.service.AttractionRepositoryService;
+import tw.com.eeit168.products.attraction.service.SelectAttractionsPictureRepositoryService;
 
 @RestController //@Controller+@ResponseBody
+@CrossOrigin
 @RequestMapping(path = {"/product"})
 public class AttractionAjaxController {
 
 	@Autowired
 	private AttractionRepositoryService attractionRepositoryService;
+	
+	@Autowired
+	private AttractionPictureRepositoryService attractionPictureRepositoryService;
+	
+	@Autowired
+	private SelectAttractionsPictureRepositoryService selectAttractionsPictureRepositoryService;
 	
 	@GetMapping(path = {"/attraction/{attractions_id}"}) //以id搜尋
 	public String findById(@PathVariable(name = "attractions_id") Integer id) {
@@ -210,5 +223,50 @@ public class AttractionAjaxController {
 		responseJson.put("list", array);
 		return responseJson.toString();
 	}
+	
+	@PostMapping(path = {"attraction/picture"}) //新增照片
+	public String createImage(@RequestParam("file") MultipartFile file, String body) {
+		JSONObject responseJson = new JSONObject();
+		AttractionPictureBean attractionPicture = null;
+		try {
+			attractionPicture = attractionPictureRepositoryService.create(body, file);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(attractionPicture == null) {
+			responseJson.put("message", "新增失敗");
+			responseJson.put("success", false);
+		} else {
+			responseJson.put("message", "新增成功");
+			responseJson.put("success", true);
+		}
+		return responseJson.toString();
+	}
+	
+	@GetMapping(path = {"attraction/allandpicture"}) //景點List
+	public String findAttractionList() {
+		JSONObject responseJson = new JSONObject();
+		JSONArray array = new JSONArray();
+		List<SelectAttractionsPictureView> result = selectAttractionsPictureRepositoryService.findAll();
+		if(result != null && !result.isEmpty()) {
+			for(SelectAttractionsPictureView picture : result) {
+				JSONObject item = new JSONObject()
+						.put("attractions_pictures_id", picture.getAttractionsPicturesId())
+						.put("attractions_name", picture.getAttractionsName())
+						.put("descriptions", picture.getDescriptions())
+						.put("adult_price", picture.getAdultPrice())
+						.put("url_image", picture.getUrlImage());
+				array = array.put(item);
+			}
+		}
+		responseJson.put("list", array);
+		return responseJson.toString();
+	}
+	
+	
+	
+	
+	
+	
 	
 }

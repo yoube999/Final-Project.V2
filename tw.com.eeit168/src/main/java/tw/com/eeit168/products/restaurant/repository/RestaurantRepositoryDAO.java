@@ -20,6 +20,6 @@ public interface RestaurantRepositoryDAO {
 	
 	public List<SelectRestaurantInventoryView> blurDateFind(java.sql.Date orderDate);
 	
-	public List<SelectRestaurantPictureView> findPictureByName(String name);
+	public List<SelectRestaurantPictureView> findPictureByName(String restaurantName);
 
 }
