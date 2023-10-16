@@ -41,7 +41,19 @@ public class MemberProfileService {
 		}
 		return null; // 登录失败，返回 null
 	}
+//更新資料後重導回會員中心
+	public MemberProfileBean fetchMemberInfo(JsonNode jsonNode) {
+		// 从JsonNode中获取用户名和密码
+		String user_account = jsonNode.get("user_account").asText();
 
+		MemberProfileBean bean = memberProfileInterFace.select(user_account);
+		if (bean != null ) {
+			return bean; // 返回完整的 MemberProfileBean 对象
+		}
+		return null; // 登录失败，返回 null
+	}
+
+	
 	// 注册会员
 	public void registerMember(JsonNode jsonNode, boolean setCustomerService) {
 		try {

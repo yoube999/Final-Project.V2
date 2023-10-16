@@ -39,6 +39,17 @@ public class MemberProfileController {
 	            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage); // 登录失败，返回 401 未授权状态和错误消息
 	        }
 	    }
+	  
+	  @PostMapping("/fetchMemberInfo")
+	    public ResponseEntity<Object> fetchMemberInfo(@RequestBody JsonNode jsonNode) {
+	        MemberProfileBean memberProfileBean = memberProfileService.fetchMemberInfo(jsonNode);
+	        if (memberProfileBean != null) {
+	            return ResponseEntity.ok(memberProfileBean); // 登录成功，返回完整的 MemberProfileBean 对象
+	        } else {
+	            String errorMessage = "查詢失敗";
+	            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage); // 登录失败，返回 401 未授权状态和错误消息
+	        }
+	    }
 	
 	// 註冊送Post送Json
 	@PostMapping("/register")
