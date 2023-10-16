@@ -263,10 +263,4 @@ public class AttractionAjaxController {
 		return responseJson.toString();
 	}
 	
-	
-	
-	
-	
-	
-	
 }
