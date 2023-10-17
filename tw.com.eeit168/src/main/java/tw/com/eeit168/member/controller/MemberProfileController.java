@@ -77,15 +77,14 @@ public class MemberProfileController {
 	// 輸入验证码后修改密码 Post送字串
 	@PostMapping("/change-password-with-verification-code")
 	public String changePasswordWithVerificationCode(@RequestParam String user_account,
-			@RequestParam String verification_code, @RequestParam String user_password) {
-		try {
-			memberProfileService.changePasswordWithVerificationCode(user_account, verification_code, user_password);
-			return "密碼更改成功！";
-		} catch (Exception e) {
-			return e.getMessage();
-		}
+	        @RequestParam String verification_code, @RequestParam String user_password) {
+	    try {
+	        memberProfileService.changePasswordWithVerificationCode(user_account, verification_code, user_password);
+	        return "密碼更改成功！"; // 無論成功或失敗，都返回相同的成功消息
+	    } catch (Exception e) {
+	        return "密碼更改失敗";
+	    }
 	}
-
 
 	 @PostMapping("/update")
     public ResponseEntity<String> updateMemberInfo(@RequestBody JsonNode jsonNode) {
