@@ -35,6 +35,19 @@ public class HelpDeskMemberService {
 	}
 
 	/**
+	 * 查詢案件，回傳總數量
+	 * 
+	 * 
+	 */
+	public long memberTotalCount(List<Integer> levels) {
+
+		if (levels != null) {
+			return helpDeskMemberDAOImpl.memberTotalCount(levels);
+		}
+		return 0;
+	}
+
+	/**
 	 * 前端點擊刪除客服人員
 	 * 
 	 * @param member_profile_id: 客服人員ID
@@ -48,7 +61,7 @@ public class HelpDeskMemberService {
 		// 如果前端未送memberProfileId時回傳false
 		if (member != null) {
 			MemberProfileBean removeId = helpDeskMemberRepository.findById(member).orElse(null);
-			
+
 			// 如果前端送memberProfileId為非客服人員回傳false
 			if (removeId != null && removeId.getMember_level() == 99) {
 				helpDeskMemberRepository.deleteById(memberProfileId);

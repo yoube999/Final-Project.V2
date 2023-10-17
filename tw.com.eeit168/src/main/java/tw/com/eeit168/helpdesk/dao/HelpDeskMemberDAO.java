@@ -7,5 +7,7 @@ import tw.com.eeit168.member.model.MemberProfileBean;
 public interface HelpDeskMemberDAO {
 
 	public List<MemberProfileBean> selectCustomerService(List<Integer> levels, int start, int row);
+	
+	public long memberTotalCount(List<Integer> levels);
 
 }

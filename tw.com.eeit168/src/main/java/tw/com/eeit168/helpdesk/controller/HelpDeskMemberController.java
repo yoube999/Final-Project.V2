@@ -55,6 +55,10 @@ public class HelpDeskMemberController {
 		JSONArray array = new JSONArray();
 		JSONObject responseJson = new JSONObject();
 
+		// 回傳給前端查詢資料總數做為分頁依據
+		long count = helpDeskMemberService.memberTotalCount(levels);
+		responseJson.put("count", count);
+		
 		if (members != null && !members.isEmpty()) {
 			for (MemberProfileBean member : members) {
 				JSONObject item = new JSONObject().put("member_profile_id", member.getMember_profile_id())

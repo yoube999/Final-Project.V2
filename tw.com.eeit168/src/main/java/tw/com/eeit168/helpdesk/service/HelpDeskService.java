@@ -32,11 +32,9 @@ public class HelpDeskService {
 
 	@Autowired
 	private HelpDeskDAO helpDeskDAO;
-	
+
 	@Autowired
 	private PictureFactory pictureFactory;
-
-	
 
 	/**
 	 * 寫入案件單，需再加上圖片上傳功能
@@ -88,7 +86,7 @@ public class HelpDeskService {
 	 * 
 	 * 
 	 */
-	public HelpDeskBean createTicket(String json,@RequestParam("image") MultipartFile image) {
+	public HelpDeskBean createTicket(String json, @RequestParam("image") MultipartFile image) {
 
 		try {
 			// 使用JSON格式包案件內容
@@ -133,8 +131,6 @@ public class HelpDeskService {
 		return null;
 	}
 
-	
-
 	/**
 	 * 查詢案件
 	 * 
@@ -149,6 +145,23 @@ public class HelpDeskService {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	/**
+	 * 查詢案件，回傳總數量
+	 * 
+	 * 
+	 */
+	public long ticketTotalCount(String json) {
+
+		try {
+			JSONObject obj = new JSONObject(json);
+			return helpDeskDAO.ticketTotalCount(obj);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return 0;
 	}
 
 	/**
@@ -182,7 +195,6 @@ public class HelpDeskService {
 		}
 		return null;
 	}
-
 
 	/**
 	 * 前端載入處理中/結案案件詳細頁面時，處理人員下拉選單查詢API

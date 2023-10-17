@@ -42,4 +42,22 @@ public class HelpDeskMemberDAOImpl implements HelpDeskMemberDAO {
 
 	}
 
+	/**
+	 * 前端點擊編輯客服人員頁面時，顯示客服人員總數量
+	 * 
+	 * @param memberLevel: 固定查詢條件為99和100
+	 * 
+	 * @return long 數量
+	 */
+	@Override
+	public long memberTotalCount(List<Integer> levels) {
+		if (levels != null) {
+			Query<Long> query = session
+					.createQuery("SELECT COUNT(*) FROM MemberProfileBean WHERE member_level IN (:levels)", Long.class);
+			query.setParameterList("levels", levels);
+			return query.uniqueResult();
+		}
+		return 0;
+	}
+
 }

@@ -19,4 +19,6 @@ public interface HelpDeskInterFace {
 
 	public abstract List<MemberProfileBean> selectCustomerUser(JSONObject obj);
 
+	public long ticketTotalCount(JSONObject obj);
+	
 }

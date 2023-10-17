@@ -93,8 +93,8 @@ public class HelpDeskDAO implements HelpDeskInterFace {
 
 		TypedQuery<HelpDeskBean> typedQuery = this.getSession().createQuery(criteriaQuery).setFetchSize(start * row);
 		if (start != 0) {
-	        typedQuery = typedQuery.setFirstResult(start);
-	    }
+			typedQuery = typedQuery.setFirstResult(start);
+		}
 		if (row != 0) {
 			typedQuery = typedQuery.setMaxResults(row);
 		}
@@ -105,6 +105,35 @@ public class HelpDeskDAO implements HelpDeskInterFace {
 		} else {
 			return null;
 		}
+
+	}
+
+	/**
+	 * 查詢案件，回傳資料總數量做分頁用
+	 * 
+	 * 
+	 */
+	@Override
+	public long ticketTotalCount(JSONObject obj) {
+		CriteriaBuilder criteriaBuilder = this.getSession().getCriteriaBuilder();
+		// 建立一個 CriteriaQuery 對象，該對象用於創建查詢的元數據結構，這裡我們想要返回 Long 類型的結果，即案件的總數量。
+		CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
+		Root<HelpDeskBean> root = countQuery.from(HelpDeskBean.class);
+
+		// 使用 criteriaBuilder.count 方法，指定您要計算匹配查詢條件的實體總數。
+		countQuery.select(criteriaBuilder.count(root));
+
+		// 如果需要添加條件，可以透過 Predicate 來添加
+		if (obj != null && !obj.isEmpty()) {
+			String status = obj.optString("helpdesk_status", ""); // 從 JSONObject 中獲取狀態欄位的值
+
+			// 用於指定一個查詢條件，即確保 HelpDeskBean 實體的 helpdesk_status 屬性（或欄位）等於特定的值 status。
+			Predicate statusPredicate = criteriaBuilder.equal(root.get("helpdesk_status"), status);
+			countQuery.where(statusPredicate);
+		}
+
+		// 使用 createQuery 方法創建查詢，並使用 getSingleResult 方法來執行查詢，並返回一個 Long 值
+		return this.getSession().createQuery(countQuery).getSingleResult();
 
 	}
 
@@ -194,7 +223,5 @@ public class HelpDeskDAO implements HelpDeskInterFace {
 		}
 
 	}
-
-	
 
 }
