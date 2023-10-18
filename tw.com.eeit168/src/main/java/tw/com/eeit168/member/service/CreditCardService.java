@@ -42,10 +42,11 @@ public class CreditCardService {
         creditCardInterFace.insert(creditCard);
     }
     // 删除信用卡
-    public void deleteCreditCardFromJson(JsonNode jsonNode) {
-        int creditCardId = jsonNode.get("credit_card_id").asInt();
-        creditCardInterFace.delete(creditCardId);
+    // 刪除信用卡
+    public void deleteCreditCardByCardNumber(int cardNumber) {
+        creditCardInterFace.delete(cardNumber);
     }
+
 
 
 

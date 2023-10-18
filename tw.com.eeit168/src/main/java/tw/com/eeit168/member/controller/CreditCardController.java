@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,10 +34,12 @@ public class CreditCardController {
         creditCardService.insertCreditCardFromJson(jsonNode, memberProfileId);
     }
 
-    @DeleteMapping("/member")
-    public void deleteCreditCard(@RequestBody JsonNode jsonNode) {
-        creditCardService.deleteCreditCardFromJson(jsonNode);
+    @DeleteMapping("/member/{credit_card_id}")
+    public ResponseEntity<String> deleteCreditCard(@PathVariable("credit_card_id") int cardNumber) {
+        creditCardService.deleteCreditCardByCardNumber(cardNumber);
+        return new ResponseEntity<>("信用卡已成功刪除", HttpStatus.OK);
     }
+
 
 
 
