@@ -105,12 +105,12 @@ public class HelpDeskRecordController {
 		if(record != null) {
 			
 			// 將時間格式轉為字串
-			String returnDate = DatetimeConverter.toString(record.getReturn_date(), "yyyy-MM-dd HH:mm:ss");
+			String returnDate = DatetimeConverter.toString(record.getReturnDate(), "yyyy-MM-dd HH:mm:ss");
 			
 			// 將得到的資料放入array陣列中
 			JSONObject item = new JSONObject()
-					.put("return_title", record.getReturn_title())
-					.put("return_description", record.getReturn_description())
+					.put("return_title", record.getReturnTitle())
+					.put("return_description", record.getReturnDescription())
 					.put("return_date", returnDate);
 			
 			array = array.put(item);

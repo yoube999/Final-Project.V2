@@ -60,7 +60,7 @@ public class HelpDeskUpdateRecordService {
 			RecordBean record = helpDeskUpdateRecordRepository.findById(record_id).orElse(null);
 
 			if (record != null) {
-				record.setRecord_status(newStatus);
+				record.setRecordStatus(newStatus);
 				helpDeskUpdateRecordRepository.save(record);
 			} else {
 				return false; // 如果查不到ID，回傳false

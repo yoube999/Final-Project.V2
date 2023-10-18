@@ -15,87 +15,89 @@ public class RecordBean {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // 這個用來標記此欄位是自動產生
 	@Column(name = "record_id")
-	private Integer record_id;
+	private Integer recordId;
 
 	@JoinColumn(name = "member_profile_id")
-	private Integer member_profile_id;
+	private Integer memberProfileId;
 
-	@Column(name = "created_at")
-	private java.util.Date created_at;
+	@Column(name = "created_at", insertable = false)
+	private java.sql.Date createdAt;
 
 	@Column(name = "record_status", columnDefinition = "nvarchar")
-	private String record_status;
+	private String recordStatus;
 
 	@Column(name = "return_title", columnDefinition = "nvarchar")
-	private String return_title;
+	private String returnTitle;
 
 	@Column(name = "return_description", columnDefinition = "nvarchar")
-	private String return_description;
+	private String returnDescription;
 
 	@Column(name = "return_date")
-	private java.util.Date return_date;
+	private java.sql.Date returnDate;
 
+	
 	@Override
 	public String toString() {
-		return "RecordBean [record_id=" + record_id + ", member_profile_id=" + member_profile_id + ", created_at="
-				+ created_at + ", record_status=" + record_status + ", return_title=" + return_title
-				+ ", return_description=" + return_description + ", return_date=" + return_date + "]";
+		return "RecordBean [recordId=" + recordId + ", memberProfileId=" + memberProfileId + ", createdAt=" + createdAt
+				+ ", recordStatus=" + recordStatus + ", returnTitle=" + returnTitle + ", returnDescription="
+				+ returnDescription + ", returnDate=" + returnDate + "]";
 	}
 
-	public Integer getRecord_id() {
-		return record_id;
+	
+	public Integer getRecordId() {
+		return recordId;
 	}
 
-	public void setRecord_id(Integer record_id) {
-		this.record_id = record_id;
+	public void setRecordId(Integer recordId) {
+		this.recordId = recordId;
 	}
 
-	public Integer getMember_profile_id() {
-		return member_profile_id;
+	public Integer getMemberProfileId() {
+		return memberProfileId;
 	}
 
-	public void setMember_profile_id(Integer member_profile_id) {
-		this.member_profile_id = member_profile_id;
+	public void setMemberProfileId(Integer memberProfileId) {
+		this.memberProfileId = memberProfileId;
 	}
 
-	public java.util.Date getCreated_at() {
-		return created_at;
+	public java.sql.Date getCreatedAt() {
+		return createdAt;
 	}
 
-	public void setCreated_at(java.util.Date created_at) {
-		this.created_at = created_at;
+	public void setCreatedAt(java.sql.Date createdAt) {
+		this.createdAt = createdAt;
 	}
 
-	public String getRecord_status() {
-		return record_status;
+	public String getRecordStatus() {
+		return recordStatus;
 	}
 
-	public void setRecord_status(String record_status) {
-		this.record_status = record_status;
+	public void setRecordStatus(String recordStatus) {
+		this.recordStatus = recordStatus;
 	}
 
-	public String getReturn_title() {
-		return return_title;
+	public String getReturnTitle() {
+		return returnTitle;
 	}
 
-	public void setReturn_title(String return_title) {
-		this.return_title = return_title;
+	public void setReturnTitle(String returnTitle) {
+		this.returnTitle = returnTitle;
 	}
 
-	public String getReturn_description() {
-		return return_description;
+	public String getReturnDescription() {
+		return returnDescription;
 	}
 
-	public void setReturn_description(String return_description) {
-		this.return_description = return_description;
+	public void setReturnDescription(String returnDescription) {
+		this.returnDescription = returnDescription;
 	}
 
-	public java.util.Date getReturn_date() {
-		return return_date;
+	public java.sql.Date getReturnDate() {
+		return returnDate;
 	}
 
-	public void setReturn_date(java.util.Date return_date) {
-		this.return_date = return_date;
+	public void setReturnDate(java.sql.Date returnDate) {
+		this.returnDate = returnDate;
 	}
 
 }

@@ -34,8 +34,8 @@ public class RecordDaoHibernate {
 	}
 	
 	public RecordBean update(RecordBean bean) {
-		if(bean != null && bean.getRecord_id() != null) {
-			RecordBean temp = this.getSession().get(RecordBean.class, bean.getRecord_id());
+		if(bean != null && bean.getRecordId() != null) {
+			RecordBean temp = this.getSession().get(RecordBean.class, bean.getRecordId());
 			if(temp != null) {
 				return (RecordBean)this.getSession().merge(bean);
 			}
