@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -243,11 +244,18 @@ public class AttractionAjaxController {
 		return responseJson.toString();
 	}
 	
-	@GetMapping(path = {"attraction/allandpicture"}) //景點List
-	public String findAttractionList() {
+	@PostMapping(path = {"/attraction/allandpicture"}) //景點List
+	public String findAttractionList(@RequestBody String json) {
+		JSONObject requesetJson = new JSONObject(json);
 		JSONObject responseJson = new JSONObject();
 		JSONArray array = new JSONArray();
-		List<SelectAttractionsPictureView> result = selectAttractionsPictureRepositoryService.findAll();
+		// 提取 start 參數和 row 參數
+				int start = requesetJson.getInt("start");
+				int row = requesetJson.getInt("row");
+		List<SelectAttractionsPictureView> result = selectAttractionsPictureRepositoryService.selectAllAttractionPicture(start, row);
+		// 回傳給前端查詢資料總數做為分頁依據
+				long count = selectAttractionsPictureRepositoryService.count();
+				responseJson.put("count", count);
 		if(result != null && !result.isEmpty()) {
 			for(SelectAttractionsPictureView picture : result) {
 				JSONObject item = new JSONObject()
@@ -261,6 +269,11 @@ public class AttractionAjaxController {
 		}
 		responseJson.put("list", array);
 		return responseJson.toString();
+	}
+
+	private void JSONObject() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
