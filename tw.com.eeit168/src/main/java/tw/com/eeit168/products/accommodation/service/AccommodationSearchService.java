@@ -1,7 +1,10 @@
 package tw.com.eeit168.products.accommodation.service;
 
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.hibernate.Session;
 import org.json.JSONException;
@@ -15,6 +18,7 @@ import tw.com.eeit168.products.accommodation.model.Accommodation;
 import tw.com.eeit168.products.accommodation.model.AccommodationInventory;
 import tw.com.eeit168.products.accommodation.model.AccommodationPhotos;
 import tw.com.eeit168.products.accommodation.model.AccommodationRoomType;
+import tw.com.eeit168.products.accommodation.model.RoomSelection;
 import tw.com.eeit168.products.accommodation.model.SelectAccommodationInventoryRoomtypePriceView;
 import tw.com.eeit168.products.accommodation.model.SelectAccommodationPhotosPriceView;
 import tw.com.eeit168.products.accommodation.repository.AccommodationInventoryRepository;
@@ -85,25 +89,74 @@ public class AccommodationSearchService {
 	}
 	
 	//依據日期、房型、來做查詢價錢
-	 public List<SelectAccommodationInventoryRoomtypePriceView> findPricesByDateAndRoomType(Integer accommodationId, Date checkInDate, Date checkOutDate, String roomTypeName) {
-	        return selectAccommodationInventoryRoomtypePriceViewRepository.findByAvailabilityDateBetweenAndRoomTypeName(checkInDate, checkOutDate, roomTypeName);
+	 public List<SelectAccommodationInventoryRoomtypePriceView> findPricesByDateAndRoomType(
+	            Integer accommodationId, Date checkInDate, Date checkOutDate, String roomTypeName) {
+	        return selectAccommodationInventoryRoomtypePriceViewRepository.findByAccommodationIdAndAvailabilityDateBetweenAndRoomTypeName(
+	                accommodationId, checkInDate, checkOutDate, roomTypeName);
 	    }
-	
 
-	    public Integer calculateTotalPrice(Integer accommodationId, Date checkInDate, Date checkOutDate, String roomTypeName) {
-	        List<SelectAccommodationInventoryRoomtypePriceView> prices = findPricesByDateAndRoomType(accommodationId, checkInDate, checkOutDate, roomTypeName);
+	    public Map<String, Integer> calculateTotalPrice(
+	            Integer accommodationId, Date checkInDate, Date checkOutDate, List<RoomSelection> rooms) {
+	        Map<String, Integer> totalPriceMap = new HashMap<>();
+	        
+	        // Calculate total days once considering the date range
+	        int totalDays = getDaysBetweenDates(checkInDate, checkOutDate);
+	        if (totalDays < 1) {
+	            totalDays = 1;  // 最少計算一天的價格
+	        }
+	        
+	        for (RoomSelection room : rooms) {
+	            String roomTypeName = room.getRoomTypeName();
+	            Integer totalRooms = room.getTotalRooms();
 
-	        // 计算总价
-	        Integer totalPrice = 0;
+	            List<SelectAccommodationInventoryRoomtypePriceView> prices =
+	                    findPricesByDateAndRoomType(accommodationId, checkInDate, checkOutDate, roomTypeName);
+	        
+	            int totalPricePerRoom = 0;
+	        
 	        for (SelectAccommodationInventoryRoomtypePriceView price : prices) {
-	        	if(price.getAccommodationId().equals(accommodationId)) {
-					totalPrice += price.getWeekdayPrice(); // 这里假设使用平日价格计算总价，你可以根据实际情况调整
-	        		
-	        	}
+	            // 價格 * 房間數量
+	        	totalPricePerRoom = price.getWeekdayPrice() * totalRooms;
+	        }
+//	        totalPricePerRoom *= totalDays;
+	        totalPriceMap.put(roomTypeName, totalPricePerRoom);
+//	            for (SelectAccommodationInventoryRoomtypePriceView price : prices) {
+//	                int roomPrice = price.getWeekdayPrice() * totalRooms;
+//	                totalPriceMap.put(roomTypeName, roomPrice);
+//	                System.out.println(totalPriceMap);
+//	            }
 	        }
 
-	        return totalPrice;
+	        return totalPriceMap;
 	    }
+	    
+	 // Helper method to calculate days between two dates
+	    private int getDaysBetweenDates(Date startDate, Date endDate) {
+	    	if (startDate.equals(endDate)) {
+	            return 1;
+	        }
+	        long diffInMillies = Math.abs(endDate.getTime() - startDate.getTime());
+	        return (int) TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+	    }
+//	 public List<SelectAccommodationInventoryRoomtypePriceView> findPricesByDateAndRoomType(Integer accommodationId, Date checkInDate, Date checkOutDate, String roomTypeName) {
+//	        return selectAccommodationInventoryRoomtypePriceViewRepository.findByAvailabilityDateBetweenAndRoomTypeName(accommodationId, checkInDate, checkOutDate, roomTypeName);
+//	    }
+//	
+//
+//	    public Integer calculateTotalPrice(Integer accommodationId, Date checkInDate, Date checkOutDate, String roomTypeName, Integer calculateTotalPrice) {
+//	        List<SelectAccommodationInventoryRoomtypePriceView> prices = findPricesByDateAndRoomType(accommodationId, checkInDate, checkOutDate, roomTypeName);
+//
+//	        // 计算总价
+//	        Integer totalPrice = 0;
+//	        for (SelectAccommodationInventoryRoomtypePriceView price : prices) {
+//	        	if(price.getAccommodationId().equals(accommodationId)) {
+//					totalPrice += price.getWeekdayPrice(); // 这里假设使用平日价格计算总价，你可以根据实际情况调整
+//	        		
+//	        	}
+//	        }
+//
+//	        return totalPrice;
+//	    }
 	 
 	//findAll Accommodation
 	public List<Accommodation> getAllAccommodations() {

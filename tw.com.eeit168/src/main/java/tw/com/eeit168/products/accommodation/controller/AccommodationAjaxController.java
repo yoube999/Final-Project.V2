@@ -1,12 +1,15 @@
 package tw.com.eeit168.products.accommodation.controller;
 
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,10 +22,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import tw.com.eeit168.products.accommodation.model.Accommodation;
 import tw.com.eeit168.products.accommodation.model.AccommodationInventory;
 import tw.com.eeit168.products.accommodation.model.AccommodationPhotos;
 import tw.com.eeit168.products.accommodation.model.AccommodationRoomType;
+import tw.com.eeit168.products.accommodation.model.RoomSelection;
 import tw.com.eeit168.products.accommodation.model.SelectAccommodationInventoryRoomtypePriceView;
 import tw.com.eeit168.products.accommodation.model.SelectAccommodationPhotosPriceView;
 import tw.com.eeit168.products.accommodation.repository.AccommodationPhotosRepository;
@@ -116,22 +122,159 @@ public class AccommodationAjaxController {
 	}
 	
 	//總價
-	@GetMapping("/{accommodationId}/calculateTotalPrice")
-	public String calculateTotalPrice(@PathVariable Integer accommodationId,
-	                                  @RequestParam("checkInDate")  Date checkInDate,
-	                                  @RequestParam("checkOutDate")  Date checkOutDate,
-	                                  @RequestParam("roomTypeName") String roomTypeName) {
-	    JSONObject responseJson = new JSONObject();
-	    
+//	@GetMapping("/{accommodationId}/calculateTotalPrice")
+//	public String calculateTotalPrice(@PathVariable Integer accommodationId,
+//	                                  @RequestParam("checkInDate")  Date checkInDate,
+//	                                  @RequestParam("checkOutDate")  Date checkOutDate,
+//	                                  @RequestParam("roomTypeName") String roomTypeName) {
+//	    JSONObject responseJson = new JSONObject();
+//	    
+//	    try {
+//	        Integer totalPrice = accommodationSearchService.calculateTotalPrice(accommodationId, checkInDate, checkOutDate, roomTypeName);
+//	        responseJson.put("totalPrice", totalPrice);
+//	    } catch (Exception e) {
+//	        responseJson.put("error", "Unable to calculate total price");
+//	    }
+//	    
+//	    return responseJson.toString();
+//	}
+	@PostMapping("/{accommodationId}/calculateTotalPrice")
+	public ResponseEntity<String> calculateTotalPrice(
+	        @PathVariable Integer accommodationId,
+	        @RequestParam("checkInDate") String checkInDateStr,
+	        @RequestParam("checkOutDate") String checkOutDateStr,
+	        @RequestBody List<RoomSelection> roomSelection) {
+	    // 解析日期
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	    Date checkInDate;
+	    Date checkOutDate;
+
 	    try {
-	        Integer totalPrice = accommodationSearchService.calculateTotalPrice(accommodationId, checkInDate, checkOutDate, roomTypeName);
-	        responseJson.put("totalPrice", totalPrice);
-	    } catch (Exception e) {
-	        responseJson.put("error", "Unable to calculate total price");
+	        checkInDate = new java.sql.Date(dateFormat.parse(checkInDateStr).getTime());
+	        checkOutDate = new java.sql.Date(dateFormat.parse(checkOutDateStr).getTime());
+	    } catch (ParseException e) {
+	        throw new IllegalArgumentException("Invalid date format");
 	    }
-	    
-	    return responseJson.toString();
+
+	    try {
+	        Map<String, Integer> totalPriceMap = accommodationSearchService.calculateTotalPrice(accommodationId, checkInDate, checkOutDate, roomSelection);
+	        
+	        // Calculate total price considering the date range
+	        int totalDays = (int) ((checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+	        if (totalDays < 1) {
+	            totalDays = 1;  // 最少計算一天的價格
+	        }
+	        
+	        for (Map.Entry<String, Integer> entry : totalPriceMap.entrySet()) {
+//	            String roomTypeName = entry.getKey();
+	            int roomPricePerDay = entry.getValue();
+	            int totalPrice = roomPricePerDay * totalDays;
+	            entry.setValue(totalPrice);
+	        }
+	        
+	        
+	        // Create a response map
+	        Map<String, Object> response = new HashMap<>();
+	        response.put("accommodationId", accommodationId);
+	        response.put("checkInDate", checkInDateStr);
+	        response.put("checkOutDate", checkOutDateStr);
+	        response.put("totalPriceMap", totalPriceMap);
+	        System.out.println("totalPriceMap=" + totalPriceMap);
+	        // Convert the response to JSON
+	        ObjectMapper objectMapper = new ObjectMapper();
+	        String jsonResponse = objectMapper.writeValueAsString(response);
+
+	        return ResponseEntity.ok(jsonResponse);
+	    } catch (Exception e) {
+	        throw new RuntimeException("Unable to calculate total price", e);
+	    }
 	}
+
+	
+	
+	
+//	@PostMapping("/{accommodationId}/calculateTotalPrice")
+//	public ResponseEntity<Map<String, Integer>> calculateTotalPrice(
+//            @PathVariable Integer accommodationId,
+//            @RequestParam("checkInDate") String checkInDateStr,
+//            @RequestParam("checkOutDate") String checkOutDateStr,
+//            @RequestBody List<RoomSelection> roomSelection) {
+//		//解析日期
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        Date checkInDate;
+//        Date checkOutDate;
+//
+//        try {
+//            checkInDate = new java.sql.Date(dateFormat.parse(checkInDateStr).getTime());
+//            checkOutDate = new java.sql.Date(dateFormat.parse(checkOutDateStr).getTime());
+//        } catch (ParseException e) {
+//            throw new IllegalArgumentException("Invalid date format");
+//        }
+//        List<RoomSelection> roomSelections = new ArrayList<>();
+//        roomSelections.add(roomSelection);
+//        try {
+//            Map<String, Integer> totalPriceMap =
+//            		accommodationSearchService.calculateTotalPrice(accommodationId, checkInDate, checkOutDate, roomSelection);
+//
+//            return ResponseEntity.ok(totalPriceMap);
+//            Map<String, Object> response = new HashMap<>();
+//            response.put("accommodationId", accommodationId);
+//            response.put("checkInDate", checkInDateStr);
+//            response.put("checkOutDate", checkOutDateStr);
+//            response.put("roomSelection", roomSelection);
+//
+//            // Convert the response to JSON
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            String jsonResponse = objectMapper.writeValueAsString(response);
+//
+//            return ResponseEntity.ok(jsonResponse);
+//        } catch (Exception e) {
+//            throw new RuntimeException("Unable to calculate total price", e);
+//        }
+//    }
+//	public String calculateTotalPrice(@PathVariable Integer accommodationId,
+//	                                  @RequestParam("checkInDate")  String checkInDateStr,
+//	                                  @RequestParam("checkOutDate")  String checkOutDateStr,
+//	                                  @RequestParam("rooms") List<RoomSelection> rooms) {
+//		 // Parse dates from string to java.sql.Date
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        Date checkInDate;
+//        Date checkOutDate;
+//
+//        try {
+//            checkInDate = new java.sql.Date(dateFormat.parse(checkInDateStr).getTime());
+//            checkOutDate = new java.sql.Date(dateFormat.parse(checkOutDateStr).getTime());
+//        } catch (ParseException e) {
+//            throw new IllegalArgumentException("Invalid date format");
+//        }
+//		
+//		List<RoomTotalPrice> totalPriceList = new ArrayList<>();
+//
+//	    try {
+//	        for (RoomSelection room : rooms) {
+//	            String roomTypeName = room.getRoomTypeName();
+//	            Integer totalRooms = room.getTotalRooms();
+//
+//	            // 修改计算总价的逻辑，根据传入的房型、数量等计算总价格
+//	            Integer totalPrice = accommodationSearchService.calculateTotalPrice(accommodationId, checkInDate, checkOutDate, roomTypeName, totalRooms);
+//	            
+//	            RoomTotalPrice roomTotalPrice = new RoomTotalPrice();
+//	            roomTotalPrice.setRoomTypeName(roomTypeName);
+//	            roomTotalPrice.setTotalRooms(totalRooms);
+//	            roomTotalPrice.setTotalPrice(totalPrice);
+//
+//	            
+//	            totalPriceList.add(roomTotalPrice);
+//	        }
+//
+//	        // Convert the totalPriceList to JSON string
+//	        ObjectMapper objectMapper = new ObjectMapper();
+//	        String jsonString = objectMapper.writeValueAsString(totalPriceList);
+//	        return jsonString;
+//	    } catch (Exception e) {
+//	        throw new RuntimeException("Unable to calculate total price", e);
+//	    }
+//	}
 
 	
 	@GetMapping(path = {"/findAllmain"})

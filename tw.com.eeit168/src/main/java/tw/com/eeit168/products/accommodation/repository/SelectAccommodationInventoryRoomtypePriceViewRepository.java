@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import tw.com.eeit168.products.accommodation.model.SelectAccommodationInventoryRoomtypePriceView;
 
 public interface SelectAccommodationInventoryRoomtypePriceViewRepository extends JpaRepository<SelectAccommodationInventoryRoomtypePriceView, Integer>{
-	 List<SelectAccommodationInventoryRoomtypePriceView> findByAvailabilityDateBetweenAndRoomTypeName(
-	            Date checkInDate, Date checkOutDate, String roomTypeName);
+	 List<SelectAccommodationInventoryRoomtypePriceView> findByAccommodationIdAndAvailabilityDateBetweenAndRoomTypeName(
+	            Integer accommodationId, Date checkInDate, Date checkOutDate, String roomTypeName);
 }
