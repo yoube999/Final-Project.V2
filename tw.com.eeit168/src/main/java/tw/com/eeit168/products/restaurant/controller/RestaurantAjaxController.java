@@ -306,11 +306,18 @@ public class RestaurantAjaxController {
 		return responseJson.toString();
 	}
 	
-	@GetMapping(path = {"/restaurant/allandpicture"}) //找餐廳List資料
-	public String findRestaurantList() {
+	@PostMapping(path = {"/restaurant/allandpicture"}) //找餐廳List資料
+	public String findRestaurantList(@RequestBody String json) {
+		JSONObject requesetJson = new JSONObject(json);
 		JSONObject responseJson = new JSONObject();
 		JSONArray array = new JSONArray();
-		List<SelectRestaurantPictureView> result = selectRestaurantPictureRepositoryService.findAll();
+		// 提取 start 參數和 row 參數
+		int start = requesetJson.getInt("start");
+		int row = requesetJson.getInt("row");
+		List<SelectRestaurantPictureView> result = selectRestaurantPictureRepositoryService.selectAllRestaurantPicture(start, row);
+		// 回傳給前端查詢資料總數做為分頁依據
+		long count = selectRestaurantPictureRepositoryService.count();
+		responseJson.put("count", count);
 		if(result != null && !result.isEmpty()) {
 			for(SelectRestaurantPictureView picture : result) {
 				JSONObject item = new JSONObject()
