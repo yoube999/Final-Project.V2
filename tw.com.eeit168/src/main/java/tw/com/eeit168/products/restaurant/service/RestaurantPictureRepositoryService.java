@@ -1,11 +1,14 @@
 package tw.com.eeit168.products.restaurant.service;
 
+import java.util.Optional;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import tw.com.eeit168.products.attraction.model.AttractionPictureBean;
 import tw.com.eeit168.products.restaurant.model.RestaurantPictureBean;
 import tw.com.eeit168.products.restaurant.repository.RestaurantPictureRepository;
 import tw.com.eeit168.products.restaurant.util.ImageConvert;
@@ -38,5 +41,14 @@ public class RestaurantPictureRepositoryService {
 	public boolean exists(Integer id) {
 		return restaurantPictureRepository.existsById(id);
 	}
+	
+	//以id搜尋
+		public RestaurantPictureBean findById(Integer id) {
+			Optional<RestaurantPictureBean> result = restaurantPictureRepository.findById(id);
+			if(result != null && result.isPresent()) {
+				return result.get();
+			}
+			return null;
+		}
 	
 }

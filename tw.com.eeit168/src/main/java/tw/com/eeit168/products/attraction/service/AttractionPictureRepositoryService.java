@@ -1,5 +1,8 @@
 package tw.com.eeit168.products.attraction.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +33,15 @@ public class AttractionPictureRepositoryService {
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	//以id搜尋
+	public AttractionPictureBean findById(Integer id) {
+		Optional<AttractionPictureBean> result = attractionPictureRepository.findById(id);
+		if(result != null && result.isPresent()) {
+			return result.get();
 		}
 		return null;
 	}

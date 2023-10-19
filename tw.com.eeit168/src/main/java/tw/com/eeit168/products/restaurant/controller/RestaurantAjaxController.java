@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import tw.com.eeit168.products.attraction.model.AttractionPictureBean;
 import tw.com.eeit168.products.restaurant.model.RestaurantBean;
 import tw.com.eeit168.products.restaurant.model.RestaurantPictureBean;
 import tw.com.eeit168.products.restaurant.model.SelectRestaurantInventoryView;
@@ -328,6 +329,20 @@ public class RestaurantAjaxController {
 						.put("url_image", picture.getUrlImage());
 				array = array.put(item);
 			}
+		}
+		responseJson.put("list", array);
+		return responseJson.toString();
+	}
+	
+	@GetMapping(path = {"/restaurant/picture/{restaurant_id}"}) //以id搜尋照片
+	public String findPictureById(@PathVariable(name = "restaurant_id") Integer id) {
+		JSONObject responseJson = new JSONObject();
+		JSONArray array = new JSONArray();
+		RestaurantPictureBean result = restaurantPictureRepositoryService.findById(id);
+		if(result != null) {
+			JSONObject item = new JSONObject()
+					.put("url_image", result.getUrlImage());
+			array = array.put(item);
 		}
 		responseJson.put("list", array);
 		return responseJson.toString();

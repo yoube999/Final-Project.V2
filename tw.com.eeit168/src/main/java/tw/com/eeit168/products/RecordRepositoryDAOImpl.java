@@ -16,10 +16,11 @@ public class RecordRepositoryDAOImpl implements RecordRepositoryDAO {
 		return session;
 	}
 	
+	//用member id去搜尋
 	public List<RecordBean> findByMemberId(Integer id) {
 		String hql = "from RecordBean where memberProfileId = :memberId";
 		Query<RecordBean> result = this.getSession().createQuery(hql, RecordBean.class);
-		result.setParameter("memberId", id);
+		result.setParameter("memberId", id); //用於將值設定給參數
 		return result.list();
 	}
 

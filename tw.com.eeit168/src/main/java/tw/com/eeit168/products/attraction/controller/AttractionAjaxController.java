@@ -52,7 +52,8 @@ public class AttractionAjaxController {
 					.put("open_time", result.getOpenTime())
 					.put("close_time", result.getCloseTime())
 					.put("contact_number", result.getContactNumber())
-					.put("times_purchased", result.getTimesPurchased());
+					.put("times_purchased", result.getTimesPurchased())
+					.put("adult_price", result.getAdultPrice());
 			array = array.put(item);
 		}
 		responseJson.put("list", array);
@@ -274,6 +275,20 @@ public class AttractionAjaxController {
 	private void JSONObject() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@GetMapping(path = {"/attraction/picture/{attractions_id}"}) //以id搜尋照片
+	public String findPictureById(@PathVariable(name = "attractions_id") Integer id) {
+		JSONObject responseJson = new JSONObject();
+		JSONArray array = new JSONArray();
+		AttractionPictureBean result = attractionPictureRepositoryService.findById(id);
+		if(result != null) {
+			JSONObject item = new JSONObject()
+					.put("url_image", result.getUrlImage());
+			array = array.put(item);
+		}
+		responseJson.put("list", array);
+		return responseJson.toString();
 	}
 	
 }

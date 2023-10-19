@@ -39,6 +39,9 @@ public class AttractionBean {
 	
 	@Column(name = "product_status")
 	private boolean productStatus;
+	
+	@Column(name = "adult_price")
+	private Integer adultPrice;
 
 	
 	@Override
@@ -46,7 +49,7 @@ public class AttractionBean {
 		return "AttractionBean [attractionsId=" + attractionsId + ", attractionsName=" + attractionsName
 				+ ", attractionsAddress=" + attractionsAddress + ", descriptions=" + descriptions + ", openTime="
 				+ openTime + ", closeTime=" + closeTime + ", contactNumber=" + contactNumber + ", timesPurchased="
-				+ timesPurchased + ", productStatus=" + productStatus + "]";
+				+ timesPurchased + ", productStatus=" + productStatus + ", adultPrice=" + adultPrice + "]";
 	}
 
 
@@ -103,6 +106,12 @@ public class AttractionBean {
 	}
 	public void setProductStatus(boolean productStatus) {
 		this.productStatus = productStatus;
+	}
+	public Integer getAdultPrice() {
+		return adultPrice;
+	}
+	public void setAdultPrice(Integer adultPrice) {
+		this.adultPrice = adultPrice;
 	}
 	
 }
