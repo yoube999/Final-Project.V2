@@ -44,9 +44,9 @@ public class PictureFactory {
 			String uniqueFilename = UUID.randomUUID().toString() + "_" + originalFilename;
 
 			// 組合最終的文件路徑
-			String filePath = IMAGE_UPLOAD_PATH + uniqueFilename;
+			String filePath = "images/" + uniqueFilename;
 
-			File dest = new File(filePath);
+			File dest = new File(IMAGE_UPLOAD_PATH, uniqueFilename);
 			image.transferTo(dest);
 
 			// 返回圖片的 URL
