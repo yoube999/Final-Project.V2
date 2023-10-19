@@ -30,6 +30,9 @@ public class SelectAccommodationPhotosPriceView {
 	
 	@Column(name = "min_weekday_price", nullable = false)
 	private Integer minWeekdayPrice;
+	
+	@Column(name = "times_purchased", nullable = false)
+	private int timesPurchased;
 
 	public Integer getAccommodationPhotoId() {
 		return accommodationPhotoId;
@@ -79,12 +82,22 @@ public class SelectAccommodationPhotosPriceView {
 		this.minWeekdayPrice = minWeekdayPrice;
 	}
 
+	public int getTimesPurchased() {
+		return timesPurchased;
+	}
+
+	public void setTimesPurchased(int timesPurchased) {
+		this.timesPurchased = timesPurchased;
+	}
+
 	@Override
 	public String toString() {
 		return "SelectAccommodationPhotosPriceView [accommodationPhotoId=" + accommodationPhotoId + ", accommodationId="
 				+ accommodationId + ", accommodationName=" + accommodationName + ", descriptions=" + descriptions
-				+ ", photoUrl=" + photoUrl + ", minWeekdayPrice=" + minWeekdayPrice + "]";
+				+ ", photoUrl=" + photoUrl + ", minWeekdayPrice=" + minWeekdayPrice + ", timesPurchased="
+				+ timesPurchased + "]";
 	}
+
 	
 	
 }

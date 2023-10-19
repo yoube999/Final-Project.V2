@@ -77,6 +77,11 @@ public class AccommodationSearchService {
 	@Autowired
 	private SelectAccommodationInventoryRoomtypePriceViewRepository selectAccommodationInventoryRoomtypePriceViewRepository;
 	
+	//top5
+	public List<SelectAccommodationPhotosPriceView> getTop5AccommodationsByTimesPurchased() {
+        return selectAccommodationPhotosPriceViewRepository.findTop5ByOrderByTimesPurchasedDesc();
+    }
+	
 	//分頁count
 	public long count(String json) {
 		try {

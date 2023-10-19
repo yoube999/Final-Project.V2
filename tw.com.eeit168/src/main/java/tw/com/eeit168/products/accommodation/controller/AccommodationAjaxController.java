@@ -121,6 +121,30 @@ public class AccommodationAjaxController {
         return responseJson.toString();
 	}
 	
+	@GetMapping("/search/top5Accommodations")
+    public String getTop5Accommodations() {
+        List<SelectAccommodationPhotosPriceView> top5Accommodations = accommodationSearchService.getTop5AccommodationsByTimesPurchased();
+        
+        JSONArray jsonArray = new JSONArray();
+        for (SelectAccommodationPhotosPriceView accommodation : top5Accommodations) {
+            JSONObject item = new JSONObject()
+                .put("accommodationPhotoId", accommodation.getAccommodationPhotoId())
+                .put("accommodationId", accommodation.getAccommodationId())
+                .put("accommodationName", accommodation.getAccommodationName())
+                .put("descriptions", accommodation.getDescriptions())
+                .put("photoUrl", accommodation.getPhotoUrl())
+                .put("minWeekdayPrice", accommodation.getMinWeekdayPrice())
+                .put("timesPurchased", accommodation.getTimesPurchased());
+            jsonArray.put(item);
+        }
+
+        JSONObject responseJson = new JSONObject();
+        responseJson.put("list", jsonArray);
+
+        return responseJson.toString();
+    }
+	
+	
 	//總價
 //	@GetMapping("/{accommodationId}/calculateTotalPrice")
 //	public String calculateTotalPrice(@PathVariable Integer accommodationId,
@@ -347,23 +371,23 @@ public class AccommodationAjaxController {
 		return responseJson.toString();
 	}
 	
-	@GetMapping(path = "/search/top5")	//Top5
-	public String selectTop5() {
-		JSONObject responseJson = new JSONObject();
-		JSONArray jsonArray = new JSONArray();
-		List<SelectAccommodationInventoryRoomtypePriceView> top5 = accommodationRepository.selectTop5();
-		if(top5 != null && !top5.isEmpty()) {
-			for(SelectAccommodationInventoryRoomtypePriceView accommodation: top5) {
-				JSONObject item = new JSONObject()
-						.put("accommodationName", accommodation.getAccommodationName())
-						.put("weekdayPrice", accommodation.getWeekdayPrice())
-						.put("timesPurchased", accommodation.getTimesPurchased());
-				jsonArray = jsonArray.put(item);
-			}
-		}
-		responseJson.put("list", jsonArray);
-		return responseJson.toString();
-	}
+//	@GetMapping(path = "/search/top5")	//Top5
+//	public String selectTop5() {
+//		JSONObject responseJson = new JSONObject();
+//		JSONArray jsonArray = new JSONArray();
+//		List<SelectAccommodationInventoryRoomtypePriceView> top5 = accommodationRepository.selectTop5();
+//		if(top5 != null && !top5.isEmpty()) {
+//			for(SelectAccommodationInventoryRoomtypePriceView accommodation: top5) {
+//				JSONObject item = new JSONObject()
+//						.put("accommodationName", accommodation.getAccommodationName())
+//						.put("weekdayPrice", accommodation.getWeekdayPrice())
+//						.put("timesPurchased", accommodation.getTimesPurchased());
+//				jsonArray = jsonArray.put(item);
+//			}
+//		}
+//		responseJson.put("list", jsonArray);
+//		return responseJson.toString();
+//	}
 	
 	@GetMapping(path = {"/search/checkInOutDate/{accommodationId}"})
 	public String findByAvailabilityDateBetween(
