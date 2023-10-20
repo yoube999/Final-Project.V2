@@ -42,7 +42,7 @@ public class RecordAjaxController {
 	}
 	
 	@GetMapping(path = {"/findall"})
-	public String findById() {
+	public String findAll() {
 		JSONObject responseJson = new JSONObject();
 		JSONArray array = new JSONArray();
 		List<RecordBean> result = recordRepositorySerivce.findAll();
