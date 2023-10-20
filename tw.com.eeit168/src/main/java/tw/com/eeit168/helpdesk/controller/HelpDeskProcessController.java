@@ -5,16 +5,19 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import tw.com.eeit168.helpdesk.model.HelpDeskProcessBean;
+import tw.com.eeit168.helpdesk.model.HelpDeskProcessWithNameBean;
 import tw.com.eeit168.helpdesk.service.HelpDeskProcessService;
 import tw.com.eeit168.products.restaurant.util.DatetimeConverter;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/eeit168/helpdeskprocess")
 
 public class HelpDeskProcessController {
@@ -47,14 +50,15 @@ public class HelpDeskProcessController {
 	public String selectTicketCommentById(@RequestBody String json) {
 		JSONObject responseJson = new JSONObject();
 
-		List<HelpDeskProcessBean> helpdeskprocess = helpDeskProcessService.selectTicketCommentById(json);
+		List<HelpDeskProcessWithNameBean> helpdeskprocess = helpDeskProcessService.selectTicketCommentById(json);
 		JSONArray array = new JSONArray();
 		if (helpdeskprocess != null && !helpdeskprocess.isEmpty()) {
-			for (HelpDeskProcessBean helpdeskproces : helpdeskprocess) {
+			for (HelpDeskProcessWithNameBean helpdeskproces : helpdeskprocess) {
 				String createtime = DatetimeConverter.toString(helpdeskproces.getCreatetime(), "yyyy-MM-dd HH:mm:ss");
 				JSONObject item = new JSONObject()
+						.put("helpdesk_process_id", helpdeskproces.getHelpdesk_process_id())
 						.put("process_description", helpdeskproces.getProcess_description())
-						.put("member_profile_id", helpdeskproces.getMember_profile_id())
+						.put("username", helpdeskproces.getUsername())
 						.put("createtime", createtime);
 
 				array = array.put(item);

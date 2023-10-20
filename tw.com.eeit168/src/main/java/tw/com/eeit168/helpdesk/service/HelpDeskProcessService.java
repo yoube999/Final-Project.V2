@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tw.com.eeit168.helpdesk.dao.HelpDeskProcessDAO;
 import tw.com.eeit168.helpdesk.model.HelpDeskProcessBean;
+import tw.com.eeit168.helpdesk.model.HelpDeskProcessWithNameBean;
 import tw.com.eeit168.products.accommodation.model.Accommodation;
 import tw.com.eeit168.products.accommodation.repository.AccommodationRepository;
 
@@ -59,7 +60,7 @@ public class HelpDeskProcessService {
 	 * 
 	 * 
 	 */
-	public List<HelpDeskProcessBean> selectTicketCommentById(String json) {
+	public List<HelpDeskProcessWithNameBean> selectTicketCommentById(String json) {
 
 		try {
 			JSONObject obj = new JSONObject(json);

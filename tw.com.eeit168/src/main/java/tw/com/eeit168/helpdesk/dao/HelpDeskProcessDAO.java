@@ -15,6 +15,7 @@ import jakarta.persistence.criteria.Order;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import tw.com.eeit168.helpdesk.model.HelpDeskProcessBean;
+import tw.com.eeit168.helpdesk.model.HelpDeskProcessWithNameBean;
 
 @Repository
 public class HelpDeskProcessDAO implements HelpDeskProcessInterFace {
@@ -48,7 +49,7 @@ public class HelpDeskProcessDAO implements HelpDeskProcessInterFace {
 	 * 
 	 */
 	@Override
-	public List<HelpDeskProcessBean> selectTicketCommentById(JSONObject obj) {
+	public List<HelpDeskProcessWithNameBean> selectTicketCommentById(JSONObject obj) {
 
 		// 後端收到查詢條件相關Null防呆處理
 		int start = obj.isNull("start") ? 0 : obj.getInt("start"); // 起始分頁
@@ -64,10 +65,10 @@ public class HelpDeskProcessDAO implements HelpDeskProcessInterFace {
 		CriteriaBuilder criteriaBuilder = this.getSession().getCriteriaBuilder();
 		// 這是描述 JPA 查詢的主要介面。通過 criteriaBuilder.createQuery(HelpDeskBean.class)。這個
 		// ProductBean.class 告訴查詢你要查詢哪種類型的實體 by ChatGPT
-		CriteriaQuery<HelpDeskProcessBean> criteriaQuery = criteriaBuilder.createQuery(HelpDeskProcessBean.class);
+		CriteriaQuery<HelpDeskProcessWithNameBean> criteriaQuery = criteriaBuilder.createQuery(HelpDeskProcessWithNameBean.class);
 
 		// from helpdesk_process
-		Root<HelpDeskProcessBean> root = criteriaQuery.from(HelpDeskProcessBean.class);
+		Root<HelpDeskProcessWithNameBean> root = criteriaQuery.from(HelpDeskProcessWithNameBean.class);
 
 		// where
 		List<Predicate> predicates = new ArrayList<>();
@@ -91,7 +92,7 @@ public class HelpDeskProcessDAO implements HelpDeskProcessInterFace {
 			}
 		}
 
-		TypedQuery<HelpDeskProcessBean> typedQuery = this.getSession().createQuery(criteriaQuery)
+		TypedQuery<HelpDeskProcessWithNameBean> typedQuery = this.getSession().createQuery(criteriaQuery)
 				.setFetchSize(start * row);
 		if (start != 0) {
 	        typedQuery = typedQuery.setFirstResult(start);
@@ -100,7 +101,7 @@ public class HelpDeskProcessDAO implements HelpDeskProcessInterFace {
 			typedQuery = typedQuery.setMaxResults(row);
 		}
 
-		List<HelpDeskProcessBean> result = typedQuery.getResultList();
+		List<HelpDeskProcessWithNameBean> result = typedQuery.getResultList();
 		if (result != null && !result.isEmpty()) {
 			return result;
 		} else {
