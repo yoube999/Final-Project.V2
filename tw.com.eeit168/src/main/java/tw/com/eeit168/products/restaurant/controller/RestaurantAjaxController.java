@@ -16,12 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-<<<<<<< Updated upstream
-import tw.com.eeit168.products.attraction.model.AttractionPictureBean;
-=======
-import tw.com.eeit168.products.accommodation.model.SelectAccommodationPhotosPriceView;
->>>>>>> Stashed changes
 import tw.com.eeit168.products.restaurant.model.RestaurantBean;
 import tw.com.eeit168.products.restaurant.model.RestaurantPictureBean;
 import tw.com.eeit168.products.restaurant.model.SelectRestaurantInventoryView;
