@@ -30,7 +30,7 @@ public class HelpDeskController {
 
 	@Autowired
 	private HelpDeskService helpDeskService;
-	
+
 	@Autowired
 	private PictureFactory pictureFactory;
 
@@ -40,8 +40,7 @@ public class HelpDeskController {
 	 * 
 	 */
 	@PostMapping("/createTicket")
-	public String createTicket(String json,
-			@RequestParam(required = false) MultipartFile image) {
+	public String createTicket(String json, @RequestParam(required = false) MultipartFile image) {
 		System.out.println(json);
 		JSONObject responseJson = new JSONObject();
 
@@ -70,7 +69,7 @@ public class HelpDeskController {
 		// 回傳給前端查詢資料總數做為分頁依據
 		long count = helpDeskService.ticketTotalCount(json);
 		responseJson.put("count", count);
-		
+
 		List<HelpDeskBean> helpdesks = helpDeskService.selectTicket(json);
 		JSONArray array = new JSONArray();
 		if (helpdesks != null && !helpdesks.isEmpty()) {
@@ -100,11 +99,11 @@ public class HelpDeskController {
 		if (helpdesk != null) {
 
 			String createtime = DatetimeConverter.toString(helpdesk.getCreatetime(), "yyyy-MM-dd HH:mm:ss");
-			JSONObject item = new JSONObject().put("customer_name", helpdesk.getCustomer_name())
-					.put("record_id", helpdesk.getRecord_id()).put("subject_line", helpdesk.getSubject_line())
-					.put("descriptions", helpdesk.getDescriptions()).put("contact_number", helpdesk.getContact_number())
-					.put("email", helpdesk.getEmail()).put("way_to_contact", helpdesk.getWay_to_contact())
-					.put("attachment", helpdesk.getAttachment())
+			JSONObject item = new JSONObject().put("helpdesk_id", helpdesk.getHelpdesk_id())
+					.put("customer_name", helpdesk.getCustomer_name()).put("record_id", helpdesk.getRecord_id())
+					.put("subject_line", helpdesk.getSubject_line()).put("descriptions", helpdesk.getDescriptions())
+					.put("contact_number", helpdesk.getContact_number()).put("email", helpdesk.getEmail())
+					.put("way_to_contact", helpdesk.getWay_to_contact()).put("attachment", helpdesk.getAttachment())
 					.put("member_profile_id", helpdesk.getMember_profile_id()).put("createtime", createtime);
 			array = array.put(item);
 
@@ -142,7 +141,7 @@ public class HelpDeskController {
 	}
 
 	/**
-	 *  顯示案件內容時，畫面上顯示圖片URL
+	 * 顯示案件內容時，畫面上顯示圖片URL
 	 * 
 	 * 
 	 */
@@ -150,20 +149,19 @@ public class HelpDeskController {
 	// 使用 ResponseEntity<Resource> 是一種通用的方式來處理 HTTP 響應，特別是用於處理二進制數據，例如圖片文件。
 	public String selectPicture(@PathVariable Integer helpdesk_id) {
 		JSONObject responseJson = new JSONObject();
-		 String pictureURL = pictureFactory.selectPicture(helpdesk_id);
+		String pictureURL = pictureFactory.selectPicture(helpdesk_id);
 
-		    if (pictureURL != null) {
-		    	// 創建JSON對象並設置URL字段
-		        responseJson.put("url", pictureURL);
+		if (pictureURL != null) {
+			// 創建JSON對象並設置URL字段
+			responseJson.put("url", pictureURL);
 
-		        return responseJson.toString();
-		    } else {
-		        // 如果找不到URL或有其他錯誤，返回 404 錯誤
-		        return null;
-		    }
+			return responseJson.toString();
+		} else {
+			// 如果找不到URL或有其他錯誤，返回 404 錯誤
+			return null;
+		}
 	}
 
-	
 	/**
 	 * 前端點擊特定案件時，透過拿到的helpdesk_id來進行搜尋案件歷程
 	 * 
@@ -187,7 +185,6 @@ public class HelpDeskController {
 		return responseJson.toString();
 	}
 
-	
 	/**
 	 * 客服人員寄送Email回覆客戶
 	 * 
@@ -197,7 +194,6 @@ public class HelpDeskController {
 	public String sendEmail(@RequestBody String json) {
 		JSONObject responseJson = new JSONObject();
 
-		
 		// 使用boolean判斷寄送信件成功失敗
 		boolean sendEmail = helpDeskService.sendEmail(json);
 		if (sendEmail == true) {
