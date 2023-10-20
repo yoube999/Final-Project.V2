@@ -13,13 +13,18 @@ import jakarta.persistence.PersistenceContext;
 import tw.com.eeit168.products.restaurant.model.RestaurantBean;
 import tw.com.eeit168.products.restaurant.model.SelectRestaurantInventoryView;
 import tw.com.eeit168.products.restaurant.model.SelectRestaurantPictureView;
+import tw.com.eeit168.products.restaurant.model.SelectRestaurantPictureViewTop5;
 import tw.com.eeit168.products.restaurant.repository.RestaurantRepository;
+import tw.com.eeit168.products.restaurant.repository.SelectRestaurantPictureViewTop5Repository;
 
 @Service //註解類別處理運算邏輯(企業邏輯)
 public class RestaurantRepositoryService {
 	
 	@Autowired
 	private RestaurantRepository restaurantRepository;
+	
+	@Autowired
+	private SelectRestaurantPictureViewTop5Repository selectRestaurantPictureViewTop5Repository;
 	
 	@PersistenceContext //允許Spring自動管理JPA或Hibernate，並將其注入到Spring管理的bean中，以便您可以輕鬆地進行數據庫操作
 	private Session session;
@@ -121,6 +126,11 @@ public class RestaurantRepositoryService {
 	public List<RestaurantBean> selectTop5() {
 		return restaurantRepository.selectTop5();
 	}
+	
+	//Top5 包含圖片
+	public List<SelectRestaurantPictureViewTop5> getTop5RestaurantsByTimesPurchased() {
+        return selectRestaurantPictureViewTop5Repository.findTop5ByOrderByTimesPurchasedDesc();
+    }
 	
 	//以被購買次數搜尋(多-少)
 	public List<RestaurantBean> findAllByPurchasedDesc() {

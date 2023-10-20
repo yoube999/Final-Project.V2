@@ -23,6 +23,7 @@ import tw.com.eeit168.products.attraction.model.SelectAttractionsTicketView;
 import tw.com.eeit168.products.attraction.service.AttractionPictureRepositoryService;
 import tw.com.eeit168.products.attraction.service.AttractionRepositoryService;
 import tw.com.eeit168.products.attraction.service.SelectAttractionsPictureRepositoryService;
+import tw.com.eeit168.products.restaurant.model.SelectRestaurantPictureViewTop5;
 
 @RestController //@Controller+@ResponseBody
 @CrossOrigin
@@ -82,6 +83,27 @@ public class AttractionAjaxController {
 		responseJson.put("list", array);
 		return responseJson.toString();
 	}
+	
+	@GetMapping("/search/top5Attractions")
+    public String getTop5top5Attractions() {
+        List<SelectAttractionsPictureView> top5Attractions = attractionRepositoryService.getTop5AttractionsByTimesPurchased();
+        
+        JSONArray jsonArray = new JSONArray();
+        for (SelectAttractionsPictureView attraction : top5Attractions) {
+            JSONObject item = new JSONObject()
+					.put("attractionsName", attraction.getAttractionsName())
+					.put("descriptions", attraction.getDescriptions())
+					.put("price", attraction.getAdultPrice())
+					.put("times_purchased", attraction.getTimesPurchased())
+            		.put("urlImage", attraction.getUrlImage());
+            jsonArray.put(item);
+        }
+
+        JSONObject responseJson = new JSONObject();
+        responseJson.put("list", jsonArray);
+
+        return responseJson.toString();
+    }
 	
 	@GetMapping(path = {"/attraction/top5"}) //Top5
 	public String selectTop5() {

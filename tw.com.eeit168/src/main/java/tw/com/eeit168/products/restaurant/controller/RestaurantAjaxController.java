@@ -17,11 +17,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+<<<<<<< Updated upstream
 import tw.com.eeit168.products.attraction.model.AttractionPictureBean;
+=======
+import tw.com.eeit168.products.accommodation.model.SelectAccommodationPhotosPriceView;
+>>>>>>> Stashed changes
 import tw.com.eeit168.products.restaurant.model.RestaurantBean;
 import tw.com.eeit168.products.restaurant.model.RestaurantPictureBean;
 import tw.com.eeit168.products.restaurant.model.SelectRestaurantInventoryView;
 import tw.com.eeit168.products.restaurant.model.SelectRestaurantPictureView;
+import tw.com.eeit168.products.restaurant.model.SelectRestaurantPictureViewTop5;
 import tw.com.eeit168.products.restaurant.service.RestaurantPictureRepositoryService;
 import tw.com.eeit168.products.restaurant.service.RestaurantRepositoryService;
 import tw.com.eeit168.products.restaurant.service.SelectRestaurantPictureRepositoryService;
@@ -140,6 +145,28 @@ public class RestaurantAjaxController {
 		return responseJson.toString();
 	}
 
+	@GetMapping("/search/top5Restaurants")
+    public String getTop5Restaurants() {
+        List<SelectRestaurantPictureViewTop5> top5Restaurants = restaurantRepositoryService.getTop5RestaurantsByTimesPurchased();
+        
+        JSONArray jsonArray = new JSONArray();
+        for (SelectRestaurantPictureViewTop5 restaurant : top5Restaurants) {
+            JSONObject item = new JSONObject()
+//            		.put("restaurant_id", restaurant.getRestaurantPicturesId())
+					.put("restaurant_name", restaurant.getRestaurantName())
+					.put("descriptions", restaurant.getDescriptions())
+					.put("price", restaurant.getPrice())
+					.put("times_purchased", restaurant.getTimesPurchased())
+            		.put("urlImage", restaurant.getUrlImage());
+            jsonArray.put(item);
+        }
+
+        JSONObject responseJson = new JSONObject();
+        responseJson.put("list", jsonArray);
+
+        return responseJson.toString();
+    }
+	
 	@GetMapping(path = "/restaurant/top5") //Top5
 	public String selectTop5() {
 		JSONObject responseJson = new JSONObject();

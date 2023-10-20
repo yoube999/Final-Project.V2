@@ -15,12 +15,16 @@ import tw.com.eeit168.products.attraction.model.SelectAttractionsInventoryView;
 import tw.com.eeit168.products.attraction.model.SelectAttractionsPictureView;
 import tw.com.eeit168.products.attraction.model.SelectAttractionsTicketView;
 import tw.com.eeit168.products.attraction.repository.AttractionRepository;
+import tw.com.eeit168.products.attraction.repository.SelectAttractionsPictureRepository;
 
 @Service //註解類別處理運算邏輯(企業邏輯)
 public class AttractionRepositoryService {
 
 	@Autowired
 	private AttractionRepository attractionRepository;
+	
+	@Autowired
+	private SelectAttractionsPictureRepository selectAttractionsPictureRepository;
 	
 	@PersistenceContext //允許Spring自動管理JPA或Hibernate，並將其注入到Spring管理的bean中，以便您可以輕鬆地進行數據庫操作
 	private Session session;
@@ -125,6 +129,11 @@ public class AttractionRepositoryService {
 	public List<SelectAttractionsTicketView> selectTop5() {
 		return attractionRepository.selectTop5();
 	}
+	
+	//Top5 包含圖片
+		public List<SelectAttractionsPictureView> getTop5AttractionsByTimesPurchased() {
+	        return selectAttractionsPictureRepository.findTop5ByOrderByTimesPurchasedDesc();
+	    }
 	
 	//以被購買次數搜尋(多-少)
 	public List<AttractionBean> findAllByPurchasedDesc() {
