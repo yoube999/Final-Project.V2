@@ -72,5 +72,22 @@ public class HelpDeskProcessService {
 
 		return null;
 	}
+	
+	/**
+	 * 查詢案件，回傳總數量
+	 * 
+	 * 
+	 */
+	public long ticketCommentsTotal(String json) {
+
+		try {
+			JSONObject obj = new JSONObject(json);
+			return helpDeskProcessDAO.ticketCommentsTotal(obj);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return 0;
+	}
 
 }

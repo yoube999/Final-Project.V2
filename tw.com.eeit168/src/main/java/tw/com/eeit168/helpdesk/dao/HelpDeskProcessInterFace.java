@@ -12,5 +12,7 @@ public interface HelpDeskProcessInterFace {
 	public abstract HelpDeskProcessBean insertComment(HelpDeskProcessBean bean);
 
 	public abstract List<HelpDeskProcessWithNameBean> selectTicketCommentById(JSONObject obj);
+	
+	public long ticketCommentsTotal(JSONObject obj);
 
 }

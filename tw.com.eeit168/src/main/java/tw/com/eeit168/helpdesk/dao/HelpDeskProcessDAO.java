@@ -14,6 +14,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Order;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import tw.com.eeit168.helpdesk.model.HelpDeskBean;
 import tw.com.eeit168.helpdesk.model.HelpDeskProcessBean;
 import tw.com.eeit168.helpdesk.model.HelpDeskProcessWithNameBean;
 
@@ -108,6 +109,35 @@ public class HelpDeskProcessDAO implements HelpDeskProcessInterFace {
 			return null;
 		}
 
+	}
+
+	/**
+	 * 查詢案件歷程，回傳資料總數量做分頁用
+	 * 
+	 * 
+	 */
+	@Override
+	public long ticketCommentsTotal(JSONObject obj) {
+		CriteriaBuilder criteriaBuilder = this.getSession().getCriteriaBuilder();
+		// 建立一個 CriteriaQuery 對象，該對象用於創建查詢的元數據結構，這裡我們想要返回 Long 類型的結果，即案件的總數量。
+		CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
+		Root<HelpDeskProcessBean> root = countQuery.from(HelpDeskProcessBean.class);
+
+		// 使用 criteriaBuilder.count 方法，指定您要計算匹配查詢條件的實體總數。
+		countQuery.select(criteriaBuilder.count(root));
+
+		// 如果需要添加條件，可以透過 Predicate 來添加
+		if (obj != null && !obj.isEmpty()) {
+			Integer ID = obj.optInt("helpdesk_id"); // 從 JSONObject 中獲取狀態欄位的值
+
+			// 用於指定一個查詢條件，即確保 HelpDeskBean 實體的 helpdesk_process_id 屬性（或欄位）等於特定的值 ID。
+			Predicate idPredicate = criteriaBuilder.equal(root.get("helpdesk_id"), ID);
+			countQuery.where(idPredicate);
+		}
+
+		// 使用 createQuery 方法創建查詢，並使用 getSingleResult 方法來執行查詢，並返回一個 Long 值
+		return this.getSession().createQuery(countQuery).getSingleResult();
+		
 	}
 
 }

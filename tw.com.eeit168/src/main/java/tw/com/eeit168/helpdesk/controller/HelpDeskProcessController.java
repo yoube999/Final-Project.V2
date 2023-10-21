@@ -50,6 +50,10 @@ public class HelpDeskProcessController {
 	public String selectTicketCommentById(@RequestBody String json) {
 		JSONObject responseJson = new JSONObject();
 
+		// 回傳給前端查詢資料總數做為分頁依據
+		long count = helpDeskProcessService.ticketCommentsTotal(json);
+		responseJson.put("count", count);
+		
 		List<HelpDeskProcessWithNameBean> helpdeskprocess = helpDeskProcessService.selectTicketCommentById(json);
 		JSONArray array = new JSONArray();
 		if (helpdeskprocess != null && !helpdeskprocess.isEmpty()) {
