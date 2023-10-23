@@ -66,4 +66,10 @@ public class RecordRepositorySerivce {
 		return recordRepository.findByMemberId(id);
 	}
 	
+
+
+
+    public RecordBean updateRecord(RecordBean record) {
+        return recordRepository.save(record);
+    }
 }

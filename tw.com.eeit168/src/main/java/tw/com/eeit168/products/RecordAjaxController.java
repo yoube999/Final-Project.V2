@@ -1,10 +1,15 @@
 package tw.com.eeit168.products;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -97,6 +102,7 @@ public class RecordAjaxController {
 						.put("return_title", record.getReturnTitle())
 						.put("return_description", record.getReturnDescription())
 						.put("return_date", record.getReturnDate());
+
 				array = array.put(item);			
 			}
 		}
@@ -104,4 +110,35 @@ public class RecordAjaxController {
 		return responseJson.toString();
 	}
 	
+	 @PostMapping("/update/{recordId}")
+	    public ResponseEntity<String> updateOrderRecord(
+	            @PathVariable(name = "recordId") Integer recordId,
+	            @RequestBody Map<String, String> updateData) {
+	        String message;
+	        HttpStatus status;
+	        
+	        RecordBean existingRecord = recordRepositorySerivce.findById(recordId);
+	        
+	        if (existingRecord != null) {
+	            // 更新订单记录的退货信息
+	            existingRecord.setReturnTitle(updateData.get("return_title"));
+	            existingRecord.setReturnDescription(updateData.get("return_description"));
+	            
+	            // 设置当前日期
+	            // 设置当前日期
+	            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	            Date currentDate = new Date();
+	            
+	            // 调用Service更新订单记录
+	            recordRepositorySerivce.updateRecord(existingRecord);
+	            
+	            message = "订单记录更新成功";
+	            status = HttpStatus.OK;
+	        } else {
+	            message = "未找到订单记录";
+	            status = HttpStatus.NOT_FOUND;
+	        }
+
+	        return new ResponseEntity<>(message, status);
+	    }
 }
