@@ -36,6 +36,9 @@ public class RestaurantBean {
 	
 	@Column(name = "product_status")
 	private boolean productStatus;
+	
+	@Column(name = "item_type", columnDefinition = "nvarchar") //如有要用nvarchar必須要有此annotation
+	private String itemType;
 
 	
 	@Override
@@ -43,10 +46,10 @@ public class RestaurantBean {
 		return "RestaurantBean [restaurantId=" + restaurantId + ", restaurantName=" + restaurantName
 				+ ", restaurantAddress=" + restaurantAddress + ", descriptions=" + descriptions + ", contactNumber="
 				+ contactNumber + ", price=" + price + ", timesPurchased=" + timesPurchased + ", productStatus="
-				+ productStatus + "]";
+				+ productStatus + ", itemType=" + itemType + "]";
 	}
 
-
+	
 	public Integer getRestaurantId() {
 		return restaurantId;
 	}
@@ -94,6 +97,12 @@ public class RestaurantBean {
 	}
 	public void setProductStatus(boolean productStatus) {
 		this.productStatus = productStatus;
+	}
+	public String getItemType() {
+		return itemType;
+	}
+	public void setItemType(String itemType) {
+		this.itemType = itemType;
 	}
 	
 }

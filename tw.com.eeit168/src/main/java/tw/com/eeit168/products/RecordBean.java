@@ -34,13 +34,16 @@ public class RecordBean {
 
 	@Column(name = "return_date")
 	private java.sql.Date returnDate;
+	
+	@Column(name = "total_price")
+	private Integer totalPrice;
 
 	
 	@Override
 	public String toString() {
 		return "RecordBean [recordId=" + recordId + ", memberProfileId=" + memberProfileId + ", createdAt=" + createdAt
 				+ ", recordStatus=" + recordStatus + ", returnTitle=" + returnTitle + ", returnDescription="
-				+ returnDescription + ", returnDate=" + returnDate + "]";
+				+ returnDescription + ", returnDate=" + returnDate + ", totalPrice=" + totalPrice + "]";
 	}
 
 	
@@ -85,6 +88,12 @@ public class RecordBean {
 	}
 	public void setReturnDate(java.sql.Date returnDate) {
 		this.returnDate = returnDate;
+	}
+	public Integer getTotalPrice() {
+		return totalPrice;
+	}
+	public void setTotalPrice(Integer totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 
 }

@@ -1,6 +1,5 @@
 package tw.com.eeit168.products;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import jakarta.persistence.PersistenceContext;
 
-@Service
+@Service //註解類別處理運算邏輯(企業邏輯)
 public class RecordRepositorySerivce {
 	
 	@Autowired
@@ -43,17 +42,13 @@ public class RecordRepositorySerivce {
 	public RecordBean create(String json) {
 		try {
 			JSONObject object = new JSONObject(json);
-			Integer recordId = object.isNull("recordId") ? null : object.getInt("recordId");
 			Integer memberProfileId = object.isNull("memberProfileId") ? null : object.getInt("memberProfileId");
 			String recordStatus = object.isNull("recordStatus") ? null : object.getString("recordStatus");
-			String returnTitle = object.isNull("returnTitle") ? null : object.getString("returnTitle");
-			String returnDescription = object.isNull("returnDescription") ? null : object.getString("returnDescription");
+			Integer totalPrice = object.isNull("totalPrice") ? null : object.getInt("totalPrice");
 			RecordBean insert = new RecordBean();
-			insert.setRecordId(recordId);
 			insert.setMemberProfileId(memberProfileId);
 			insert.setRecordStatus(recordStatus);
-			insert.setReturnTitle(returnTitle);
-			insert.setReturnDescription(returnDescription);
+			insert.setTotalPrice(totalPrice);
 			return recordRepository.save(insert);
 		} catch (JSONException e) {
 			e.printStackTrace();

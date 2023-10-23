@@ -21,7 +21,7 @@ public class RecordAjaxController {
 	@Autowired
 	private RecordRepositorySerivce recordRepositorySerivce;
 	
-	@GetMapping(path = {"/findbyid/{record_id}"})
+	@GetMapping(path = {"/findbyid/{record_id}"}) //以id搜尋
 	public String findById(@PathVariable(name = "record_id") Integer id) {
 		JSONObject responseJson = new JSONObject();
 		JSONArray array = new JSONArray();
@@ -34,14 +34,15 @@ public class RecordAjaxController {
 					.put("record_status", result.getRecordStatus())
 					.put("return_title", result.getReturnTitle())
 					.put("return_description", result.getReturnDescription())
-					.put("return_date", result.getReturnDate());
+					.put("return_date", result.getReturnDate())
+					.put("total_price", result.getTotalPrice());
 			array = array.put(item);
 		}
 		responseJson.put("list", array);
 		return responseJson.toString();
 	}
 	
-	@GetMapping(path = {"/findall"})
+	@GetMapping(path = {"/findall"}) //搜尋全部
 	public String findAll() {
 		JSONObject responseJson = new JSONObject();
 		JSONArray array = new JSONArray();
@@ -55,7 +56,8 @@ public class RecordAjaxController {
 						.put("record_status", record.getRecordStatus())
 						.put("return_title", record.getReturnTitle())
 						.put("return_description", record.getReturnDescription())
-						.put("return_date", record.getReturnDate());
+						.put("return_date", record.getReturnDate())
+						.put("total_price", record.getTotalPrice());
 				array = array.put(item);			
 			}
 		}
@@ -63,15 +65,9 @@ public class RecordAjaxController {
 		return responseJson.toString();
 	}
 
-	@PostMapping(path = {"/insert"})
+	@PostMapping(path = {"/insert"}) //新增
 	public String create(@RequestBody String body) {
 		JSONObject responseJson = new JSONObject();
-		JSONObject object = new JSONObject(body);
-		Integer recordId = object.isNull("recordId") ? null : object.getInt("recordId");
-		if(recordRepositorySerivce.exists(recordId)) {
-			responseJson.put("message", "id已存在，新增失敗");
-			responseJson.put("success", false);
-		} else {
 			RecordBean result = recordRepositorySerivce.create(body);
 			if(result == null) {
 				responseJson.put("message", "新增失敗");
@@ -79,12 +75,14 @@ public class RecordAjaxController {
 			} else {
 				responseJson.put("message", "新增成功");
 				responseJson.put("success", true);
+				responseJson.put("memberProfileId", result.getMemberProfileId());
+				responseJson.put("recordStatus", result.getRecordStatus());
+				responseJson.put("totalPrice", result.getTotalPrice());
 			}
-		}
-		return null;
+		return responseJson.toString();
 	}
 	
-	@GetMapping(path = {"/findbymemberid/{memberId}"})
+	@GetMapping(path = {"/findbymemberid/{memberId}"}) //以memberId搜尋
 	public String findbymemberid(@PathVariable(name = "memberId") Integer id) {
 		JSONObject responseJson = new JSONObject();
 		JSONArray array = new JSONArray();

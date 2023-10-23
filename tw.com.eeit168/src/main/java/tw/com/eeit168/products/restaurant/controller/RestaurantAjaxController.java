@@ -16,11 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import tw.com.eeit168.products.RecordBean;
+import tw.com.eeit168.products.restaurant.model.ReservationRestuarantBean;
 import tw.com.eeit168.products.restaurant.model.RestaurantBean;
 import tw.com.eeit168.products.restaurant.model.RestaurantPictureBean;
 import tw.com.eeit168.products.restaurant.model.SelectRestaurantInventoryView;
 import tw.com.eeit168.products.restaurant.model.SelectRestaurantPictureView;
 import tw.com.eeit168.products.restaurant.model.SelectRestaurantPictureViewTop5;
+import tw.com.eeit168.products.restaurant.service.ReservationRestuarantRepositoryService;
 import tw.com.eeit168.products.restaurant.service.RestaurantPictureRepositoryService;
 import tw.com.eeit168.products.restaurant.service.RestaurantRepositoryService;
 import tw.com.eeit168.products.restaurant.service.SelectRestaurantPictureRepositoryService;
@@ -38,6 +42,9 @@ public class RestaurantAjaxController {
 	
 	@Autowired
 	private SelectRestaurantPictureRepositoryService selectRestaurantPictureRepositoryService;
+	
+	@Autowired
+	private ReservationRestuarantRepositoryService reservationRestuarantRepositoryService;
 		
 	@GetMapping(path = {"/restaurant/{restaurant_id}"}) //以id搜尋
 	public String findById(@PathVariable(name = "restaurant_id") Integer id) {
@@ -367,6 +374,26 @@ public class RestaurantAjaxController {
 		}
 		responseJson.put("list", array);
 		return responseJson.toString();
+	}
+	
+	@PostMapping(path = {"reservation/insert"})
+	public String createReservation(@RequestBody String body) {
+		JSONObject responseJson = new JSONObject();
+		ReservationRestuarantBean result = reservationRestuarantRepositoryService.create(body);
+		if(result == null) {
+			responseJson.put("message", "新增失敗");
+			responseJson.put("success", false);
+		} else {
+			responseJson.put("message", "新增成功");
+			responseJson.put("success", true);
+			responseJson.put("record_id", result.getRecordId());
+			responseJson.put("restaurant_id", result.getRestaurantId());
+			responseJson.put("reservation_date", result.getReservationDate());
+			responseJson.put("total_count", result.getTotalCount());
+			responseJson.put("total_price", result.getTotalPrice());
+			responseJson.put("record_restuarant_status", result.getRecordRestuarantStatus());
+		}
+	return responseJson.toString();
 	}
 	
 }

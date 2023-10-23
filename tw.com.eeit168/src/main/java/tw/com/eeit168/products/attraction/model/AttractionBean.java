@@ -42,6 +42,9 @@ public class AttractionBean {
 	
 	@Column(name = "adult_price")
 	private Integer adultPrice;
+	
+	@Column(name = "item_type", columnDefinition = "nvarchar") //如有要用nvarchar必須要有此annotation
+	private String itemType;
 
 	
 	@Override
@@ -49,10 +52,11 @@ public class AttractionBean {
 		return "AttractionBean [attractionsId=" + attractionsId + ", attractionsName=" + attractionsName
 				+ ", attractionsAddress=" + attractionsAddress + ", descriptions=" + descriptions + ", openTime="
 				+ openTime + ", closeTime=" + closeTime + ", contactNumber=" + contactNumber + ", timesPurchased="
-				+ timesPurchased + ", productStatus=" + productStatus + ", adultPrice=" + adultPrice + "]";
+				+ timesPurchased + ", productStatus=" + productStatus + ", adultPrice=" + adultPrice + ", itemType="
+				+ itemType + "]";
 	}
 
-
+	
 	public Integer getAttractionsId() {
 		return attractionsId;
 	}
@@ -112,6 +116,12 @@ public class AttractionBean {
 	}
 	public void setAdultPrice(Integer adultPrice) {
 		this.adultPrice = adultPrice;
+	}
+	public String getItemType() {
+		return itemType;
+	}
+	public void setItemType(String itemType) {
+		this.itemType = itemType;
 	}
 	
 }
