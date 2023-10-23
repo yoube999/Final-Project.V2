@@ -37,6 +37,23 @@ public class HelpDeskRecordService {
 
 		return null;
 	}
+	
+	/**
+	 * 查詢案件，回傳總數量
+	 * 
+	 * 
+	 */
+	public long recordsTotal(String json) {
+
+		try {
+			JSONObject obj = new JSONObject(json);
+			return helpDeskRecordDAO.recordsTotal(obj);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return 0;
+	}
 
 	/**
 	 * 取得特定會員資料
@@ -56,7 +73,7 @@ public class HelpDeskRecordService {
 	 * 
 	 * 
 	 */
-	public RecordBean selectRecordById(Integer record_id) {
+	public HelpDeskRecordBean selectRecordById(Integer record_id) {
 		if (record_id != null) {
 			return helpDeskRecordDAO.selectRecordById(record_id);
 		}

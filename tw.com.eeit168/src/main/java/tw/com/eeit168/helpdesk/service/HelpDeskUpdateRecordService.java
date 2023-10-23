@@ -72,10 +72,7 @@ public class HelpDeskUpdateRecordService {
 			if (accommodationRecord != null) {
 				accommodationRecord.setRecordAccommodationStatus(newStatus);
 				accommodationOrderRepository.save(accommodationRecord);
-			} else {
-				return false; // 如果查不到ID，回傳false
-			}
-
+			} 
 			// 更新 reservation_attractions
 			ReservationAttractionBean reservationRecord = reservationAttractionRepository.findById(record_id)
 					.orElse(null);
@@ -83,9 +80,7 @@ public class HelpDeskUpdateRecordService {
 			if (reservationRecord != null) {
 				reservationRecord.setRecordAttractionsStatus(newStatus);
 				reservationAttractionRepository.save(reservationRecord);
-			} else {
-				return false; // 如果查不到ID，回傳false
-			}
+			} 
 
 			// 更新 reservation_restuarant
 			ReservationRestuarantBean restuarantRecord = reservationRestuarantRepository.findById(record_id)
@@ -94,9 +89,7 @@ public class HelpDeskUpdateRecordService {
 			if (restuarantRecord != null) {
 				restuarantRecord.setRecordRestuarantStatus(newStatus);
 				reservationRestuarantRepository.save(restuarantRecord);
-			} else {
-				return false; // 如果查不到ID，回傳false
-			}
+			} 
 
 			return true; // 如果全部更新成功，返回 true
 		} catch (JSONException e) {

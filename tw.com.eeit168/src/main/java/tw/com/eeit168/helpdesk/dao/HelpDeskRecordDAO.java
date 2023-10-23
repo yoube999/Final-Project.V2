@@ -11,7 +11,9 @@ import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Order;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import tw.com.eeit168.helpdesk.model.HelpDeskProcessBean;
 import tw.com.eeit168.helpdesk.model.HelpDeskRecordBean;
 import tw.com.eeit168.member.model.MemberProfileBean;
 import tw.com.eeit168.products.RecordBean;
@@ -35,6 +37,8 @@ public class HelpDeskRecordDAO implements HelpDeskRecordInterFace {
 	public List<HelpDeskRecordBean> selectRecordByStatus(JSONObject obj) {
 
 		// 後端收到查詢條件相關Nulll防呆處理
+		int start = obj.isNull("start") ? 0 : obj.getInt("start"); // 起始分頁
+		int row = obj.isNull("row") ? 10 : obj.getInt("row"); // 分頁案件數量
 		String sortType = obj.isNull("sortType") ? null : obj.getString("sortType"); // 排序欄位
 		String sortOrder = obj.isNull("sortOrder") ? null : obj.getString("sortOrder"); // 查詢排序
 
@@ -60,6 +64,12 @@ public class HelpDeskRecordDAO implements HelpDeskRecordInterFace {
 
 		// 這段程式碼的目的是創建一個TypedQuery<MemberProfileBean>對象，用於執行基於標準的 JPA 查詢 by ChatGPT
 		TypedQuery<HelpDeskRecordBean> typedQuery = this.getSession().createQuery(criteriaQuery);
+		if (start != 0) {
+			typedQuery = typedQuery.setFirstResult(start);
+		}
+		if (row != 0) {
+			typedQuery = typedQuery.setMaxResults(row);
+		}
 
 		List<HelpDeskRecordBean> result = typedQuery.getResultList();
 		if (result != null && !result.isEmpty()) {
@@ -68,6 +78,35 @@ public class HelpDeskRecordDAO implements HelpDeskRecordInterFace {
 			return null;
 		}
 
+	}
+	
+	/**
+	 * 查詢訂單，回傳資料總數量做分頁用
+	 * 
+	 * 
+	 */
+	@Override
+	public long recordsTotal(JSONObject obj) {
+		CriteriaBuilder criteriaBuilder = this.getSession().getCriteriaBuilder();
+		// 建立一個 CriteriaQuery 對象，該對象用於創建查詢的元數據結構，這裡我們想要返回 Long 類型的結果，即案件的總數量。
+		CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
+		Root<HelpDeskRecordBean> root = countQuery.from(HelpDeskRecordBean.class);
+
+		// 使用 criteriaBuilder.count 方法，指定您要計算匹配查詢條件的實體總數。
+		countQuery.select(criteriaBuilder.count(root));
+
+		// 如果需要添加條件，可以透過 Predicate 來添加
+		if (obj != null && !obj.isEmpty()) {
+			String status = obj.optString("record_status", "審核中"); // 從 JSONObject 中獲取狀態欄位的值
+
+			// 用於指定一個查詢條件，即確保 HelpDeskBean 實體的 helpdesk_process_id 屬性（或欄位）等於特定的值 ID。
+			Predicate statusPredicate = criteriaBuilder.equal(root.get("record_status"), status);
+			countQuery.where(statusPredicate);
+		}
+
+		// 使用 createQuery 方法創建查詢，並使用 getSingleResult 方法來執行查詢，並返回一個 Long 值
+		return this.getSession().createQuery(countQuery).getSingleResult();
+		
 	}
 
 	/**
@@ -90,9 +129,9 @@ public class HelpDeskRecordDAO implements HelpDeskRecordInterFace {
 	 * 
 	 */
 	@Override
-	public RecordBean selectRecordById(Integer record_id) {
+	public HelpDeskRecordBean selectRecordById(Integer record_id) {
 		if (record_id != null) {
-			return this.getSession().get(RecordBean.class, record_id);
+			return this.getSession().get(HelpDeskRecordBean.class, record_id);
 		}
 
 		return null;

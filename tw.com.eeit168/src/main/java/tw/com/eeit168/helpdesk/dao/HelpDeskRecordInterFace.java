@@ -14,6 +14,8 @@ public interface HelpDeskRecordInterFace {
 	
 	public abstract MemberProfileBean selectUserById(Integer member_profile_id);
 	
-	public abstract RecordBean selectRecordById(Integer record_id);
+	public abstract HelpDeskRecordBean selectRecordById(Integer record_id);
+
+	public long recordsTotal(JSONObject obj);
 
 }
