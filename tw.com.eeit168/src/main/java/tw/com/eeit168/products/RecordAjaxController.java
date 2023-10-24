@@ -137,14 +137,14 @@ public class RecordAjaxController {
 //	            LocalTime time = LocalTime.now();  // 设置时分秒为 00:00:00
 //	            LocalDateTime dateTime = now.atTime(time);
 	            // 格式化为日期字符串
-	            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-	            String formattedDateTime = now.format(formatter);
-	            // 将时间字符串转换为 Timestamp
-	            Timestamp timestamp = Timestamp.valueOf(formattedDateTime);       
-	            // 将 Timestamp 转换为 Date
-	            Date date = new Date(timestamp.getTime());
-	            // 设置退货时间
-	            existingRecord.setReturnDate(date);
+//	            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//	            String formattedDateTime = now.format(formatter);
+//	            // 将时间字符串转换为 Timestamp
+//	            Timestamp timestamp = Timestamp.valueOf(formattedDateTime);
+//	            // 将 Timestamp 转换为 Date
+//	            Date date = new Date(timestamp.getTime());
+//	            // 设置退货时间
+	            existingRecord.setReturnDate(new java.util.Date());
 	            // 调用 Service 更新订单记录
 	            recordRepositorySerivce.updateRecord(existingRecord);
 

@@ -33,7 +33,7 @@ public class RecordBean {
 	private String returnDescription;
 
 	@Column(name = "return_date")
-	private java.sql.Date returnDate;
+	private java.util.Date returnDate;
 	
 	@Column(name = "total_price")
 	private Integer totalPrice;
@@ -83,10 +83,10 @@ public class RecordBean {
 	public void setReturnDescription(String returnDescription) {
 		this.returnDescription = returnDescription;
 	}
-	public java.sql.Date getReturnDate() {
+	public java.util.Date getReturnDate() {
 		return returnDate;
 	}
-	public void setReturnDate(java.sql.Date returnDate) {
+	public void setReturnDate(java.util.Date returnDate) {
 		this.returnDate = returnDate;
 	}
 	public Integer getTotalPrice() {
