@@ -21,7 +21,7 @@ public class RecordBean {
 	private Integer memberProfileId;
 
 	@Column(name = "created_at", insertable = false)
-	private java.sql.Date createdAt;
+	private java.util.Date createdAt;
 
 	@Column(name = "record_status", columnDefinition = "nvarchar") //如有要用nvarchar必須要有此annotation
 	private String recordStatus;
@@ -59,10 +59,10 @@ public class RecordBean {
 	public void setMemberProfileId(Integer memberProfileId) {
 		this.memberProfileId = memberProfileId;
 	}
-	public java.sql.Date getCreatedAt() {
+	public java.util.Date getCreatedAt() {
 		return createdAt;
 	}
-	public void setCreatedAt(java.sql.Date createdAt) {
+	public void setCreatedAt(java.util.Date createdAt) {
 		this.createdAt = createdAt;
 	}
 	public String getRecordStatus() {
