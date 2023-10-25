@@ -1,5 +1,6 @@
 package tw.com.eeit168.products.restaurant.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import tw.com.eeit168.products.RecordBean;
 import tw.com.eeit168.products.restaurant.model.ReservationRestuarantBean;
 import tw.com.eeit168.products.restaurant.model.RestaurantBean;
@@ -376,6 +376,7 @@ public class RestaurantAjaxController {
 		return responseJson.toString();
 	}
 	
+
 	@PostMapping(path = {"reservation/insert"})
 	public String createReservation(@RequestBody String body) {
 		JSONObject responseJson = new JSONObject();
@@ -395,5 +396,77 @@ public class RestaurantAjaxController {
 		}
 	return responseJson.toString();
 	}
+
+	@PostMapping(path = {"/restaurant/blursearchAndPictures/{keyword}"})
+	public String blursearchAndPictures(@PathVariable(value = "keyword") String keyword, @RequestBody String json) {
+	    JSONObject responseJson = new JSONObject();
+	    JSONArray jsonArray = new JSONArray();
+
+	    // 先执行模糊搜索
+	    List<SelectRestaurantInventoryView> blurFindResult = restaurantRepositoryService.blurFind(keyword);
+
+	    if (blurFindResult != null && !blurFindResult.isEmpty()) {
+	        for (SelectRestaurantInventoryView restaurant : blurFindResult) {
+	            String matchedRestaurantName = restaurant.getRestaurantName();
+
+	            // 检查餐厅名称是否包含模糊搜索的关键词
+	            if (matchedRestaurantName != null && keyword != null && matchedRestaurantName.contains(keyword)) {
+	            	System.out.println("Matched Restaurant: " + matchedRestaurantName);
+	                JSONObject item = new JSONObject()
+	                        .put("restaurant_Inventory_id", restaurant.getRestaurantInventoryId())
+	                        .put("restaurant_name", restaurant.getRestaurantName())
+	                        .put("restaurant_address", restaurant.getRestaurantAddress())
+	                        .put("availability_date", restaurant.getAvailabilityDate());
+	                jsonArray.put(item);
+	            }else {
+	                String message = "查無此資料";
+	                responseJson.put("message", message);
+	                // 将 responseJson 返回给前端
+	            }
+	        }
+	    }
+
+	    if (jsonArray.isEmpty()) {
+	        String message = "查無此資料";
+	        responseJson.put("message", message);
+	    }
+	    // 執行圖片列表搜尋
+	    JSONObject requestJson = new JSONObject(json);
+	    int start = requestJson.optInt("start", 0);
+	    int row = requestJson.optInt("row", 10);
+	    List<SelectRestaurantPictureView> selectAllRestaurantPicture = selectRestaurantPictureRepositoryService.selectAllRestaurantPicture(start, row);
+
+	    // 筛选商品列表，只保留与模糊搜索结果匹配的餐厅名称相同的商品
+	    List<SelectRestaurantPictureView> filteredPictures = new ArrayList<>();
+	    for (SelectRestaurantPictureView picture : selectAllRestaurantPicture) {
+	        String pictureRestaurantName = picture.getRestaurantName();
+	        if (pictureRestaurantName != null && pictureRestaurantName.contains(keyword)) {
+	            filteredPictures.add(picture);
+	        }
+	    }
+	    
+	    long count = selectRestaurantPictureRepositoryService.count();
+	    responseJson.put("count", count);
+
+	    if (!filteredPictures.isEmpty()) {
+	        for (SelectRestaurantPictureView picture : filteredPictures) {
+	            JSONObject item = new JSONObject()
+	                    .put("restaurant_pictures_id", picture.getRestaurantPicturesId())
+	                    .put("restaurant_name", picture.getRestaurantName())
+	                    .put("price", picture.getPrice())
+	                    .put("descriptions", picture.getDescriptions())
+	                    .put("url_image", picture.getUrlImage());
+	            jsonArray.put(item);
+	        }
+	    }
+
+	    // 将模糊搜索结果放入 responseJson
+	    responseJson.put("list", jsonArray);
+	    
+	    // 返回最终的 JSON 字符串
+	    return responseJson.toString();
+	}
+
+
 	
 }

@@ -34,6 +34,9 @@ public class Accommodation {
 	
 	@Column(name = "times_purchased", nullable = false)
 	private int timesPurchased;
+	
+	@Column(name = "item_type", nullable = false)
+	private String itemType;
 
 	public Integer getAccommodationId() {
 		return accommodationId;
@@ -59,12 +62,28 @@ public class Accommodation {
 		this.accommodationAddress = accommodationAddress;
 	}
 
+	public String getDescriptions() {
+		return descriptions;
+	}
+
+	public void setDescriptions(String descriptions) {
+		this.descriptions = descriptions;
+	}
+
 	public String getContactNumber() {
 		return contactNumber;
 	}
 
 	public void setContactNumber(String contactNumber) {
 		this.contactNumber = contactNumber;
+	}
+
+	public boolean isProductStatus() {
+		return productStatus;
+	}
+
+	public void setProductStatus(boolean productStatus) {
+		this.productStatus = productStatus;
 	}
 
 	public int getTimesPurchased() {
@@ -75,22 +94,12 @@ public class Accommodation {
 		this.timesPurchased = timesPurchased;
 	}
 
-
-	public String getDescriptions() {
-		return descriptions;
+	public String getItemType() {
+		return itemType;
 	}
 
-	public void setDescriptions(String descriptions) {
-		this.descriptions = descriptions;
-	}
-	
-	
-	public boolean isProductStatus() {
-		return productStatus;
-	}
-
-	public void setProductStatus(boolean productStatus) {
-		this.productStatus = productStatus;
+	public void setItemType(String itemType) {
+		this.itemType = itemType;
 	}
 
 	@Override
@@ -98,12 +107,10 @@ public class Accommodation {
 		return "Accommodation [accommodationId=" + accommodationId + ", accommodationName=" + accommodationName
 				+ ", accommodationAddress=" + accommodationAddress + ", descriptions=" + descriptions
 				+ ", contactNumber=" + contactNumber + ", productStatus=" + productStatus + ", timesPurchased="
-				+ timesPurchased + "]";
+				+ timesPurchased + ", itemType=" + itemType + "]";
 	}
 
-	
-	
-	
+		
 	//Constructors
 //	public Accommodation() {
 //		

@@ -10,4 +10,6 @@ import tw.com.eeit168.products.accommodation.model.SelectAccommodationInventoryR
 public interface SelectAccommodationInventoryRoomtypePriceViewRepository extends JpaRepository<SelectAccommodationInventoryRoomtypePriceView, Integer>{
 	 List<SelectAccommodationInventoryRoomtypePriceView> findByAccommodationIdAndAvailabilityDateBetweenAndRoomTypeName(
 	            Integer accommodationId, Date checkInDate, Date checkOutDate, String roomTypeName);
+	 
+//	 String findItemTypeByAccommodationId(Integer accommodationId);
 }

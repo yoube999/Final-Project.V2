@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 import org.hibernate.Session;
@@ -16,12 +17,14 @@ import jakarta.persistence.PersistenceContext;
 import tw.com.eeit168.products.accommodation.dao.SelectAccommodationPhotosPriceViewDAOHibernate;
 import tw.com.eeit168.products.accommodation.model.Accommodation;
 import tw.com.eeit168.products.accommodation.model.AccommodationInventory;
+import tw.com.eeit168.products.accommodation.model.AccommodationOrder;
 import tw.com.eeit168.products.accommodation.model.AccommodationPhotos;
 import tw.com.eeit168.products.accommodation.model.AccommodationRoomType;
 import tw.com.eeit168.products.accommodation.model.RoomSelection;
 import tw.com.eeit168.products.accommodation.model.SelectAccommodationInventoryRoomtypePriceView;
 import tw.com.eeit168.products.accommodation.model.SelectAccommodationPhotosPriceView;
 import tw.com.eeit168.products.accommodation.repository.AccommodationInventoryRepository;
+import tw.com.eeit168.products.accommodation.repository.AccommodationOrderRepository;
 import tw.com.eeit168.products.accommodation.repository.AccommodationPhotosRepository;
 import tw.com.eeit168.products.accommodation.repository.AccommodationPictureRepository;
 import tw.com.eeit168.products.accommodation.repository.AccommodationRepository;
@@ -49,7 +52,7 @@ public class AccommodationSearchService {
 	public void setAccommodationRoomTypeRepository(AccommodationRoomTypeRepository accommodationRoomTypeRepository) {
 		this.accommodationRoomTypeRepository = accommodationRoomTypeRepository;
 	}
-	
+
 	@Autowired
 	private AccommodationPictureRepository accommodationPictureRepository;
 
@@ -64,25 +67,28 @@ public class AccommodationSearchService {
 
 	@Autowired
 	private AccommodationRepository accommodationRepository;
-	
+
 	@Autowired
 	private SelectAccommodationPhotosPriceViewRepository selectAccommodationPhotosPriceViewRepository;
-	
+
 	@Autowired
 	private SelectAccommodationPhotosPriceViewDAOHibernate selectAccommodationPhotosPriceViewDAOHibernate;
 
 	@Autowired
 	private AccommodationPhotosRepository accommodationPhotosRepository;
-	
+
 	@Autowired
 	private SelectAccommodationInventoryRoomtypePriceViewRepository selectAccommodationInventoryRoomtypePriceViewRepository;
+
+	@Autowired
+	private AccommodationOrderRepository accommodationOrderRepository;
 	
-	//top5
+	// top5
 	public List<SelectAccommodationPhotosPriceView> getTop5AccommodationsByTimesPurchased() {
-        return selectAccommodationPhotosPriceViewRepository.findTop5ByOrderByTimesPurchasedDesc();
-    }
-	
-	//分頁count
+		return selectAccommodationPhotosPriceViewRepository.findTop5ByOrderByTimesPurchasedDesc();
+	}
+
+	// 分頁count
 	public long count(String json) {
 		try {
 			JSONObject obj = new JSONObject(json);
@@ -92,57 +98,58 @@ public class AccommodationSearchService {
 		}
 		return 0;
 	}
-	
-	//依據日期、房型、來做查詢價錢
-	 public List<SelectAccommodationInventoryRoomtypePriceView> findPricesByDateAndRoomType(
-	            Integer accommodationId, Date checkInDate, Date checkOutDate, String roomTypeName) {
-	        return selectAccommodationInventoryRoomtypePriceViewRepository.findByAccommodationIdAndAvailabilityDateBetweenAndRoomTypeName(
-	                accommodationId, checkInDate, checkOutDate, roomTypeName);
-	    }
 
-	    public Map<String, Integer> calculateTotalPrice(
-	            Integer accommodationId, Date checkInDate, Date checkOutDate, List<RoomSelection> rooms) {
-	        Map<String, Integer> totalPriceMap = new HashMap<>();
-	        
-	        // Calculate total days once considering the date range
-	        int totalDays = getDaysBetweenDates(checkInDate, checkOutDate);
-	        if (totalDays < 1) {
-	            totalDays = 1;  // 最少計算一天的價格
-	        }
-	        
-	        for (RoomSelection room : rooms) {
-	            String roomTypeName = room.getRoomTypeName();
-	            Integer totalRooms = room.getTotalRooms();
+	// 依據日期、房型、來做查詢價錢
+	public List<SelectAccommodationInventoryRoomtypePriceView> findPricesByDateAndRoomType(Integer accommodationId,
+			Date checkInDate, Date checkOutDate, String roomTypeName) {
+		return selectAccommodationInventoryRoomtypePriceViewRepository
+				.findByAccommodationIdAndAvailabilityDateBetweenAndRoomTypeName(accommodationId, checkInDate,
+						checkOutDate, roomTypeName);
+	}
 
-	            List<SelectAccommodationInventoryRoomtypePriceView> prices =
-	                    findPricesByDateAndRoomType(accommodationId, checkInDate, checkOutDate, roomTypeName);
-	        
-	            int totalPricePerRoom = 0;
-	        
-	        for (SelectAccommodationInventoryRoomtypePriceView price : prices) {
-	            // 價格 * 房間數量
-	        	totalPricePerRoom = price.getWeekdayPrice() * totalRooms;
-	        }
+	public Map<String, Integer> calculateTotalPrice(Integer accommodationId, Date checkInDate, Date checkOutDate,
+			List<RoomSelection> rooms) {
+		Map<String, Integer> totalPriceMap = new HashMap<>();
+
+		// Calculate total days once considering the date range
+		int totalDays = getDaysBetweenDates(checkInDate, checkOutDate);
+		if (totalDays < 1) {
+			totalDays = 1; // 最少計算一天的價格
+		}
+
+		for (RoomSelection room : rooms) {
+			String roomTypeName = room.getRoomTypeName();
+			Integer totalRooms = room.getTotalRooms();
+
+			List<SelectAccommodationInventoryRoomtypePriceView> prices = findPricesByDateAndRoomType(accommodationId,
+					checkInDate, checkOutDate, roomTypeName);
+
+			int totalPricePerRoom = 0;
+
+			for (SelectAccommodationInventoryRoomtypePriceView price : prices) {
+				// 價格 * 房間數量
+				totalPricePerRoom = price.getWeekdayPrice() * totalRooms;
+			}
 //	        totalPricePerRoom *= totalDays;
-	        totalPriceMap.put(roomTypeName, totalPricePerRoom);
+			totalPriceMap.put(roomTypeName, totalPricePerRoom);
 //	            for (SelectAccommodationInventoryRoomtypePriceView price : prices) {
 //	                int roomPrice = price.getWeekdayPrice() * totalRooms;
 //	                totalPriceMap.put(roomTypeName, roomPrice);
 //	                System.out.println(totalPriceMap);
 //	            }
-	        }
+		}
 
-	        return totalPriceMap;
-	    }
-	    
-	 // Helper method to calculate days between two dates
-	    private int getDaysBetweenDates(Date startDate, Date endDate) {
-	    	if (startDate.equals(endDate)) {
-	            return 1;
-	        }
-	        long diffInMillies = Math.abs(endDate.getTime() - startDate.getTime());
-	        return (int) TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-	    }
+		return totalPriceMap;
+	}
+
+	// Helper method to calculate days between two dates
+	private int getDaysBetweenDates(Date startDate, Date endDate) {
+		if (startDate.equals(endDate)) {
+			return 1;
+		}
+		long diffInMillies = Math.abs(endDate.getTime() - startDate.getTime());
+		return (int) TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+	}
 //	 public List<SelectAccommodationInventoryRoomtypePriceView> findPricesByDateAndRoomType(Integer accommodationId, Date checkInDate, Date checkOutDate, String roomTypeName) {
 //	        return selectAccommodationInventoryRoomtypePriceViewRepository.findByAvailabilityDateBetweenAndRoomTypeName(accommodationId, checkInDate, checkOutDate, roomTypeName);
 //	    }
@@ -162,55 +169,54 @@ public class AccommodationSearchService {
 //
 //	        return totalPrice;
 //	    }
-	 
-	//findAll Accommodation
+
+	// findAll Accommodation
 	public List<Accommodation> getAllAccommodations() {
-        return accommodationRepository.findAll();
-    }
-	
-	//findAccommodationById
-	public List<Accommodation>getAccommodationById(Integer accommodationId){
+		return accommodationRepository.findAll();
+	}
+
+	// findAccommodationById
+	public List<Accommodation> getAccommodationById(Integer accommodationId) {
 		return accommodationRepository.findByAccommodationId(accommodationId);
 	}
-	
-	//抓出所有資料以及分頁功能
+
+	// 抓出所有資料以及分頁功能
 	public List<SelectAccommodationPhotosPriceView> selectAll(String json) {
 		try {
 			JSONObject jsonObject = new JSONObject(json);
 			return selectAccommodationPhotosPriceViewDAOHibernate.selectAll(jsonObject);
-		} catch(JSONException e) {
+		} catch (JSONException e) {
 			// 需改寫成跳轉至錯誤頁面
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
-	//findAll Accommodation photos by accommodationId
-	public List<AccommodationPhotos> selectAllPhotos(Integer accommodationId){
+
+	// findAll Accommodation photos by accommodationId
+	public List<AccommodationPhotos> selectAllPhotos(Integer accommodationId) {
 		return accommodationPhotosRepository.findByAccommodationId(accommodationId);
 	}
-	
-	//findAll SelectAccommodationPhotosPriceViewRepository
-	public List<SelectAccommodationPhotosPriceView> getAllAccommodationsInfo(){
+
+	// findAll SelectAccommodationPhotosPriceViewRepository
+	public List<SelectAccommodationPhotosPriceView> getAllAccommodationsInfo() {
 		return selectAccommodationPhotosPriceViewRepository.findAll();
 	}
-	
+
 	public String getPhotoUrlByAccommodationId(Integer accommodationId) {
-        // 根據 accommodationId 查詢相應的圖片 URL
-        // 這裡假設 AccommodationPhotoRepository 可以根據 accommodationId 查詢相關圖片
-        String photoUrl = accommodationPictureRepository.findPhotoUrlByAccommodationId(accommodationId);
-        return photoUrl;
-    }
-	
-	
+		// 根據 accommodationId 查詢相應的圖片 URL
+		// 這裡假設 AccommodationPhotoRepository 可以根據 accommodationId 查詢相關圖片
+		String photoUrl = accommodationPictureRepository.findPhotoUrlByAccommodationId(accommodationId);
+		return photoUrl;
+	}
+
 	public String getPhotoUrlById(Integer photoId) {
 		// Here, you would fetch the photo URL from your database based on the photoId
-        // Example assuming Photo has a field named "photoUrl"
-        // Replace this with actual logic to fetch the photo URL based on photoId
+		// Example assuming Photo has a field named "photoUrl"
+		// Replace this with actual logic to fetch the photo URL based on photoId
 		AccommodationPhotos photo = accommodationPictureRepository.findById(photoId).orElse(null);
-		return (photo != null)? photo.getPhotoUrl():null;
+		return (photo != null) ? photo.getPhotoUrl() : null;
 	}
-	
+
 	public List<Accommodation> findAccommodationName(String keyword) {
 		return accommodationRepository.findAccommodationName(keyword);
 	}
@@ -221,14 +227,15 @@ public class AccommodationSearchService {
 
 	public List<SelectAccommodationInventoryRoomtypePriceView> findByAvailabilityDateBetween(java.sql.Date checkinDate,
 			java.sql.Date checkoutDate) {
-				return accommodationRepository.findByAvailabilityDateBetween(checkinDate, checkoutDate);
+		return accommodationRepository.findByAvailabilityDateBetween(checkinDate, checkoutDate);
 	}
 
 	public List<SelectAccommodationInventoryRoomtypePriceView> findByAccommodationIdAndAvailabilityDateBetween(
-            Integer accommodationId, java.sql.Date checkinDate, java.sql.Date checkoutDate){
-			return accommodationRepository.findByAccommodationIdAndAvailabilityDateBetween(accommodationId, checkinDate, checkoutDate);
+			Integer accommodationId, java.sql.Date checkinDate, java.sql.Date checkoutDate) {
+		return accommodationRepository.findByAccommodationIdAndAvailabilityDateBetween(accommodationId, checkinDate,
+				checkoutDate);
 	}
-	
+
 //	public List<AccommodationInventory> findByAvailabilityDateBetween(java.sql.Date checkInDate,
 //			java.sql.Date checkOutDate) {
 //		return accommodationInventoryRepositoryDAOImpl.findByAvailabilityDateBetween(checkInDate, checkOutDate);
@@ -244,8 +251,9 @@ public class AccommodationSearchService {
 //	    // 改為使用 SelectAccommodationInventoryRoomtypePriceView
 //	    return combinationFinder.findCombinations(totalGuests, requiredRooms);
 //	}
-	
-	public List<List<AccommodationRoomType>> findRoomCombinations(int accommodationId, int totalGuests, int requiredRooms) {
+
+	public List<List<AccommodationRoomType>> findRoomCombinations(int accommodationId, int totalGuests,
+			int requiredRooms) {
 		RoomCombinationFinder combinationFinder = new RoomCombinationFinder(accommodationRoomTypeRepository);
 		return combinationFinder.findCombinations(accommodationId, totalGuests, requiredRooms);
 	}
@@ -275,20 +283,41 @@ public class AccommodationSearchService {
 
 		return accommodationRepository.findAllByWeekdayPriceDesc();
 	}
-	
+
 	public List<SelectAccommodationInventoryRoomtypePriceView> findAllByWeekendPriceDesc() {
 		return accommodationRepository.findAllByWeekendPriceDesc();
 	}
-	
+
 	public List<SelectAccommodationInventoryRoomtypePriceView> findAllByWeekdayPriceAsc() {
 		return accommodationRepository.findAllByWeekdayPriceAsc();
 	}
-	
+
 	public List<SelectAccommodationInventoryRoomtypePriceView> findAllByWeekendPriceAsc() {
 		return accommodationRepository.findAllByWeekendPriceAsc();
 	}
+
+	public String findItemTypeByAccommodationId(Integer accommodationId) {
+
+		Optional<Accommodation> result = accommodationRepository
+				.findById(accommodationId);
+
+		if (result.isPresent()) {
+			Accommodation entity = result.get();
+			// 然后从实体中获取你需要的字段
+			String itemType = entity.getItemType();
+			return itemType;
+		} else {
+			// 处理未找到记录的情况，例如返回一个错误消息或抛出异常
+			return "记录未找到";
+		}
+	}
 	
-	
+	//寫入order
+	public void saveAccommodationOrder(AccommodationOrder accommodationOrder) {
+        // 使用 save 方法保存或更新实体
+        accommodationOrderRepository.save(accommodationOrder);
+    }
+
 //	public List<Accommodation> findAccommodationName(String keyword) {
 //		if (keyword != null && !keyword.trim().isEmpty()) {
 //			String hql = "FROM Accommodation WHERE accommodationName LIKE :keyword OR accommodationAddress LIKE :keyword";

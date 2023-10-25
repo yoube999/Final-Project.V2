@@ -26,6 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import tw.com.eeit168.products.accommodation.model.Accommodation;
 import tw.com.eeit168.products.accommodation.model.AccommodationInventory;
+import tw.com.eeit168.products.accommodation.model.AccommodationOrder;
 import tw.com.eeit168.products.accommodation.model.AccommodationPhotos;
 import tw.com.eeit168.products.accommodation.model.AccommodationRoomType;
 import tw.com.eeit168.products.accommodation.model.RoomSelection;
@@ -93,7 +94,8 @@ public class AccommodationAjaxController {
 						.put("accommodationName", accommodation.getAccommodationName())
 						.put("descriptions", accommodation.getDescriptions())
 						.put("photoUrl", accommodation.getPhotoUrl())
-						.put("minWeekdayPrice", accommodation.getMinWeekdayPrice());
+						.put("minWeekdayPrice", accommodation.getMinWeekdayPrice())
+						.put("itemType", accommodation.getItemType());
 				jsonArray = jsonArray.put(item);
 			}
 		}
@@ -113,7 +115,8 @@ public class AccommodationAjaxController {
 						.put("accommodationAddress", accommodation.getAccommodationAddress())
 						.put("descriptions", accommodation.getDescriptions())
 						.put("contactNumber", accommodation.getContactNumber())
-						.put("timesPurchased", accommodation.getTimesPurchased());
+						.put("timesPurchased", accommodation.getTimesPurchased())
+						.put("itemType", accommodation.getItemType());
 						jsonArray = jsonArray.put(item);
 			}
 		}
@@ -134,7 +137,8 @@ public class AccommodationAjaxController {
                 .put("descriptions", accommodation.getDescriptions())
                 .put("photoUrl", accommodation.getPhotoUrl())
                 .put("minWeekdayPrice", accommodation.getMinWeekdayPrice())
-                .put("timesPurchased", accommodation.getTimesPurchased());
+                .put("timesPurchased", accommodation.getTimesPurchased())
+            	.put("itemType", accommodation.getItemType());
             jsonArray.put(item);
         }
 
@@ -172,6 +176,7 @@ public class AccommodationAjaxController {
 	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	    Date checkInDate;
 	    Date checkOutDate;
+	   
 
 	    try {
 	        checkInDate = new java.sql.Date(dateFormat.parse(checkInDateStr).getTime());
@@ -197,12 +202,19 @@ public class AccommodationAjaxController {
 	        }
 	        
 	        
+	        //獲取itemType
+	        String itemType = accommodationSearchService.findItemTypeByAccommodationId(accommodationId);
+	        
+//	        System.out.println(itemType);
+	        
 	        // Create a response map
 	        Map<String, Object> response = new HashMap<>();
 	        response.put("accommodationId", accommodationId);
 	        response.put("checkInDate", checkInDateStr);
 	        response.put("checkOutDate", checkOutDateStr);
 	        response.put("totalPriceMap", totalPriceMap);
+	        response.put("itemType", itemType);
+	        
 	        System.out.println("totalPriceMap=" + totalPriceMap);
 	        // Convert the response to JSON
 	        ObjectMapper objectMapper = new ObjectMapper();
@@ -213,6 +225,25 @@ public class AccommodationAjaxController {
 	        throw new RuntimeException("Unable to calculate total price", e);
 	    }
 	}
+	
+	//寫入order
+	@PostMapping("/create")
+    public ResponseEntity<String> createAccommodationOrder(@RequestBody AccommodationOrder request) {
+        // 创建一个新的 AccommodationOrder 实例并设置用户提供的数据
+        AccommodationOrder accommodationOrder = new AccommodationOrder();
+        accommodationOrder.setRecordId(request.getRecordId());
+        accommodationOrder.setAccommodationId(request.getAccommodationId());
+        accommodationOrder.setRoomTypeName(request.getRoomTypeName());
+        accommodationOrder.setCheckedInDate(request.getCheckedInDate());
+        accommodationOrder.setCheckedOutDate(request.getCheckedOutDate());
+        accommodationOrder.setTotalPrice(request.getTotalPrice());
+        accommodationOrder.setRecordAccommodationStatus(request.getRecordAccommodationStatus());
+
+        // 调用服务层方法保存实体
+        accommodationSearchService.saveAccommodationOrder(accommodationOrder);
+
+        return ResponseEntity.ok("Accommodation Order created successfully.");
+    }
 
 	
 	

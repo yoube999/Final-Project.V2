@@ -33,6 +33,9 @@ public class SelectAccommodationPhotosPriceView {
 	
 	@Column(name = "times_purchased", nullable = false)
 	private int timesPurchased;
+	
+	@Column(name = "item_type", nullable = false)
+	private String itemType;
 
 	public Integer getAccommodationPhotoId() {
 		return accommodationPhotoId;
@@ -90,14 +93,21 @@ public class SelectAccommodationPhotosPriceView {
 		this.timesPurchased = timesPurchased;
 	}
 
+	public String getItemType() {
+		return itemType;
+	}
+
+	public void setItemType(String itemType) {
+		this.itemType = itemType;
+	}
+
 	@Override
 	public String toString() {
 		return "SelectAccommodationPhotosPriceView [accommodationPhotoId=" + accommodationPhotoId + ", accommodationId="
 				+ accommodationId + ", accommodationName=" + accommodationName + ", descriptions=" + descriptions
 				+ ", photoUrl=" + photoUrl + ", minWeekdayPrice=" + minWeekdayPrice + ", timesPurchased="
-				+ timesPurchased + "]";
+				+ timesPurchased + ", itemType=" + itemType + "]";
 	}
 
-	
-	
+		
 }
