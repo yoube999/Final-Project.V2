@@ -40,7 +40,7 @@ public class HelpDeskController {
 	 * 
 	 */
 	@PostMapping("/createTicket")
-	public String createTicket(String json) {
+	public String createTicket(@RequestBody String json) {
 		System.out.println(json);
 		JSONObject responseJson = new JSONObject();
 
