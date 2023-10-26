@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin
-@RequestMapping(path = {"/project/record"})
+@RequestMapping(path = {"/record"})
 public class RecordAjaxController {
 	
 	@Autowired

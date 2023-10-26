@@ -81,55 +81,55 @@ public class HelpDeskService {
 		return null;
 	}
 
-	/**
-	 * 寫入案件單，使用多載方式，當有上傳圖片時走此邏輯
-	 * 
-	 * 
-	 */
-	public HelpDeskBean createTicket(String json, @RequestParam("image") MultipartFile image) {
-
-		try {
-			// 使用JSON格式包案件內容
-			JSONObject obj = new JSONObject(json);
-
-			// 後端收到Null防呆處理
-			String customer_name = obj.isNull("customer_name") ? "訪客" : obj.getString("customer_name");
-			Integer record_id = obj.isNull("record_id") ? null : obj.getInt("record_id");
-			String subject_line = obj.isNull("subject_line") ? "未填寫主旨" : obj.getString("subject_line");
-			String descriptions = obj.isNull("descriptions") ? "未填寫內容" : obj.getString("descriptions");
-			String contact_number = obj.isNull("contact_number") ? "未填寫電話號碼" : obj.getString("contact_number");
-			String email = obj.isNull("email") ? "未填寫email" : obj.getString("email");
-			String way_to_contact = obj.isNull("way_to_contact") ? "電子信箱" : obj.getString("way_to_contact");
-
-			HelpDeskBean insert = new HelpDeskBean();
-			insert.setCustomer_name(customer_name);
-			insert.setRecord_id(record_id);
-			insert.setSubject_line(subject_line);
-			insert.setDescriptions(descriptions);
-			insert.setContact_number(contact_number);
-			insert.setEmail(email);
-			insert.setWay_to_contact(way_to_contact);
-			// 實現此方法以將圖片儲存到資料庫並返回 URL
-			if (image != null && !image.isEmpty()) {
-				String imageUrl = pictureFactory.saveImages(image);
-				insert.setAttachment(imageUrl);
-			}
-			// 建立案件時客服人員固定為null
-			insert.setMember_profile_id(null);
-			// 建立案件時狀態固定為未處理
-			insert.setHelpdesk_status("未處理");
-			// 建立案件時取得Loacl當下時間
-			insert.setCreatetime(new java.util.Date());
-
-			return helpDeskDAO.insert(insert);
-
-		} catch (JSONException e) {
-			// 需改寫成跳轉至錯誤頁面
-			e.printStackTrace();
-		}
-
-		return null;
-	}
+//	/**
+//	 * 寫入案件單，使用多載方式，當有上傳圖片時走此邏輯
+//	 * 
+//	 * 
+//	 */
+//	public HelpDeskBean createTicket(String json, @RequestParam("image") MultipartFile image) {
+//
+//		try {
+//			// 使用JSON格式包案件內容
+//			JSONObject obj = new JSONObject(json);
+//
+//			// 後端收到Null防呆處理
+//			String customer_name = obj.isNull("customer_name") ? "訪客" : obj.getString("customer_name");
+//			Integer record_id = obj.isNull("record_id") ? null : obj.getInt("record_id");
+//			String subject_line = obj.isNull("subject_line") ? "未填寫主旨" : obj.getString("subject_line");
+//			String descriptions = obj.isNull("descriptions") ? "未填寫內容" : obj.getString("descriptions");
+//			String contact_number = obj.isNull("contact_number") ? "未填寫電話號碼" : obj.getString("contact_number");
+//			String email = obj.isNull("email") ? "未填寫email" : obj.getString("email");
+//			String way_to_contact = obj.isNull("way_to_contact") ? "電子信箱" : obj.getString("way_to_contact");
+//
+//			HelpDeskBean insert = new HelpDeskBean();
+//			insert.setCustomer_name(customer_name);
+//			insert.setRecord_id(record_id);
+//			insert.setSubject_line(subject_line);
+//			insert.setDescriptions(descriptions);
+//			insert.setContact_number(contact_number);
+//			insert.setEmail(email);
+//			insert.setWay_to_contact(way_to_contact);
+//			// 實現此方法以將圖片儲存到資料庫並返回 URL
+//			if (image != null && !image.isEmpty()) {
+//				String imageUrl = pictureFactory.saveImages(image);
+//				insert.setAttachment(imageUrl);
+//			}
+//			// 建立案件時客服人員固定為null
+//			insert.setMember_profile_id(null);
+//			// 建立案件時狀態固定為未處理
+//			insert.setHelpdesk_status("未處理");
+//			// 建立案件時取得Loacl當下時間
+//			insert.setCreatetime(new java.util.Date());
+//
+//			return helpDeskDAO.insert(insert);
+//
+//		} catch (JSONException e) {
+//			// 需改寫成跳轉至錯誤頁面
+//			e.printStackTrace();
+//		}
+//
+//		return null;
+//	}
 
 	/**
 	 * 查詢案件

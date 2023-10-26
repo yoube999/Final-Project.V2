@@ -31,7 +31,7 @@ import tw.com.eeit168.products.restaurant.service.SelectRestaurantPictureReposit
 
 @RestController //@Controller+@ResponseBody
 @CrossOrigin
-@RequestMapping(path = {"/project/product"})
+@RequestMapping(path = {"/product"})
 public class RestaurantAjaxController {
 	
 	@Autowired

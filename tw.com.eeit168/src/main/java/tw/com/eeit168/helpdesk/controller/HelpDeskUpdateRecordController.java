@@ -15,7 +15,7 @@ import tw.com.eeit168.helpdesk.service.HelpDeskUpdateRecordService;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/project/eeit168/helpdeskupdaterecord")
+@RequestMapping("/eeit168/helpdeskupdaterecord")
 
 public class HelpDeskUpdateRecordController {
 

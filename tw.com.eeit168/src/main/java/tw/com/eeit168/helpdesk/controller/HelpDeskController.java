@@ -24,7 +24,7 @@ import tw.com.eeit168.products.restaurant.util.DatetimeConverter;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/project/eeit168/helpdesk")
+@RequestMapping("/eeit168/helpdesk")
 
 public class HelpDeskController {
 
@@ -40,11 +40,11 @@ public class HelpDeskController {
 	 * 
 	 */
 	@PostMapping("/createTicket")
-	public String createTicket(String json, @RequestParam(required = false) MultipartFile image) {
+	public String createTicket(String json) {
 		System.out.println(json);
 		JSONObject responseJson = new JSONObject();
 
-		HelpDeskBean helpdesk = helpDeskService.createTicket(json, image);
+		HelpDeskBean helpdesk = helpDeskService.createTicket(json);
 		if (helpdesk != null) {
 			// 若前端收到true時需顯示成功訊息
 			responseJson.put("message", "新增案件成功");
