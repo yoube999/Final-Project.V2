@@ -38,7 +38,7 @@ import tw.com.eeit168.products.accommodation.service.AccommodationSearchService;
 import tw.com.eeit168.products.accommodation.util.ImageToBase64Converter;
 
 @RestController
-@RequestMapping("/eeit168/accommodation")
+@RequestMapping("/project/eeit168/accommodation")
 @CrossOrigin
 public class AccommodationAjaxController {
 	

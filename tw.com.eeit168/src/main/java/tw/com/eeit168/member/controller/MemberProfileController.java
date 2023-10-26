@@ -19,7 +19,7 @@ import tw.com.eeit168.member.model.MemberProfileBean;
 import tw.com.eeit168.member.service.MemberProfileService;
 
 @RestController
-@RequestMapping("/eeit168/member")
+@RequestMapping("/project/eeit168/member")
 @CrossOrigin
 public class MemberProfileController {
 

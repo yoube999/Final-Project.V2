@@ -28,7 +28,7 @@ import tw.com.eeit168.helpdesk.service.HelpDeskProductsService;
 import tw.com.eeit168.helpdesk.util.CsvFieldMapping;
 
 @RestController
-@RequestMapping("/eeit168/helpdeskproducts")
+@RequestMapping("/project/eeit168/helpdeskproducts")
 
 @Service
 @Transactional(rollbackFor = { Exception.class })

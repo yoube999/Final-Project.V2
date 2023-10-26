@@ -21,7 +21,7 @@ import tw.com.eeit168.member.model.CreditCardBean;
 import tw.com.eeit168.member.service.CreditCardService;
 
 @RestController
-@RequestMapping("/credit-cards")
+@RequestMapping("/project/credit-cards")
 @CrossOrigin
 public class CreditCardController {
 

@@ -20,7 +20,7 @@ import tw.com.eeit168.member.model.MemberProfileBean;
 import tw.com.eeit168.member.service.MemberProfileService;
 
 @RestController
-@RequestMapping("/eeit168/helpdeskmember")
+@RequestMapping("/project/eeit168/helpdeskmember")
 public class HelpDeskMemberController {
 
 	@Autowired

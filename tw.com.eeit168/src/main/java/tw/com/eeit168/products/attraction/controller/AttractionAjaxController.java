@@ -27,7 +27,7 @@ import tw.com.eeit168.products.restaurant.model.SelectRestaurantPictureViewTop5;
 
 @RestController //@Controller+@ResponseBody
 @CrossOrigin
-@RequestMapping(path = {"/product"})
+@RequestMapping(path = {"/project/product"})
 public class AttractionAjaxController {
 
 	@Autowired

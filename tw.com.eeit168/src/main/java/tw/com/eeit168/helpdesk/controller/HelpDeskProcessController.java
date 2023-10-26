@@ -18,7 +18,7 @@ import tw.com.eeit168.products.restaurant.util.DatetimeConverter;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/eeit168/helpdeskprocess")
+@RequestMapping("/project/eeit168/helpdeskprocess")
 
 public class HelpDeskProcessController {
 
